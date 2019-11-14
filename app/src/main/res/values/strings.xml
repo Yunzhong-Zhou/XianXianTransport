@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">鲜鲜拉(司机)</string>
+    <!--司机端-->
+    <string name="app_name">鲜鲜拉</string>
 
     <string name="paizhao">拍照</string>
     <string name="xiangce">相册</string>
     <string name="tiaoguo">跳过</string>
     <string name="quanbutixian"><u>全部提现</u></string>
-
-
+    
     <!--系统提示-->
     <string name="app_prompt">提示</string>
     <string name="app_submit">提交</string>
