@@ -102,7 +102,10 @@ public class Fragment3 extends BaseFragment {
         textView1 = findViewByID_My(R.id.textView1);
         textView1.setOnClickListener(this);
         textView2 = findViewByID_My(R.id.textView2);
-        textView1.setText(localUserInfo.getNickname());
+        if (!localUserInfo.getNickname().equals("")){
+            textView1.setText(localUserInfo.getNickname());
+        }
+
         textView2.setText(localUserInfo.getPhonenumber());
         if (!localUserInfo.getUserImage().equals(""))
             Glide.with(getActivity())
@@ -159,8 +162,10 @@ public class Fragment3 extends BaseFragment {
             public void onResponse(Fragment3Model response) {
                 MyLogger.i(">>>>>>>>>我的" + response);
                 //昵称
-                textView1.setText(response.getNickname());
-                localUserInfo.setNickname(response.getNickname());
+                if (!response.getNickname().equals("")) {
+                    textView1.setText(response.getNickname());
+                    localUserInfo.setNickname(response.getNickname());
+                }
 
                 //头像
                 localUserInfo.setUserImage(response.getHead());

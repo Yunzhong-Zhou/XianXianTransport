@@ -250,6 +250,9 @@ public class AddSurchargeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 editText_1.setText("");
+                editText_2.setText("");
+                add_ll.removeView(view);
+
             }
         });
 
