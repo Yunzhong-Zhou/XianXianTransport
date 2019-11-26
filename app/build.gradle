@@ -19,7 +19,7 @@ android {
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
-                JPUSH_APPKEY : "ba95d1496721e1aa9aff3e91", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_APPKEY : "b034308576e73a6e3705d115", //JPush 上注册的包名对应的 Appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
 
@@ -118,8 +118,8 @@ dependencies {
     //    implementation 'com.liaoinstan.springview:WeixinHeader:1.5.1'        //微信小程序header（只有header）
 
     //极光推送
-    implementation 'cn.jiguang.sdk:jpush:3.3.4'
-    implementation 'cn.jiguang.sdk:jcore:2.1.2'
+    implementation 'cn.jiguang.sdk:jpush:3.4.0'
+    implementation 'cn.jiguang.sdk:jcore:2.2.2'
 
     //异常上报-腾讯bugly
     implementation 'com.tencent.bugly:crashreport:latest.release'

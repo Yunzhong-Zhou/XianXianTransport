@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.hjq.toast.ToastUtils;
 import com.hyphenate.chat.EMOptions;
@@ -13,6 +14,9 @@ import com.hyphenate.easeui.EaseUI;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.transport.xianxian.utils.MyLogger;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -44,10 +48,18 @@ public class MyApplication extends Application {
         mContext = this;
         myApplication = this;
 
-        MultiDex.install(this);
 
+        Context context = getApplicationContext();
+        // 获取当前包名
+        String packageName = context.getPackageName();
+        // 获取当前进程名
+        String processName = getProcessName(android.os.Process.myPid());
+        // 设置是否为上报进程
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
+        strategy.setUploadProcess(processName == null || processName.equals(packageName));
         //腾讯bugly 异常上报初始化-建议在测试阶段建议设置成true，发布时设置为false。
-        CrashReport.initCrashReport(getApplicationContext(), "789711ef96", false);
+        CrashReport.initCrashReport(context, "d0972bab05", false, strategy);
+
 
         //toast初始化
         ToastUtils.init(this);
@@ -80,7 +92,7 @@ public class MyApplication extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
 
-//        MultiDex.install(this);//方法数超过64k
+        MultiDex.install(this);//方法数超过64k
     }
 
     private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
@@ -232,4 +244,33 @@ public class MyApplication extends Application {
         return null;
     }
 
+
+    /**
+     * 获取进程号对应的进程名
+     *
+     * @param pid 进程号
+     * @return 进程名
+     */
+    private static String getProcessName(int pid) {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader("/proc/" + pid + "/cmdline"));
+            String processName = reader.readLine();
+            if (!TextUtils.isEmpty(processName)) {
+                processName = processName.trim();
+            }
+            return processName;
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        }
+        return null;
+    }
 }

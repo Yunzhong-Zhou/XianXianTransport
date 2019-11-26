@@ -52,7 +52,6 @@ import java.util.List;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.superrtc.ContextUtils.getApplicationContext;
 import static com.transport.xianxian.net.OkHttpClientManager.IMGHOST;
 
 
@@ -216,7 +215,7 @@ public class Fragment2 extends BaseFragment {
     protected void initData() {
 //        requestServer();
         //初始化定位
-        mLocationClient = new AMapLocationClient(getApplicationContext());
+        mLocationClient = new AMapLocationClient(getActivity());
         AMapLocationClientOption option = new AMapLocationClientOption();
         //设置定位场景，目前支持三种场景（签到、出行、运动，默认无场景）
         option.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.Transport);
@@ -405,11 +404,10 @@ public class Fragment2 extends BaseFragment {
     public void requestServer() {
         super.requestServer();
 //        this.showLoadingPage();
-
         showProgress(true, getString(R.string.app_loading));
         if (mLocationClient != null) {
             //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
-            mLocationClient.stopLocation();
+//            mLocationClient.stopLocation();
             mLocationClient.startLocation();
         }
     }
