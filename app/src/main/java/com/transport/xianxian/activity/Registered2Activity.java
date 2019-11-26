@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import com.squareup.okhttp.Request;
 import com.transport.xianxian.R;
 import com.transport.xianxian.base.BaseActivity;
@@ -28,7 +30,7 @@ import static com.transport.xianxian.net.OkHttpClientManager.HOST;
  */
 
 public class Registered2Activity extends BaseActivity {
-    String id = "";
+    String id = "", hx_username = "";
     String identity_name = "", identity_number = "";
     private EditText editText1, editText2, editText3;
     private TextView textView2;
@@ -80,6 +82,7 @@ public class Registered2Activity extends BaseActivity {
     protected void initData() {
 //        request(captchaURL);
         id = getIntent().getStringExtra("id");
+        hx_username = getIntent().getStringExtra("hx_username");
     }
 
 
@@ -157,12 +160,39 @@ public class Registered2Activity extends BaseActivity {
             public void onResponse(final String response) {
                 MyLogger.i(">>>>>>>>>注册2" + response);
                 textView2.setClickable(true);
-                localUserInfo.setUserId(id);
-                Bundle bundle = new Bundle();
-                bundle.putInt("isShowAd", 1);
-                CommonUtil.gotoActivityWithFinishOtherAllAndData(
-                        Registered2Activity.this, MainActivity.class,
-                        bundle, true);
+
+                //登录环信
+                EMClient.getInstance().logout(false);
+                EMClient.getInstance().login(hx_username, "123456", new EMCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        hideProgress();
+                        //保存id
+                        localUserInfo.setUserId(id);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("isShowAd", 1);
+                        CommonUtil.gotoActivityWithFinishOtherAllAndData(
+                                Registered2Activity.this, MainActivity.class,
+                                bundle, true);
+                    }
+
+                    @Override
+                    public void onProgress(int progress, String status) {
+                    }
+
+                    @Override
+                    public void onError(int code, String error) {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                hideProgress();
+                                MyLogger.i("环信登录失败：" + error);
+                                myToast("环信登录失败：" + error);
+                            }
+                        });
+                    }
+                });
+
+
             }
         }, false);
 

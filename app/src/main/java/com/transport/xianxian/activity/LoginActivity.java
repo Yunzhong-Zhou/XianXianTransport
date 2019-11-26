@@ -231,6 +231,7 @@ public class LoginActivity extends BaseActivity {
                             dialog.dismiss();
                             Bundle bundle = new Bundle();
                             bundle.putString("id",response.getId());
+                            bundle.putString("hx_username",response.getHx_username());
                             CommonUtil.gotoActivity(LoginActivity.this, Registered2Activity.class, false);
                         }
                     });

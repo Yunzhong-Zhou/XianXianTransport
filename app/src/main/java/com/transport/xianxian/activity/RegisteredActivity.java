@@ -41,7 +41,7 @@ public class RegisteredActivity extends BaseActivity {
     private ImageView imageView1;
     boolean isgouxuan = true;
 
-    String phonenum = "", password1 = "", password2 = "", code = "", num = "", nickname = "", register_addr = "";
+    String phonenum = "", password1 = "", password2 = "", code = "", num = "", nickname = "", register_addr = "",hx_username = "";
 
     private TimeCount time;
 
@@ -305,7 +305,8 @@ public class RegisteredActivity extends BaseActivity {
                         @Override
                         public void run() {
                             try {
-                                EMClient.getInstance().createAccount(jObj1.getString("hx_username"), "123456");
+                                hx_username = jObj1.getString("hx_username");
+                                EMClient.getInstance().createAccount(hx_username, "123456");
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -313,6 +314,7 @@ public class RegisteredActivity extends BaseActivity {
                                         //去完善信息
                                         Bundle bundle = new Bundle();
                                         bundle.putString("id", id);
+                                        bundle.putString("hx_username", hx_username);
                                         CommonUtil.gotoActivityWithData(RegisteredActivity.this, Registered2Activity.class, bundle, true);
                                     }
                                 });
