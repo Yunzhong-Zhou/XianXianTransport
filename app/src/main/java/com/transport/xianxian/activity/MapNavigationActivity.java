@@ -365,7 +365,7 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
                 tv_left.setText("转派订单");//左边按钮
                 tv_left.setBackgroundResource(R.drawable.btn_lanse);
 
-                tv_right.setText("配送完闭");//右边按钮
+                tv_right.setText("配送完毕");//右边按钮
                 break;
 
         }
@@ -556,7 +556,7 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
                             }
                         });
                         break;
-                    case "配送完闭":
+                    case "配送完毕":
                         if (!model.getTindent().getTerminal_id().equals("")){
                             aMapTrackClient.stopTrack(new TrackParam(Constants.SERVICE_ID, Long.valueOf(model.getTindent().getTerminal_id())), onTrackListener);
                             aMapTrackClient.stopGather(onTrackListener);

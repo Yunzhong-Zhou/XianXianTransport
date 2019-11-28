@@ -192,7 +192,6 @@ public class Registered2Activity extends BaseActivity {
                     }
                 });
 
-
             }
         }, false);
 

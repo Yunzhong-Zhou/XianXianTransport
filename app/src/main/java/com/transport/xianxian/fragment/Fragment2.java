@@ -815,7 +815,7 @@ public class Fragment2 extends BaseFragment {
                                                 @Override
                                                 public void onClick(View v) {
                                                     Bundle bundle = new Bundle();
-                                                    bundle.putString(EaseConstant.EXTRA_USER_ID, model.getSend_mobile());
+                                                    bundle.putString(EaseConstant.EXTRA_USER_ID, model.getHx_username());
                                                     CommonUtil.gotoActivityWithData(getActivity(), ChatActivity.class, bundle, false);
                                                 }
                                             });
