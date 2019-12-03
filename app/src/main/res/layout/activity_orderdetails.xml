@@ -365,52 +365,10 @@
                         android:text="费用明细"
                         android:textColor="@color/black2"
                         android:textSize="11sp" />
-
-                    <LinearLayout
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="起步价"
-                            android:textColor="@color/black1"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/textView9"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0元"
-                            android:textColor="@color/black1"
-                            android:textSize="17sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="里程费"
-                            android:textColor="@color/black1"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/textView10"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0元"
-                            android:textColor="@color/black1"
-                            android:textSize="17sp" />
-                    </LinearLayout>
+                        android:layout_height="wrap_content" />
 
                     <TextView
                         android:id="@+id/textView11"

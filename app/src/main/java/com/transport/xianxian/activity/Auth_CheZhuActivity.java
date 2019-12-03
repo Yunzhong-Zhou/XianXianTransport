@@ -60,7 +60,7 @@ public class Auth_CheZhuActivity extends BaseActivity {
                 break;
             case R.id.linearLayout3:
                 //人脸认证
-//                CommonUtil.gotoActivity(this,,false);
+                CommonUtil.gotoActivity(this, Auth_RenLianActivity.class, false);
                 break;
             case R.id.linearLayout4:
                 //银行卡绑定

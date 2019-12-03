@@ -218,7 +218,7 @@ public class MyProfileActivity extends BaseActivity {
                 textView3.setClickable(true);
                 MyLogger.i(">>>>>>>>>修改手机" + response);
                 time.start();//开始计时
-                myToast("修改成功");
+                myToast("修改手机号成功，请重新登录");
                 //退出程序
                 localUserInfo.setUserId("");
                 localUserInfo.setUserName("");

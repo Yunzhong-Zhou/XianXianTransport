@@ -351,7 +351,7 @@ public class Fragment1 extends BaseFragment {
                 showErrorPage();
                 hideProgress();
                 if (!info.equals("")) {
-                    myToast(info);
+                    showToast(info);
                 }
             }
 

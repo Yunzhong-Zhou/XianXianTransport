@@ -319,7 +319,7 @@ public class TagAliasOperatorHelper {
         }
     }
     public static class TagAliasBean{
-        int action;
+        public int action;
         Set<String> tags;
         String alias;
         boolean isAliasAction;

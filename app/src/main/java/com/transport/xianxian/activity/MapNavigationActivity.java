@@ -56,11 +56,16 @@ import com.transport.xianxian.net.OkHttpClientManager;
 import com.transport.xianxian.net.URLs;
 import com.transport.xianxian.utils.CommonUtil;
 import com.transport.xianxian.utils.MyLogger;
+import com.zhy.adapter.recyclerview.CommonAdapter;
+import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import static com.transport.xianxian.net.OkHttpClientManager.IMGHOST;
 
@@ -80,9 +85,11 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
     ScrollView scrollView;
     LinearLayout linearLayout1, ll_hint1, ll_hint2;
     ImageView imageView1, imageView1_2, iv_xinxi, iv_xinxi_2, iv_dianhua, iv_dianhua_2;
-    TextView textView1, textView1_2, textView2, textView2_2, textView3, textView4, textView5, textView6, textView7, textView8, textView9, textView10, textView11,
+    TextView textView1, textView1_2, textView2, textView2_2, textView3, textView4, textView5, textView6, textView7, textView8, textView11,
             tv_shouqi, tv_left, tv_right, tv_fujiafei;
-
+    RecyclerView recyclerView;
+    List<OrderDetailsModel.TindentBean.PriceDetailBean> list = new ArrayList<>();
+    CommonAdapter<OrderDetailsModel.TindentBean.PriceDetailBean> mAdapter;
     double lat = 0, lng = 0;
     int juli = 0;
 
@@ -229,9 +236,11 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
         textView6 = findViewByID_My(R.id.textView6);
         textView7 = findViewByID_My(R.id.textView7);
         textView8 = findViewByID_My(R.id.textView8);
-        textView9 = findViewByID_My(R.id.textView9);
-        textView10 = findViewByID_My(R.id.textView10);
         textView11 = findViewByID_My(R.id.textView11);
+
+        recyclerView = findViewByID_My(R.id.recyclerView);
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLinearLayoutManager);
 
         tv_shouqi = findViewByID_My(R.id.tv_shouqi);
         tv_left = findViewByID_My(R.id.tv_left);
@@ -301,9 +310,18 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
         textView6.setText(model.getTindent().getNow_state() + " " + model.getTindent().getNow_state_action());//time 卸货
         textView7.setText(model.getTindent().getRemark());//备注
         textView8.setText("¥ " + model.getTindent().getPrice());//订单金额
-        textView9.setText(model.getTindent().getPrice_detail().getStart() + "元");//起步价
-        textView10.setText(model.getTindent().getPrice_detail().getMilleage() + "元");//离装货时间还有0小时
 //                textView11.setText(response.getTindent().getSend_time());//描述
+        //费用明细
+        list = model.getTindent().getPrice_detail();
+        mAdapter = new CommonAdapter<OrderDetailsModel.TindentBean.PriceDetailBean>
+                (MapNavigationActivity.this, R.layout.item_add_fragment2_2, list) {
+            @Override
+            protected void convert(ViewHolder holder, OrderDetailsModel.TindentBean.PriceDetailBean model, int position) {
+                holder.setText(R.id.tv_title, model.getTitle());
+                holder.setText(R.id.tv_money, model.getPriceX() + "元");
+            }
+        };
+        recyclerView.setAdapter(mAdapter);
 
         //标签
         FlowLayoutAdapter<String> flowLayoutAdapter;

@@ -118,8 +118,8 @@ dependencies {
     //    implementation 'com.liaoinstan.springview:WeixinHeader:1.5.1'        //微信小程序header（只有header）
 
     //极光推送
-    implementation 'cn.jiguang.sdk:jpush:3.4.0'
-    implementation 'cn.jiguang.sdk:jcore:2.2.2'
+    implementation 'cn.jiguang.sdk:jpush:3.4.1'
+    implementation 'cn.jiguang.sdk:jcore:2.2.4'
 
     //异常上报-腾讯bugly
     implementation 'com.tencent.bugly:crashreport:latest.release'

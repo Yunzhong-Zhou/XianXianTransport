@@ -57,6 +57,8 @@ import com.transport.xianxian.net.OkHttpClientManager;
 import com.transport.xianxian.net.URLs;
 import com.transport.xianxian.utils.CommonUtil;
 import com.transport.xianxian.utils.MyLogger;
+import com.zhy.adapter.recyclerview.CommonAdapter;
+import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,6 +68,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import overlay.AMapUtil;
 import overlay.TruckRouteColorfulOverLay;
 
@@ -89,8 +93,12 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
 
     LinearLayout linearLayout1, ll_hint1, ll_hint2;
     ImageView imageView1, iv_xinxi, iv_dianhua, iv_xiangqing;
-    TextView textView1, textView2, textView3, textView4, textView5, textView6, textView7, textView8, textView9, textView10, textView11,
+    TextView textView1, textView2, textView3, textView4, textView5, textView6, textView7, textView8, textView11,
             tv_addr1, tv_title1, tv_juli1, tv_addr2, tv_title2, tv_juli2, tv_shouqi, tv_left, tv_right;
+
+    RecyclerView recyclerView;
+    List<OrderDetailsModel.TindentBean.PriceDetailBean> list = new ArrayList<>();
+    CommonAdapter<OrderDetailsModel.TindentBean.PriceDetailBean> mAdapter;
 
     //开始点、结束点、计算距离
     double lat = 0, lng = 0, juli = 0;
@@ -254,9 +262,11 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
         textView6 = findViewByID_My(R.id.textView6);
         textView7 = findViewByID_My(R.id.textView7);
         textView8 = findViewByID_My(R.id.textView8);
-        textView9 = findViewByID_My(R.id.textView9);
-        textView10 = findViewByID_My(R.id.textView10);
         textView11 = findViewByID_My(R.id.textView11);
+
+        recyclerView = findViewByID_My(R.id.recyclerView);
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLinearLayoutManager);
 
         tv_addr1 = findViewByID_My(R.id.tv_addr1);
         tv_title1 = findViewByID_My(R.id.tv_title1);
@@ -367,10 +377,18 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                 textView6.setText(response.getTindent().getSend_time());//离装货时间还有0小时
                 textView7.setText(response.getTindent().getRemark());//备注
                 textView8.setText("¥ " + response.getTindent().getPrice());//订单金额
-                textView9.setText(response.getTindent().getPrice_detail().getStart() + "元");//起步价
-                textView10.setText(response.getTindent().getPrice_detail().getMilleage() + "元");//离装货时间还有0小时
 //                textView11.setText(response.getTindent().getSend_time());//描述
-
+                //费用明细
+                list = response.getTindent().getPrice_detail();
+                mAdapter = new CommonAdapter<OrderDetailsModel.TindentBean.PriceDetailBean>
+                        (OrderDetailsActivity.this, R.layout.item_add_fragment2_2, list) {
+                    @Override
+                    protected void convert(ViewHolder holder, OrderDetailsModel.TindentBean.PriceDetailBean model, int position) {
+                        holder.setText(R.id.tv_title, model.getTitle());
+                        holder.setText(R.id.tv_money, model.getPriceX() + "元");
+                    }
+                };
+                recyclerView.setAdapter(mAdapter);
                 //标签
                 FlowLayoutAdapter<String> flowLayoutAdapter;
                /* List<String> stringList = new ArrayList<>();

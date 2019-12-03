@@ -1,5 +1,7 @@
 package com.transport.xianxian.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -93,7 +95,7 @@ public class OrderDetailsModel implements Serializable {
         private String hx_username;
         private String remark;
         private String price;
-        private PriceDetailBean price_detail;
+        private List<PriceDetailBean> price_detail;
         private int is_appoint;
         private OptionBtnBean option_btn;
         private NextAddrBean next_addr;
@@ -229,14 +231,6 @@ public class OrderDetailsModel implements Serializable {
             this.price = price;
         }
 
-        public PriceDetailBean getPrice_detail() {
-            return price_detail;
-        }
-
-        public void setPrice_detail(PriceDetailBean price_detail) {
-            this.price_detail = price_detail;
-        }
-
         public int getIs_appoint() {
             return is_appoint;
         }
@@ -283,6 +277,14 @@ public class OrderDetailsModel implements Serializable {
 
         public void setGoods_desc(List<String> goods_desc) {
             this.goods_desc = goods_desc;
+        }
+
+        public List<PriceDetailBean> getPrice_detail() {
+            return price_detail;
+        }
+
+        public void setPrice_detail(List<PriceDetailBean> price_detail) {
+            this.price_detail = price_detail;
         }
 
         public static class CarTypeInfoBean implements Serializable {
@@ -378,32 +380,6 @@ public class OrderDetailsModel implements Serializable {
 
             public void setVehicle_axis(String vehicle_axis) {
                 this.vehicle_axis = vehicle_axis;
-            }
-        }
-
-        public static class PriceDetailBean implements Serializable {
-            /**
-             * start : 10
-             * milleage : 10
-             */
-
-            private String start;
-            private String milleage;
-
-            public String getStart() {
-                return start;
-            }
-
-            public void setStart(String start) {
-                this.start = start;
-            }
-
-            public String getMilleage() {
-                return milleage;
-            }
-
-            public void setMilleage(String milleage) {
-                this.milleage = milleage;
             }
         }
 
@@ -621,6 +597,33 @@ public class OrderDetailsModel implements Serializable {
 
             public void setOther(String other) {
                 this.other = other;
+            }
+        }
+
+        public static class PriceDetailBean {
+            /**
+             * title : 里程费
+             * price : 18.00
+             */
+
+            private String title;
+            @SerializedName("price")
+            private String priceX;
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getPriceX() {
+                return priceX;
+            }
+
+            public void setPriceX(String priceX) {
+                this.priceX = priceX;
             }
         }
     }
