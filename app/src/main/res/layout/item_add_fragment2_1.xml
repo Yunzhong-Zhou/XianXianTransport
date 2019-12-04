@@ -70,6 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="估计用时：0小时"
+                    android:visibility="gone"
                     android:textColor="@color/black3"
                     android:textSize="12sp" />
             </LinearLayout>

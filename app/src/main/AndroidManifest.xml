@@ -113,8 +113,8 @@
 
         <!--首页-->
         <activity
-            android:name=".activity.NoticeDetailActivity"
-            android:label="公告详情" />
+            android:name=".activity.NoticeListActivity"
+            android:label="公告列表" />
         <activity
             android:name=".activity.ScoreDetailActivity"
             android:label="评分详情" />

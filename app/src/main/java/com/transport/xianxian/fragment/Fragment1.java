@@ -28,7 +28,7 @@ import com.squareup.okhttp.Request;
 import com.transport.xianxian.R;
 import com.transport.xianxian.activity.CapitalStatisticsActivity;
 import com.transport.xianxian.activity.MainActivity;
-import com.transport.xianxian.activity.NoticeDetailActivity;
+import com.transport.xianxian.activity.NoticeListActivity;
 import com.transport.xianxian.activity.OrderDetailsActivity;
 import com.transport.xianxian.activity.ScoreDetailActivity;
 import com.transport.xianxian.base.BaseFragment;
@@ -326,7 +326,7 @@ public class Fragment1 extends BaseFragment {
                     @Override
                     public void onItemClick(TextView v) {
 //                        MyLogger.i(">>>>"+v.getText());
-                        CommonUtil.gotoActivity(getActivity(), NoticeDetailActivity.class);
+                        CommonUtil.gotoActivity(getActivity(), NoticeListActivity.class);
                     }
                 });
 
@@ -496,7 +496,7 @@ public class Fragment1 extends BaseFragment {
                 break;
             case R.id.ll_xiaoxi:
                 //公告详情
-                CommonUtil.gotoActivity(getActivity(), NoticeDetailActivity.class);
+                CommonUtil.gotoActivity(getActivity(), NoticeListActivity.class);
                 break;
             case R.id.tv_zijintongji:
                 //资金统计

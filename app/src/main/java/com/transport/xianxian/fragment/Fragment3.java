@@ -26,6 +26,7 @@ import com.transport.xianxian.activity.JiangLiHuoDongActivity;
 import com.transport.xianxian.activity.LoginActivity;
 import com.transport.xianxian.activity.MainActivity;
 import com.transport.xianxian.activity.MyProfileActivity;
+import com.transport.xianxian.activity.NoticeListActivity;
 import com.transport.xianxian.activity.TrackSearchActivity;
 import com.transport.xianxian.activity.TrackServiceActivity;
 import com.transport.xianxian.activity.WalletActivity;
@@ -47,9 +48,9 @@ import static com.transport.xianxian.net.OkHttpClientManager.IMGHOST;
  */
 public class Fragment3 extends BaseFragment {
     ImageView imageView1;
-    TextView textView1, textView2;
+    TextView textView1, textView2,tv_banbenhao;
     LinearLayout linearLayout1, linearLayout2, linearLayout3, linearLayout4, linearLayout5, linearLayout6,
-            linearLayout7, linearLayout8, linearLayout9,linearLayout10,linearLayout11;
+            linearLayout7, linearLayout8, linearLayout9,linearLayout10,linearLayout11,linearLayout12;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -128,7 +129,7 @@ public class Fragment3 extends BaseFragment {
         linearLayout9 = findViewByID_My(R.id.linearLayout9);
         linearLayout10= findViewByID_My(R.id.linearLayout10);
         linearLayout11 = findViewByID_My(R.id.linearLayout11);
-
+        linearLayout12 = findViewByID_My(R.id.linearLayout12);
         linearLayout1.setOnClickListener(this);
         linearLayout2.setOnClickListener(this);
         linearLayout3.setOnClickListener(this);
@@ -140,6 +141,10 @@ public class Fragment3 extends BaseFragment {
         linearLayout9.setOnClickListener(this);
         linearLayout10.setOnClickListener(this);
         linearLayout11.setOnClickListener(this);
+        linearLayout12.setOnClickListener(this);
+
+        tv_banbenhao = findViewByID_My(R.id.tv_banbenhao);
+        tv_banbenhao.setText("版本号："+CommonUtil.getVersionName(getActivity()));
 
     }
 
@@ -289,6 +294,10 @@ public class Fragment3 extends BaseFragment {
             case R.id.linearLayout11:
                 //查看轨迹
                 CommonUtil.gotoActivity(getActivity(), TrackSearchActivity.class);
+                break;
+            case R.id.linearLayout12:
+                //公告列表
+                CommonUtil.gotoActivity(getActivity(), NoticeListActivity.class);
                 break;
         }
     }

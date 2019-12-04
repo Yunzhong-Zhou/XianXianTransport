@@ -263,9 +263,8 @@ public class JiFenLieBiaoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("url", HOST + "/api/goods/tscore-rule");
+                bundle.putString("url", HOST + "/api/article/detail-html?id=5a5deb216ab181888fac372299c97be1");
                 CommonUtil.gotoActivityWithData(JiFenLieBiaoActivity.this, WebContentActivity.class, bundle, false);
-
             }
         });
     }

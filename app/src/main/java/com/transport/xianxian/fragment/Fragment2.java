@@ -504,13 +504,13 @@ public class Fragment2 extends BaseFragment {
                                                     tv1.setText("" + i);
                                                     tv1.setBackgroundResource(R.drawable.yuanxing_huise);
                                                 }
-                                                tv2.setText(CommonUtil.timedate1(model.getAddr_list().get(i).getArrive_time()) + " " + model.getAddr_list().get(i).getStatus_text());//time 装货
-                                                if (i == 0){
+                                                tv2.setText(model.getAddr_list().get(i).getArrive_time() + " " + model.getAddr_list().get(i).getStatus_text());//time 装货
+                                                /*if (i == 0){
                                                     tv3.setVisibility(View.GONE);
                                                 }else {
                                                     tv3.setVisibility(View.VISIBLE);
                                                     tv3.setText("估计用时：" + CommonUtil.timedate3(Long.valueOf(model.getAddr_list().get(i).getPre_time())) + "分钟");//估计用时：
-                                                }
+                                                }*/
                                                 tv4.setText(model.getAddr_list().get(i).getAddr());//地址
                                                 tv5.setText(model.getAddr_list().get(i).getAddr_detail());//地址详情
                                                 mEndPoint = new DPoint(Double.valueOf(model.getAddr_list().get(i).getLat()), Double.valueOf(model.getAddr_list().get(i).getLng()));//终点，39.995576,116.481288
@@ -735,7 +735,7 @@ public class Fragment2 extends BaseFragment {
                                                 //起点
                                                 if (i == 0) {
                                                     if (!model.getAddr_list().get(i).getArrive_time().equals(""))
-                                                        holder.setText(R.id.tv_time1, CommonUtil.timedate1(model.getAddr_list().get(i).getArrive_time()) + " 装货");
+                                                        holder.setText(R.id.tv_time1, model.getAddr_list().get(i).getArrive_time() + " 装货");
 
                                                     holder.setText(R.id.tv_addr1, model.getAddr_list().get(i).getAddr());
                                                     holder.setText(R.id.tv_title1, model.getAddr_list().get(i).getAddr_detail());
@@ -744,7 +744,7 @@ public class Fragment2 extends BaseFragment {
                                                 //终点
                                                 if (i == model.getAddr_list().size() - 1) {
                                                     if (!model.getAddr_list().get(i).getArrive_time().equals(""))
-                                                        holder.setText(R.id.tv_time2, CommonUtil.timedate1(model.getAddr_list().get(i).getLeave_time()) + " 卸货");
+                                                        holder.setText(R.id.tv_time2, model.getAddr_list().get(i).getArrive_time() + " 卸货");
                                                     holder.setText(R.id.tv_addr2, model.getAddr_list().get(i).getAddr());
                                                     holder.setText(R.id.tv_title2, model.getAddr_list().get(i).getAddr_detail());
                                                     holder.setText(R.id.tv_juli2, "送货路程" + CommonUtil.distanceFormat(Double.valueOf(model.getAddr_list().get(i).getMileage())));
@@ -897,14 +897,14 @@ public class Fragment2 extends BaseFragment {
                                             for (int i = 0; i < model.getAddr_list().size(); i++) {
                                                 //起点
                                                 if (i == 0) {
-                                                    holder.setText(R.id.tv_time1, CommonUtil.timedate1(model.getAddr_list().get(i).getArrive_time()) + " 装货");
+                                                    holder.setText(R.id.tv_time1, model.getAddr_list().get(i).getArrive_time() + " 装货");
                                                     holder.setText(R.id.tv_addr1, model.getAddr_list().get(i).getAddr());
                                                     holder.setText(R.id.tv_title1, model.getAddr_list().get(i).getAddr_detail());
                                                     holder.setText(R.id.tv_juli1, "送货路程" + CommonUtil.distanceFormat(Double.valueOf(model.getAddr_list().get(i).getMileage())));
                                                 }
                                                 //终点
                                                 if (i == model.getAddr_list().size() - 1) {
-                                                    holder.setText(R.id.tv_time2, CommonUtil.timedate1(model.getAddr_list().get(i).getLeave_time()) + " 卸货");
+                                                    holder.setText(R.id.tv_time2, model.getAddr_list().get(i).getArrive_time() + " 卸货");
                                                     holder.setText(R.id.tv_addr2, model.getAddr_list().get(i).getAddr());
                                                     holder.setText(R.id.tv_title2, model.getAddr_list().get(i).getAddr_detail());
                                                     holder.setText(R.id.tv_juli2, "送货路程" + CommonUtil.distanceFormat(Double.valueOf(model.getAddr_list().get(i).getMileage())));

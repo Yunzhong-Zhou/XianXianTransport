@@ -92,7 +92,7 @@ public class Registered2Activity extends BaseActivity {
             case R.id.textView4:
                 //用户注册协议
                 Bundle bundle = new Bundle();
-                bundle.putString("url", HOST + "/api/driver/article/gvrp");
+                bundle.putString("url", HOST + "/api/article/detail-html?id=7376922d287fc0cb8960acd5d43e33e9");
                 CommonUtil.gotoActivityWithData(Registered2Activity.this, WebContentActivity.class, bundle, false);
                 break;
             case R.id.textView2:

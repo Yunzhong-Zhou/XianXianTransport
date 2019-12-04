@@ -26,9 +26,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by zyz on 2019-10-03.
- * 公告详情
+ * 公告列表
  */
-public class NoticeDetailActivity extends BaseActivity {
+public class NoticeListActivity extends BaseActivity {
     int page = 1;
     private RecyclerView recyclerView;
     List<NoticeDetailModel> list = new ArrayList<>();
@@ -36,7 +36,7 @@ public class NoticeDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_noticedetail);
+        setContentView(R.layout.activity_noticelist);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class NoticeDetailActivity extends BaseActivity {
         });
 
         recyclerView = findViewByID_My(R.id.recyclerView);
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(NoticeDetailActivity.this);
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(NoticeListActivity.this);
         recyclerView.setLayoutManager(mLinearLayoutManager);
     }
 
@@ -83,7 +83,7 @@ public class NoticeDetailActivity extends BaseActivity {
         Request(string);
     }
     private void Request(String string) {
-        OkHttpClientManager.getAsyn(NoticeDetailActivity.this, URLs.NoticeDetail + string, new OkHttpClientManager.ResultCallback<String>() {
+        OkHttpClientManager.getAsyn(NoticeListActivity.this, URLs.NoticeDetail + string, new OkHttpClientManager.ResultCallback<String>() {
             @Override
             public void onError(Request request, String info, Exception e) {
                 showErrorPage();
@@ -105,7 +105,7 @@ public class NoticeDetailActivity extends BaseActivity {
                     list = JSON.parseArray(jsonArray.toString(), NoticeDetailModel.class);
                     if (list.size() > 0) {
                         mAdapter = new CommonAdapter<NoticeDetailModel>
-                                (NoticeDetailActivity.this, R.layout.item_noticedetail, list) {
+                                (NoticeListActivity.this, R.layout.item_noticedetail, list) {
                             @Override
                             protected void convert(ViewHolder holder, NoticeDetailModel model, int position) {
                                 holder.setText(R.id.tv1, model.getTitle());
@@ -167,6 +167,6 @@ public class NoticeDetailActivity extends BaseActivity {
 
     @Override
     protected void updateView() {
-        titleView.setTitle("公告详情");
+        titleView.setTitle("公告列表");
     }
 }
