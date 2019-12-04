@@ -12,6 +12,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.location.CoordinateConverter;
+import com.amap.api.location.DPoint;
 import com.amap.api.navi.AMapNavi;
 import com.amap.api.navi.AMapNaviListener;
 import com.amap.api.navi.AMapNaviView;
@@ -91,7 +93,7 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
     List<OrderDetailsModel.TindentBean.PriceDetailBean> list = new ArrayList<>();
     CommonAdapter<OrderDetailsModel.TindentBean.PriceDetailBean> mAdapter;
     double lat = 0, lng = 0;
-    int juli = 0;
+    float juli = 0;
 
     //轨迹
     private static final String TAG = "TrackServiceActivity";
@@ -640,7 +642,7 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
         //货车信息
         if (aMapCarInfo == null) {
             aMapCarInfo = new AMapCarInfo();
-            aMapCarInfo.setCarType("1");//设置车辆类型，0小车，1货车
+            aMapCarInfo.setCarType(model.getTindent().getCar_type_info().getCar_type());//设置车辆类型，0小车，1货车
 
             aMapCarInfo.setCarNumber(model.getTindent().getCar_type_info().getCar_number());//设置车辆的车牌号码. 如:京DFZ239,京ABZ239
             aMapCarInfo.setVehicleSize(model.getTindent().getCar_type_info().getVehicle_siz());// * 设置货车的大小
@@ -654,7 +656,6 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
             aMapCarInfo.setRestriction(true);//设置是否躲避车辆限行。
         }
         aMapCarInfo.setVehicleLoadSwitch(true);
-        aMapCarInfo.setCarType("1");
         mAMapNavi.setCarInfo(aMapCarInfo);
         /**
          * 方法: int strategy=mAMapNavi.strategyConvert(congestion, avoidhightspeed, cost, hightspeed, multipleroute); 参数:
@@ -860,7 +861,10 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
     public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
         //当GPS位置有更新时的回调函数
 //        MyLogger.i(">>>>>>>>>GPS位置" + aMapNaviLocation.getCoord().getLatitude());
-
+        DPoint mStartDPoint = new DPoint(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());//起点
+        DPoint mEndDPoint = new DPoint(lat, lng);//终点，39.995576,116.481288
+        juli = CoordinateConverter.calculateLineDistance(mStartDPoint, mEndDPoint);
+        MyLogger.i(">>>>>>>>距目的地剩余距离:>>>>>直线距离" + juli);
     }
 
     @Override
@@ -917,7 +921,8 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
     @Override
     public void onNaviInfoUpdate(NaviInfo naviInfo) {
         MyLogger.i(">>>>>>>>距目的地剩余距离:" + naviInfo.getPathRetainDistance());
-        juli = naviInfo.getPathRetainDistance();
+//        juli = naviInfo.getPathRetainDistance();
+
 //        MyLogger.i(">>>>>>>>距目的地剩余时间:"+naviInfo.getPathRetainTime());
 
         /*if (naviInfo.getPathRetainDistance() <100){

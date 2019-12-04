@@ -299,7 +299,7 @@ public class OrderDetailsModel implements Serializable {
              * vehicle_height : 4
              * vehicle_axis : 6
              */
-
+            private String car_type;
             private String car_type_id;
             private String car_number;
             private String vehicle_siz;
@@ -309,6 +309,14 @@ public class OrderDetailsModel implements Serializable {
             private String vehicle_width;
             private String vehicle_height;
             private String vehicle_axis;
+
+            public String getCar_type() {
+                return car_type;
+            }
+
+            public void setCar_type(String car_type) {
+                this.car_type = car_type;
+            }
 
             public String getCar_type_id() {
                 return car_type_id;
@@ -600,7 +608,7 @@ public class OrderDetailsModel implements Serializable {
             }
         }
 
-        public static class PriceDetailBean {
+        public static class PriceDetailBean implements Serializable {
             /**
              * title : 里程费
              * price : 18.00
