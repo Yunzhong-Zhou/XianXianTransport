@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.transport.xianxian.activity.NoticeListActivity;
 import com.transport.xianxian.activity.OrderDetailsActivity;
 import com.transport.xianxian.activity.WebContentActivity;
 import com.transport.xianxian.utils.CommonUtil;
@@ -78,13 +79,14 @@ public class MyReceiver extends BroadcastReceiver {
                         CommonUtil.gotoActivityWithData(context, OrderDetailsActivity.class, bundle1);
                         break;
                     case "2":
+                    case "4":
                         //网页
                         Bundle bundle2 = new Bundle();
                         bundle2.putString("url", url);
                         CommonUtil.gotoActivityWithData(context, WebContentActivity.class, bundle2);
                         break;
                     case "3":
-                        //
+                        CommonUtil.gotoActivity(context, NoticeListActivity.class);
                         break;
                 }
 

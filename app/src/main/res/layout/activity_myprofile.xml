@@ -40,7 +40,7 @@
                 android:gravity="center"
                 android:onClick="onClick"
                 android:padding="13dp"
-                android:text="上传照片至后台审核"
+                android:text="修改头像"
                 android:textColor="@color/white" />
 
         </LinearLayout>
@@ -113,7 +113,7 @@
                 android:gravity="center"
                 android:onClick="onClick"
                 android:padding="13dp"
-                android:text="上传照片至后台审核"
+                android:text="修改手机号"
                 android:textColor="@color/white" />
 
 

@@ -154,7 +154,7 @@ public class JiFenShangChengActivity extends BaseActivity {
                 //设置自动轮播，默认为true
                 banner.isAutoPlay(true);
                 //设置轮播时间
-                banner.setDelayTime(1500);
+                banner.setDelayTime(3000);
                 //banner设置方法全部调用完毕时最后调用
                 banner.start();
 

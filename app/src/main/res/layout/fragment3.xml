@@ -458,7 +458,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:layout_weight="1"
-                                android:text="公告列表"
+                                android:text="消息列表"
                                 android:textColor="@color/black1"
                                 android:textSize="14sp" />
 

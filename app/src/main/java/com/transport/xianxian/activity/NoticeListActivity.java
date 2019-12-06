@@ -1,6 +1,7 @@
 package com.transport.xianxian.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.liaoinstan.springview.widget.SpringView;
@@ -10,8 +11,10 @@ import com.transport.xianxian.base.BaseActivity;
 import com.transport.xianxian.model.NoticeDetailModel;
 import com.transport.xianxian.net.OkHttpClientManager;
 import com.transport.xianxian.net.URLs;
+import com.transport.xianxian.utils.CommonUtil;
 import com.transport.xianxian.utils.MyLogger;
 import com.zhy.adapter.recyclerview.CommonAdapter;
+import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import org.json.JSONArray;
@@ -113,6 +116,36 @@ public class NoticeListActivity extends BaseActivity {
                                 holder.setText(R.id.tv3, model.getCreated_at());
                             }
                         };
+                        mAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, RecyclerView.ViewHolder viewHolder, int i) {
+                                switch (list.get(i).getType()){
+                                    case 1:
+                                        //订单消息跳转订单详情
+                                        Bundle bundle1 = new Bundle();
+                                        bundle1.putString("id",list.get(i).getDetail());
+                                        CommonUtil.gotoActivityWithData(NoticeListActivity.this,OrderDetailsActivity.class,bundle1);
+                                        break;
+                                    case 2:
+                                        //图文跳转url
+                                    case 4:
+                                        // 跳转url
+                                        Bundle bundle2 = new Bundle();
+                                        bundle2.putString("url",list.get(i).getDetail());
+                                        CommonUtil.gotoActivityWithData(NoticeListActivity.this,WebContentActivity.class,bundle2);
+                                        break;
+                                    case 3:
+                                        //文字消息直接显示
+                                        break;
+
+                                }
+                            }
+
+                            @Override
+                            public boolean onItemLongClick(View view, RecyclerView.ViewHolder viewHolder, int i) {
+                                return false;
+                            }
+                        });
                         recyclerView.setAdapter(mAdapter);
                     } else {
                         showEmptyPage();//空数据
@@ -167,6 +200,6 @@ public class NoticeListActivity extends BaseActivity {
 
     @Override
     protected void updateView() {
-        titleView.setTitle("公告列表");
+        titleView.setTitle("消息列表");
     }
 }

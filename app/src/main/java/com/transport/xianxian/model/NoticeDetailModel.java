@@ -7,17 +7,19 @@ import java.io.Serializable;
  */
 public class NoticeDetailModel implements Serializable {
     /**
-     * id : 1
-     * member_id : 3
-     * title : 提现
-     * message : 提醒下谢谢
-     * created_at : 2019-10-17 16:13:40
+     * id : 5
+     * type : 3
+     * title : 测试极光推送
+     * message : 测试极光推送测试极光推送
+     * detail :
+     * created_at : 2019-12-03 16:11
      */
 
     private int id;
-    private int member_id;
+    private int type;
     private String title;
     private String message;
+    private String detail;
     private String created_at;
 
     public int getId() {
@@ -28,12 +30,12 @@ public class NoticeDetailModel implements Serializable {
         this.id = id;
     }
 
-    public int getMember_id() {
-        return member_id;
+    public int getType() {
+        return type;
     }
 
-    public void setMember_id(int member_id) {
-        this.member_id = member_id;
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getTitle() {
@@ -50,6 +52,14 @@ public class NoticeDetailModel implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     public String getCreated_at() {

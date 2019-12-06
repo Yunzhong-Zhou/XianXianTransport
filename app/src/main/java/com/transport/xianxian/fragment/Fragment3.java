@@ -296,7 +296,7 @@ public class Fragment3 extends BaseFragment {
                 CommonUtil.gotoActivity(getActivity(), TrackSearchActivity.class);
                 break;
             case R.id.linearLayout12:
-                //公告列表
+                //消息列表
                 CommonUtil.gotoActivity(getActivity(), NoticeListActivity.class);
                 break;
         }

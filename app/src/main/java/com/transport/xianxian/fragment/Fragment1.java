@@ -314,21 +314,27 @@ public class Fragment1 extends BaseFragment {
                 }
 
                 // 公告消息
-                xiaoxiArray.clear();
-                for (int i = 0; i < response.getNotice_list().size(); i++) {
-                    xiaoxiArray.add(response.getNotice_list().get(i).getTitle());
-                }
-                rollingView.setPageSize(1);
-                rollingView.setClickColor(0xff888888);
-//        rollingView.setLeftDrawable(R.drawable.drawable_red_dot);
-                rollingView.setRollingText(xiaoxiArray);// 绑定数据
-                rollingView.setOnItemClickListener(new RollingView.onItemClickListener() {
-                    @Override
-                    public void onItemClick(TextView v) {
-//                        MyLogger.i(">>>>"+v.getText());
-                        CommonUtil.gotoActivity(getActivity(), NoticeListActivity.class);
+                if (response.getNotice_list().size() > 0) {
+                    ll_xiaoxi.setVisibility(View.VISIBLE);
+                    xiaoxiArray.clear();
+                    for (int i = 0; i < response.getNotice_list().size(); i++) {
+                        xiaoxiArray.add(response.getNotice_list().get(i).getTitle());
                     }
-                });
+                    rollingView.setPageSize(1);
+                    rollingView.setClickColor(0xff888888);
+//        rollingView.setLeftDrawable(R.drawable.drawable_red_dot);
+                    rollingView.setRollingText(xiaoxiArray);// 绑定数据
+                    rollingView.setOnItemClickListener(new RollingView.onItemClickListener() {
+                        @Override
+                        public void onItemClick(TextView v) {
+//                        MyLogger.i(">>>>"+v.getText());
+                            CommonUtil.gotoActivity(getActivity(), NoticeListActivity.class);
+                        }
+                    });
+                } else {
+                    ll_xiaoxi.setVisibility(View.GONE);
+                }
+
 
                 //订单类型
                 indent_use_type = response.getIndent_use_type_list().get(0).getKey() + "";
@@ -348,10 +354,31 @@ public class Fragment1 extends BaseFragment {
         OkHttpClientManager.postAsyn(getActivity(), URLs.Fragment1List, params, new OkHttpClientManager.ResultCallback<String>() {
             @Override
             public void onError(Request request, String info, Exception e) {
-                showErrorPage();
+//                showErrorPage();
                 hideProgress();
                 if (!info.equals("")) {
                     showToast(info);
+                }
+                //接单出错
+                showContentPage();
+                isStartJieDan = false;
+                tv_kaishijiedan.setBackgroundResource(R.drawable.btn_lanse);
+                tv_kaishijiedan.setText("开始接单");
+                tv_hint.setVisibility(View.VISIBLE);
+
+                //停止定位
+                if (mLocationClient != null)
+                    mLocationClient.stopLocation();//停止定位后，本地定位服务并不会被销毁
+
+                //关闭计时器
+                if (time1 != null) {
+                    time1.cancel();
+                }
+
+                //清空列表数据
+                if (list.size() > 0) {
+                    list.clear();
+                    recyclerView.removeAllViews();
                 }
             }
 

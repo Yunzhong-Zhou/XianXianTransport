@@ -87,7 +87,7 @@ public class ChangePasswordActivity extends BaseActivity {
                 //修改密码
                 if (match()) {
                     textView2.setClickable(false);
-                    showProgress(true, getString(R.string.registered_h14));
+                    showProgress(true, "正在修改密码...");
                     HashMap<String, String> params = new HashMap<>();
                     params.put("mobile", phonenum);
                     params.put("password", password1);//密码（不能小于6位数）
