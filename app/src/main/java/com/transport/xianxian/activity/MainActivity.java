@@ -202,7 +202,8 @@ public class MainActivity extends BaseActivity {
             });*/
         }
 
-        RequestUpgrade("?app_type=" + 1);//检查更新
+        RequestUpgrade("?app_type=" + 1
+                + "&type=" + "driver");//检查更新//"driver 司机 owner货主端"
     }
 
     @Override

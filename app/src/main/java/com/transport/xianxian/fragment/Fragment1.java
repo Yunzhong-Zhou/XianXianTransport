@@ -294,7 +294,7 @@ public class Fragment1 extends BaseFragment {
                 MyLogger.i(">>>>>>>>>首页" + response);
                 model = response;
                 textView1.setText(response.getNickname());//昵称
-                textView2.setText("¥ " + response.getMoney());//今日流水
+                textView2.setText("¥ " + response.getToday_money());//今日流水
                 textView3.setText(response.getMoney());//账户余额
                 textView4.setText(response.getOnline_time());//在线时长
                 textView5.setText(response.getIndent_count());//今日单量

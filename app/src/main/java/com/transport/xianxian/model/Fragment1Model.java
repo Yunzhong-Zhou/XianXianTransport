@@ -40,6 +40,7 @@ public class Fragment1Model {
     private String indent_count;
     private String comment_score;
     private String money;
+    private String today_money;
     private String is_work;
     private String lat;
     private String lng;
@@ -57,6 +58,14 @@ public class Fragment1Model {
     private List<TimeEndListBean> time_end_list;
     private List<NoticeListBean> notice_list;
     private List<WaitTindentBean> wait_tindent;
+
+    public String getToday_money() {
+        return today_money;
+    }
+
+    public void setToday_money(String today_money) {
+        this.today_money = today_money;
+    }
 
     public String getNickname() {
         return nickname;

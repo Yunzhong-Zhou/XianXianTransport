@@ -113,7 +113,8 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        RequestUpgrade("?app_type=" + 1);//检查更新
+        RequestUpgrade("?app_type=" + 1
+                + "&type=" + "driver");//检查更新//"driver 司机 owner货主端"
 
         /*byte[] mBytes = null;
         String mString = "{阿达大as家阿sdf什顿附asd件好久}";
