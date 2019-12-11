@@ -76,6 +76,7 @@ public class Fragment1 extends BaseFragment {
     double lat = 0, lng = 0, juli = 0;
     Fragment1Model model;
     private RecyclerView recyclerView;
+    LinearLayoutManager mLinearLayoutManager;
     List<Fragment1ListModel> list = new ArrayList<>();
     CommonAdapter<Fragment1ListModel> mAdapter;
 
@@ -158,7 +159,7 @@ public class Fragment1 extends BaseFragment {
             }
         });
         recyclerView = findViewByID_My(R.id.recyclerView);
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLinearLayoutManager);
 
         //公告消息
@@ -395,11 +396,6 @@ public class Fragment1 extends BaseFragment {
                     JSONArray jsonArray = jObj.getJSONArray("data");
                     list = JSON.parseArray(jsonArray.toString(), Fragment1ListModel.class);
                     MyLogger.i(">>>>>>>" + list.size());
-                    /*if (list.size() == 0) {
-//                        myToast(getString(R.string.app_nomore));
-                    } else {
-
-                    }*/
 //                        list.addAll(list1);
                     //初始化列表
                     mAdapter = new CommonAdapter<Fragment1ListModel>
@@ -498,8 +494,17 @@ public class Fragment1 extends BaseFragment {
                             return false;
                         }
                     });
-                    recyclerView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
+
+                    if (list.size() > 0) {
+                        recyclerView.setAdapter(mAdapter);
+//                    mAdapter.notifyDataSetChanged();
+                    }else {
+                        showEmptyPage();
+                    }
+
+
+
+
 
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
@@ -1068,4 +1073,5 @@ public class Fragment1 extends BaseFragment {
             }
         }, false);
     }
+
 }

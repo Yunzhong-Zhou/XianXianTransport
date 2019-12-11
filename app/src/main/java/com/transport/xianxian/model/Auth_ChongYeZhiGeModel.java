@@ -1,4 +1,4 @@
-package com.transport.xianxian.activity;
+package com.transport.xianxian.model;
 
 import java.io.Serializable;
 

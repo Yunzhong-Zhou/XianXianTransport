@@ -193,7 +193,7 @@ public class AddSurchargeActivity extends BaseActivity {
                 editText1.setText(response.getCity());
                 textView1.setText(response.getRule());
 
-                if (response.getAttach().size() > 3) {
+                if (response.getAttach().size() >= 3) {
                     editText2.setText(response.getAttach().get(0).getMoney());
                     editText3.setText(response.getAttach().get(1).getMoney());
                     editText4.setText(response.getAttach().get(2).getMoney());
