@@ -377,13 +377,13 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
             case 2://已装货
             case 3://部分卸货
                 tv_left.setText("转派订单");//左边按钮
-                tv_left.setBackgroundResource(R.drawable.btn_huise);
+                tv_left.setBackgroundResource(R.drawable.btn_lanse);
 
                 tv_right.setText("确认卸货");//右边按钮
                 break;
             case 7://订单完成
-                tv_left.setText("转派订单");//左边按钮
-                tv_left.setBackgroundResource(R.drawable.btn_lanse);
+                tv_left.setText("返回详情");//左边按钮
+                tv_left.setBackgroundResource(R.drawable.btn_juse);
 
                 tv_right.setText("配送完毕");//右边按钮
                 break;
@@ -479,6 +479,9 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
             case R.id.tv_left:
                 //左边按钮
                 switch (tv_left.getText().toString().trim()) {
+                    case "返回详情":
+                        finish();
+                        break;
                     case "取消订单":
                         showToast("确认取消订单吗？", "确认", "取消", new View.OnClickListener() {
                             @Override

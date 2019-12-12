@@ -242,7 +242,7 @@ public class Auth_CheLiangZhaoPianActivity extends BaseActivity {
                     @Override
                     public void onResponse(final Auth_CheLiangZhaoPianModel response) {
                         hideProgress();
-                        MyLogger.i(">>>>>>>>>车主认证-驾驶证及行驶证认证" + response);
+                        MyLogger.i(">>>>>>>>>车主认证-车辆照片认证" + response);
 
                         stringList = response.getCar_type_list();
                         //车型描述
@@ -252,7 +252,6 @@ public class Auth_CheLiangZhaoPianActivity extends BaseActivity {
                                 item = i;
                             }
                             pageViews.add(inflater.inflate(R.layout.item_auth_clzp_vp_page, null));
-
                         }
 
                         for (int i = 0; i < pageViews.size(); i++) {

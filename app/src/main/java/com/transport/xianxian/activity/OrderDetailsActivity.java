@@ -443,13 +443,13 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                     case 2://已装货
                     case 3://已卸货
                         tv_left.setText("转派订单");//左边按钮
-                        tv_left.setBackgroundResource(R.drawable.btn_huise);
+                        tv_left.setBackgroundResource(R.drawable.btn_lanse);
 
                         tv_right.setText("去卸货");//右边按钮
                         break;
                     case 7://订单完成
-                        tv_left.setText("转派订单");//左边按钮
-                        tv_left.setBackgroundResource(R.drawable.btn_lanse);
+                        tv_left.setText("返回列表");//左边按钮
+                        tv_left.setBackgroundResource(R.drawable.btn_juse);
 
                         tv_right.setText("配送完毕");//右边按钮
                         break;
