@@ -126,6 +126,8 @@ public class DuiHuanListActivity extends BaseActivity {
 //                                    .placeholder(R.mipmap.headimg)//加载站位图
 //                                    .error(R.mipmap.headimg)//加载失败
                                             .into(imageView1);//加载图片
+
+                                holder.setText(R.id.textView5, model.getStatus_text());//状态
                             }
                         };
                         recyclerView.setAdapter(mAdapter);

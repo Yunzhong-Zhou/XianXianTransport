@@ -121,6 +121,8 @@ public class JiFenMingXiActivity extends BaseActivity {
                                     tv3.setTextColor(getResources().getColor(R.color.red));
                                     tv3.setText("-" + model.getScore());
                                 }
+
+                                holder.setText(R.id.tv4, "备注："+model.getRemark());//备注
                             }
                         };
                         recyclerView.setAdapter(mAdapter);

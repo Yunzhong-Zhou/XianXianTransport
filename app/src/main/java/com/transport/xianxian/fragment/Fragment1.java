@@ -402,6 +402,9 @@ public class Fragment1 extends BaseFragment {
                             (getActivity(), R.layout.item_fragment1, list) {
                         @Override
                         protected void convert(ViewHolder holder, Fragment1ListModel model, int position) {
+                            //订单号
+                            holder.setText(R.id.tv_ordernum, "订单号：" + model.getSn());
+
                             holder.setText(R.id.tv1, model.getNow_state() + " 装货");
                             if (model.getNow_state_action() >= 0) {
                                 holder.setText(R.id.tv2, "离装货时间还有" + CommonUtil.timedate4(model.getNow_state_action() * 1000));//离装货时间还有0小时

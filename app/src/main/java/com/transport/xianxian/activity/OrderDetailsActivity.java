@@ -426,7 +426,7 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                     case 0://未接单
                         if (model.getTindent().getIs_appoint() == 1) {//平台指派，可以拒绝
                             tv_left.setText("拒绝此单");//左边按钮
-                            tv_left.setBackgroundResource(R.drawable.btn_huise);
+                            tv_left.setBackgroundResource(R.drawable.btn_juse);
 
                         } else {
                             tv_left.setText("返回列表");//左边按钮
@@ -436,14 +436,14 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                         break;
                     case 1://已接单
                         tv_left.setText("取消订单");//左边按钮
-                        tv_left.setBackgroundResource(R.drawable.btn_huise);
+                        tv_left.setBackgroundResource(R.drawable.btn_juse);
 
                         tv_right.setText("去装货");//右边按钮
                         break;
                     case 2://已装货
                     case 3://已卸货
                         tv_left.setText("转派订单");//左边按钮
-                        tv_left.setBackgroundResource(R.drawable.btn_lanse);
+                        tv_left.setBackgroundResource(R.drawable.btn_juse);
 
                         tv_right.setText("去卸货");//右边按钮
                         break;

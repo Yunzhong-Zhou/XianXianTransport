@@ -19,6 +19,15 @@ public class DuiHuanListModel implements Serializable {
     private String sub_title;
     private String score;
     private String created_at;
+    private String status_text;
+
+    public String getStatus_text() {
+        return status_text;
+    }
+
+    public void setStatus_text(String status_text) {
+        this.status_text = status_text;
+    }
 
     public String getTitle() {
         return title;

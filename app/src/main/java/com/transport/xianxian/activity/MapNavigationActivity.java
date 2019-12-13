@@ -370,14 +370,14 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
                 break;*/
             case 1://已接单
                 tv_left.setText("取消订单");//左边按钮
-                tv_left.setBackgroundResource(R.drawable.btn_huise);
+                tv_left.setBackgroundResource(R.drawable.btn_juse);
 
                 tv_right.setText("确认装货");//右边按钮
                 break;
             case 2://已装货
             case 3://部分卸货
                 tv_left.setText("转派订单");//左边按钮
-                tv_left.setBackgroundResource(R.drawable.btn_lanse);
+                tv_left.setBackgroundResource(R.drawable.btn_juse);
 
                 tv_right.setText("确认卸货");//右边按钮
                 break;

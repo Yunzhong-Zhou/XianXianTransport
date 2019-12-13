@@ -37,7 +37,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="2019年10月03日16:02:27"
+                android:text="描述"
+                android:lines="2"
+                android:maxLines="2"
                 android:textColor="@color/black2"
                 android:textSize="12sp" />
 
@@ -57,6 +59,12 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:orientation="vertical">
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="状态"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -64,6 +72,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/yuanjiao_5_lanse1"
                 android:gravity="center"
+                android:layout_marginTop="10dp"
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp"
                 android:text="-0积分"

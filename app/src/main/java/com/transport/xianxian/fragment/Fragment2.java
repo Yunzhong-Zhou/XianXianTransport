@@ -443,6 +443,9 @@ public class Fragment2 extends BaseFragment {
                                             (getActivity(), R.layout.item_fragment2_1, list1) {
                                         @Override
                                         protected void convert(ViewHolder holder, Fragment2Model1 model, int position) {
+                                            //订单号
+                                            holder.setText(R.id.tv_ordernum, "订单号：" + model.getSn());
+
                                             holder.setText(R.id.textView1, model.getNow_state_action());//状态
                                             holder.setText(R.id.textView2, model.getNow_state_sub_action());//配送中
                                             holder.setText(R.id.textView3, model.getUser_type());//专车
@@ -694,6 +697,8 @@ public class Fragment2 extends BaseFragment {
                                             (getActivity(), R.layout.item_fragment2_2, list2) {
                                         @Override
                                         protected void convert(ViewHolder holder, Fragment2Model1 model, int position) {
+                                            //订单号
+                                            holder.setText(R.id.tv_ordernum, "订单号：" + model.getSn());
 //                                            holder.setText(R.id.textView1, model.getNow_state_action());//状态
                                             holder.setText(R.id.textView2, model.getUser_type());//专车
 //                                            holder.setText(R.id.textView3, );//附加费未收取
@@ -870,6 +875,9 @@ public class Fragment2 extends BaseFragment {
                                             (getActivity(), R.layout.item_fragment2_3, list3) {
                                         @Override
                                         protected void convert(ViewHolder holder, Fragment2Model1 model, int position) {
+                                            //订单号
+                                            holder.setText(R.id.tv_ordernum, "订单号：" + model.getSn());
+
                                             holder.setText(R.id.textView1, model.getNow_state_action());//状态
                                             holder.setText(R.id.textView2, "货源单号" + model.getSn());//货源单号
                                             holder.setText(R.id.textView3, model.getCreated_at() + " 发布");//发布时间

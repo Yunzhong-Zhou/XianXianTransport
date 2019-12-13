@@ -105,7 +105,11 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        item = 0;
+    }
     @Override
     protected void initView() {
         mBottomTabBar = findViewByID_My(R.id.bottom_tab_bar);
