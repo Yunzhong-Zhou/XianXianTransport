@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +55,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -74,6 +78,7 @@ public class Fragment1 extends BaseFragment {
     String indent_use_type = "", distance = "", temperature = "", time_start = "", time_end = "",
             addr = "";
     double lat = 0, lng = 0, juli = 0;
+    long time = 0;
     Fragment1Model model;
     private RecyclerView recyclerView;
     LinearLayoutManager mLinearLayoutManager;
@@ -297,7 +302,31 @@ public class Fragment1 extends BaseFragment {
                 textView1.setText(response.getNickname());//昵称
                 textView2.setText("¥ " + response.getToday_money());//今日流水
                 textView3.setText(response.getMoney());//账户余额
-                textView4.setText(response.getOnline_time());//在线时长
+//                textView4.setText(response.getOnline_time());//在线时长
+                time = response.getOnline_time() * 1000;
+                Handler startTimehandler = new Handler() {
+                    public void handleMessage(android.os.Message msg) {
+                        textView4.setText("" + (String) msg.obj);
+                    }
+                };
+                new Timer("在线计时器").scheduleAtFixedRate(new TimerTask() {
+                    @Override
+                    public void run() {
+                        time = time + 1000;
+//                        String dd = new DecimalFormat("00").format(time / 3600 / 24);
+//                        String hh = new DecimalFormat("00").format(time / 3600);
+//                        String mm = new DecimalFormat("00").format(time % 3600 / 60);
+//                        String ss = new DecimalFormat("00").format(time % 60);
+//                        String timeFormat = new String(hh + "小时" + mm + "分" + ss + "秒");
+                        String timeFormat = CommonUtil.timedate5(time);//格式化时间
+
+                        Message msg = new Message();
+                        msg.obj = timeFormat;
+                        startTimehandler.sendMessage(msg);
+                    }
+
+                }, 0, 1000L);
+
                 textView5.setText(response.getIndent_count());//今日单量
                 textView6.setText(response.getComment_score());//当前评分
                 if (!response.getHead().equals(""))
@@ -501,12 +530,9 @@ public class Fragment1 extends BaseFragment {
                     if (list.size() > 0) {
                         recyclerView.setAdapter(mAdapter);
 //                    mAdapter.notifyDataSetChanged();
-                    }else {
+                    } else {
                         showEmptyPage();
                     }
-
-
-
 
 
                 } catch (JSONException e) {

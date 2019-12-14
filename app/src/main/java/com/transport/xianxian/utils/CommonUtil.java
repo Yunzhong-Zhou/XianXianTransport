@@ -317,6 +317,7 @@ public class CommonUtil {
 
     /**
      * 距离只保留两位小数
+     *
      * @param distance 以米为单位
      * @return
      */
@@ -329,7 +330,7 @@ public class CommonUtil {
         } else {
             str = "m";
         }
-        return String.format("%.2f",value)+str;
+        return String.format("%.2f", value) + str;
     }
 
     /**
@@ -527,6 +528,7 @@ public class CommonUtil {
 
 
     //时间转时间戳
+
     /**
      * 调此方法输入所要转换的时间输入例如（"2014-06-14 16-09-00"）返回时间戳
      *
@@ -658,7 +660,52 @@ public class CommonUtil {
                 sb.append(String.format("%02d", minute) + ":");//分
             }
 //            if (second > 0) {
-                sb.append(String.format("%02d", second) + "s");//秒
+            sb.append(String.format("%02d", second) + "s");//秒
+//            }
+            /*if(milliSecond > 0) {
+                sb.append(milliSecond+"毫秒");//毫秒
+            }*/
+            return sb.toString();
+        }
+    }
+
+    /**
+     * 毫秒转时分秒 HH:mm:ss
+     *
+     * @param time
+     * @return
+     */
+    public static String timedate5(Long time) {
+        {
+            Integer ss = 1000;
+            Integer mi = ss * 60;
+            Integer hh = mi * 60;
+            Integer dd = hh * 24;
+
+            Long day = time / dd;
+            Long hour = (time - day * dd) / hh;//24小时制
+            Long hour1 = time / hh;
+            Long minute = (time - day * dd - hour * hh) / mi;
+            Long second = (time - day * dd - hour * hh - minute * mi) / ss;
+            Long milliSecond = time - day * dd - hour * hh - minute * mi - second * ss;
+
+            StringBuffer sb = new StringBuffer();
+
+            if (day > 0) {
+                sb.append(day + "天");//天
+                sb.append(String.format("%02d", hour) + "时");//小时-取两位小数
+            }else {
+                if (hour > 0) {
+                    sb.append(String.format("%02d", hour) + "时");//小时-取两位小数
+//            sb.append(Integer.valueOf(hour1+"") + ":");//小时-取整
+                }
+//            if (minute > 0) {
+                sb.append(String.format("%02d", minute) + "分");//分
+//            }
+//            if (second > 0) {
+                sb.append(String.format("%02d", second) + "秒");//秒
+            }
+
 //            }
             /*if(milliSecond > 0) {
                 sb.append(milliSecond+"毫秒");//毫秒

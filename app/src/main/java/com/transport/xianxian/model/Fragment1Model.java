@@ -36,7 +36,7 @@ public class Fragment1Model {
     private String nickname;
     private String head;
     private String mobile;
-    private String online_time;
+    private Long online_time;
     private String indent_count;
     private String comment_score;
     private String money;
@@ -91,11 +91,11 @@ public class Fragment1Model {
         this.mobile = mobile;
     }
 
-    public String getOnline_time() {
+    public Long getOnline_time() {
         return online_time;
     }
 
-    public void setOnline_time(String online_time) {
+    public void setOnline_time(Long online_time) {
         this.online_time = online_time;
     }
 
