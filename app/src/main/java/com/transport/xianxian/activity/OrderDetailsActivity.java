@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.location.CoordinateConverter;
 import com.amap.api.location.DPoint;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
@@ -99,6 +98,10 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
     RecyclerView recyclerView;
     List<OrderDetailsModel.TindentBean.PriceDetailBean> list = new ArrayList<>();
     CommonAdapter<OrderDetailsModel.TindentBean.PriceDetailBean> mAdapter;
+
+    RecyclerView recyclerView2;
+    List<OrderDetailsModel.TindentBean.AddrListBean> list2 = new ArrayList<>();
+    CommonAdapter<OrderDetailsModel.TindentBean.AddrListBean> mAdapter2;
 
     //开始点、结束点、计算距离
     double lat = 0, lng = 0, juli = 0;
@@ -268,6 +271,10 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLinearLayoutManager);
 
+        recyclerView2 = findViewByID_My(R.id.recyclerView2);
+        LinearLayoutManager mLinearLayoutManager2 = new LinearLayoutManager(this);
+        recyclerView2.setLayoutManager(mLinearLayoutManager2);
+
         tv_addr1 = findViewByID_My(R.id.tv_addr1);
         tv_title1 = findViewByID_My(R.id.tv_title1);
         tv_juli1 = findViewByID_My(R.id.tv_juli1);
@@ -324,7 +331,7 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                 hideProgress();
                 MyLogger.i(">>>>>>>>>订单详情" + response);
                 model = response;
-                for (int i = 0; i < response.getTindent().getAddr_list().size(); i++) {
+                /*for (int i = 0; i < response.getTindent().getAddr_list().size(); i++) {
                     pointList.add(new LatLonPoint(Double.valueOf(response.getTindent().getAddr_list().get(i).getLat())
                             , Double.valueOf(response.getTindent().getAddr_list().get(i).getLng())));//添加标注点
                     if (i == 0) {
@@ -358,7 +365,32 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                         //途经点
 
                     }
-                }
+                }*/
+                list2 = response.getTindent().getAddr_list();
+                mAdapter2 = new CommonAdapter<OrderDetailsModel.TindentBean.AddrListBean>
+                        (OrderDetailsActivity.this, R.layout.item_addr, list2) {
+                    @Override
+                    protected void convert(ViewHolder holder, OrderDetailsModel.TindentBean.AddrListBean model, int position) {
+                        //车型
+                        TextView textView1 = holder.getView(R.id.tv1);
+                        if (position == 0) {
+                            textView1.setText("发");
+                            textView1.setBackgroundResource(R.drawable.yuanxing_lanse);
+                        } else if (position == (response.getTindent().getAddr_list().size() - 1)) {
+                            textView1.setText("收");
+                            textView1.setBackgroundResource(R.drawable.yuanxing_juse);
+                        } else {
+                            //途经点
+                            textView1.setText("途");
+                            textView1.setBackgroundResource(R.drawable.yuanxing_huise);
+                        }
+                        holder.setText(R.id.tv2, model.getAddr());//地址
+                        holder.setText(R.id.tv3, "发货人：" + model.getName());//发货人
+                        holder.setText(R.id.tv4, "手机号：" + model.getMobile());//手机号
+                    }
+                };
+                recyclerView2.setAdapter(mAdapter2);
+
                 setfromandtoMarker();//显示标注物
                 searchRouteResult(RouteSearch.DRIVING_MULTI_STRATEGY_FASTEST_SHORTEST_AVOID_CONGESTION);//默认避免拥堵、设置车辆信息
 

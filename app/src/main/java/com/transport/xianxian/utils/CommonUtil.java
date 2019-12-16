@@ -694,16 +694,16 @@ public class CommonUtil {
             if (day > 0) {
                 sb.append(day + "天");//天
                 sb.append(String.format("%02d", hour) + "时");//小时-取两位小数
+//                sb.append(String.format("%02d", minute) + "分");//分
             }else {
                 if (hour > 0) {
                     sb.append(String.format("%02d", hour) + "时");//小时-取两位小数
-//            sb.append(Integer.valueOf(hour1+"") + ":");//小时-取整
+                    sb.append(String.format("%02d", minute) + "分");//分
+                }else {
+                    sb.append(String.format("%02d", minute) + "分");//分
+                    sb.append(String.format("%02d", second) + "秒");//秒
                 }
-//            if (minute > 0) {
-                sb.append(String.format("%02d", minute) + "分");//分
-//            }
-//            if (second > 0) {
-                sb.append(String.format("%02d", second) + "秒");//秒
+
             }
 
 //            }

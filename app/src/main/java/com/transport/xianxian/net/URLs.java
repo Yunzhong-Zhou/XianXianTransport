@@ -161,7 +161,7 @@ public class URLs {
     /**
      * 提币（get）
      */
-    public static final String TakeCash = "/api/withdrawal/create";
+    public static final String TakeCash = "/api/driver/center/tmoney-withdrawal-create";
     /**
      * 提现列表
      */

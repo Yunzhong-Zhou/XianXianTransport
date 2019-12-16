@@ -177,11 +177,15 @@
                             android:textSize="12sp" />
 
                     </LinearLayout>
-
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:visibility="visible"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -291,14 +295,31 @@
                 </LinearLayout>
                 //标签
 
-                <com.cy.cyflowlayoutlibrary.FlowLayout
-                    android:id="@+id/flowLayout"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    app:height_space="10dp"
-                    app:width_space="10dp" />
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="其他需求"
+                        android:textColor="@color/black3"
+                        android:textSize="12sp" />
+
+                    <com.cy.cyflowlayoutlibrary.FlowLayout
+                        android:id="@+id/flowLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        app:height_space="10dp"
+                        app:width_space="10dp" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -321,6 +342,7 @@
                         android:textColor="@color/black1"
                         android:textSize="11sp" />
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"

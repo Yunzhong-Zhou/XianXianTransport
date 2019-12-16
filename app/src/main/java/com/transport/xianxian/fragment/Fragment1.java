@@ -103,6 +103,14 @@ public class Fragment1 extends BaseFragment {
     private DPoint mStartPoint = null;
     private DPoint mEndPoint = null;
 
+    Handler startTimehandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            textView4.setText("" + (String) msg.obj);
+        }
+    };
+
+    TimerTask timerTask = null;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment1, container, false);
@@ -143,6 +151,9 @@ public class Fragment1 extends BaseFragment {
         super.onDestroy();
         if (time1 != null) {
             time1.cancel();
+        }
+        if (timerTask !=null){
+            timerTask.cancel();
         }
         if (mLocationClient != null)
             mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
@@ -304,28 +315,27 @@ public class Fragment1 extends BaseFragment {
                 textView3.setText(response.getMoney());//账户余额
 //                textView4.setText(response.getOnline_time());//在线时长
                 time = response.getOnline_time() * 1000;
-                Handler startTimehandler = new Handler() {
-                    public void handleMessage(android.os.Message msg) {
-                        textView4.setText("" + (String) msg.obj);
-                    }
-                };
-                new Timer("在线计时器").scheduleAtFixedRate(new TimerTask() {
-                    @Override
-                    public void run() {
-                        time = time + 1000;
+
+                if (timerTask == null) {
+                    timerTask = new TimerTask() {
+                        @Override
+                        public void run() {
+                            time = time + 1000;
 //                        String dd = new DecimalFormat("00").format(time / 3600 / 24);
 //                        String hh = new DecimalFormat("00").format(time / 3600);
 //                        String mm = new DecimalFormat("00").format(time % 3600 / 60);
 //                        String ss = new DecimalFormat("00").format(time % 60);
 //                        String timeFormat = new String(hh + "小时" + mm + "分" + ss + "秒");
-                        String timeFormat = CommonUtil.timedate5(time);//格式化时间
+                            String timeFormat = CommonUtil.timedate5(time);//格式化时间
 
-                        Message msg = new Message();
-                        msg.obj = timeFormat;
-                        startTimehandler.sendMessage(msg);
-                    }
+                            Message msg = new Message();
+                            msg.obj = timeFormat;
+                            startTimehandler.sendMessage(msg);
+                        }
 
-                }, 0, 1000L);
+                    };
+                    new Timer("在线计时器").scheduleAtFixedRate(timerTask, 0, 1000L);
+                }
 
                 textView5.setText(response.getIndent_count());//今日单量
                 textView6.setText(response.getComment_score());//当前评分

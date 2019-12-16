@@ -46,6 +46,12 @@ public class WalletActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        requestServer();
+    }
+
+    @Override
     protected void initView() {
         setSpringViewMore(true);//不需要加载更多
         springView.setListener(new SpringView.OnFreshListener() {
@@ -97,7 +103,6 @@ public class WalletActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        requestServer();
     }
 
     @Override
