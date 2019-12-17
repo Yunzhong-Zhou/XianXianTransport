@@ -331,14 +331,15 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                 hideProgress();
                 MyLogger.i(">>>>>>>>>订单详情" + response);
                 model = response;
-                /*for (int i = 0; i < response.getTindent().getAddr_list().size(); i++) {
+                pointList.clear();
+                for (int i = 0; i < response.getTindent().getAddr_list().size(); i++) {
                     pointList.add(new LatLonPoint(Double.valueOf(response.getTindent().getAddr_list().get(i).getLat())
                             , Double.valueOf(response.getTindent().getAddr_list().get(i).getLng())));//添加标注点
                     if (i == 0) {
                         mStartPoint = new LatLonPoint(Double.valueOf(response.getTindent().getAddr_list().get(i).getLat())
                                 , Double.valueOf(response.getTindent().getAddr_list().get(i).getLng()));//起点
 
-                        tv_addr1.setText(response.getTindent().getAddr_list().get(i).getAddr());
+                       /* tv_addr1.setText(response.getTindent().getAddr_list().get(i).getAddr());
                         tv_title1.setText(response.getTindent().getAddr_list().get(i).getAddr_detail());
 
                         if (lat != 0 && lng != 0) {
@@ -347,12 +348,12 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                                     Double.valueOf(response.getTindent().getAddr_list().get(i).getLng()));//终点，39.995576,116.481288
                             juli = CoordinateConverter.calculateLineDistance(mStartDPoint, mEndDPoint);
                             tv_juli1.setText("距您" + CommonUtil.distanceFormat(juli) + "m");
-                        }
+                        }*/
                     } else if (i == (model.getTindent().getAddr_list().size() - 1)) {
                         mEndPoint = new LatLonPoint(Double.valueOf(response.getTindent().getAddr_list().get(i).getLat()),
                                 Double.valueOf(response.getTindent().getAddr_list().get(i).getLng()));//终点
 
-                        tv_addr2.setText(response.getTindent().getAddr_list().get(i).getAddr());
+                        /*tv_addr2.setText(response.getTindent().getAddr_list().get(i).getAddr());
                         tv_title2.setText(response.getTindent().getAddr_list().get(i).getAddr_detail());
                         if (lat != 0 && lng != 0) {
                             mStartDPoint = new DPoint(lat, lng);//起点
@@ -360,12 +361,12 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                                     Double.valueOf(response.getTindent().getAddr_list().get(i).getLng()));//终点，39.995576,116.481288
                             juli = CoordinateConverter.calculateLineDistance(mStartDPoint, mEndDPoint);
                             tv_juli2.setText("距您" + CommonUtil.distanceFormat(juli) + "m");
-                        }
+                        }*/
                     } else {
                         //途经点
 
                     }
-                }*/
+                }
                 list2 = response.getTindent().getAddr_list();
                 mAdapter2 = new CommonAdapter<OrderDetailsModel.TindentBean.AddrListBean>
                         (OrderDetailsActivity.this, R.layout.item_addr, list2) {
