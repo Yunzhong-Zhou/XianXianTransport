@@ -21,6 +21,15 @@ public class NoticeDetailModel implements Serializable {
     private String message;
     private String detail;
     private String created_at;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public int getId() {
         return id;

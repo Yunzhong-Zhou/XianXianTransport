@@ -361,7 +361,16 @@
                                 android:text="会话列表"
                                 android:textColor="@color/black1"
                                 android:textSize="14sp" />
-
+                            <TextView
+                                android:id="@+id/tv_xiaoxinum"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:text="0"
+                                android:textSize="12sp"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:layout_marginRight="8dp"
+                                android:background="@drawable/yuanxing_hongse"/>
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

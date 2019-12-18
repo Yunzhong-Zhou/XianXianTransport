@@ -191,6 +191,10 @@ public class URLs {
      */
     public static final String NoticeDetail = "/api/driver/message";
     /**
+     * 消息详情取消红点
+     */
+    public static final String Detail = "/api/driver/tindent/detail";
+    /**
      * 评分详情
      */
     public static final String ScoreDetail = "/api/driver/tcomment";
