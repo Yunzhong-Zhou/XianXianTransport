@@ -155,9 +155,13 @@ public class AddSurchargeActivity extends BaseActivity {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                if (i == 1) {
+
+                finish();
+                /*if (i == 1) {
                     finish();
-                }
+                }else {
+
+                }*/
 
             }
         }, false);
@@ -281,22 +285,22 @@ public class AddSurchargeActivity extends BaseActivity {
         }*/
         //逾时等候费
         money1 = editText2.getText().toString().trim();
-        if (TextUtils.isEmpty(money1)) {
+        /*if (TextUtils.isEmpty(money1)) {
             showToast("请输入逾时等候费");
             return false;
-        }
+        }*/
         //路桥费
         money2 = editText3.getText().toString().trim();
-        if (TextUtils.isEmpty(money2)) {
+        /*if (TextUtils.isEmpty(money2)) {
             showToast("请输入路桥费");
             return false;
-        }
+        }*/
         //搬运费
         money3 = editText4.getText().toString().trim();
-        if (TextUtils.isEmpty(money3)) {
+        /*if (TextUtils.isEmpty(money3)) {
             showToast("请输入搬运费");
             return false;
-        }
+        }*/
 
         //材料消耗
         JSONArray moneyArray = new JSONArray();

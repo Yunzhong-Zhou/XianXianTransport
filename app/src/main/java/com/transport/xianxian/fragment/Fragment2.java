@@ -448,7 +448,24 @@ public class Fragment2 extends BaseFragment {
 
                                             holder.setText(R.id.textView1, model.getNow_state_action());//状态
                                             holder.setText(R.id.textView2, model.getNow_state_sub_action());//配送中
-                                            holder.setText(R.id.textView3, model.getUser_type());//专车
+                                            //车型
+                                            TextView tv_3 = holder.getView(R.id.textView3);
+                                            tv_3.setText(model.getUse_type());
+                                            switch (model.getUse_type_id()) {
+                                                case 1:
+                                                    //专车
+                                                    tv_3.setBackgroundResource(R.drawable.yuanjiao_3_lanse);
+                                                    break;
+                                                case 2:
+                                                    //顺风车
+                                                    tv_3.setBackgroundResource(R.drawable.yuanjiao_3_huangse);
+                                                    break;
+                                                case 3:
+                                                    //快递
+                                                    tv_3.setBackgroundResource(R.drawable.yuanjiao_3_hongse);
+                                                    break;
+                                            }
+
                                             holder.setText(R.id.textView4, model.getNow_state() + model.getNow_state_action());//几点卸货/装货
                                             ImageView imageView1 = holder.getView(R.id.imageView1);
                                             if (!model.getSend_head().equals(""))
@@ -466,6 +483,7 @@ public class Fragment2 extends BaseFragment {
                                             holder.setText(R.id.textView10, "¥ " + model.getPrice());//订单金额
                                             //费用列表
                                             LinearLayout ll_add2 = holder.getView(R.id.ll_add2);
+                                            ll_add2.removeAllViews();
                                             for (int i = 0; i < model.getPrice_detail().size(); i++) {
                                                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                                                         ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -700,7 +718,23 @@ public class Fragment2 extends BaseFragment {
                                             //订单号
                                             holder.setText(R.id.tv_ordernum, "订单号：" + model.getSn());
 //                                            holder.setText(R.id.textView1, model.getNow_state_action());//状态
-                                            holder.setText(R.id.textView2, model.getUser_type());//专车
+                                            //车型
+                                            TextView tv_3 = holder.getView(R.id.textView2);
+                                            tv_3.setText(model.getUse_type());
+                                            switch (model.getUse_type_id()) {
+                                                case 1:
+                                                    //专车
+                                                    tv_3.setBackgroundResource(R.drawable.yuanjiao_3_lanse);
+                                                    break;
+                                                case 2:
+                                                    //顺风车
+                                                    tv_3.setBackgroundResource(R.drawable.yuanjiao_3_huangse);
+                                                    break;
+                                                case 3:
+                                                    //快递
+                                                    tv_3.setBackgroundResource(R.drawable.yuanjiao_3_hongse);
+                                                    break;
+                                            }
 //                                            holder.setText(R.id.textView3, );//附加费未收取
                                             holder.setText(R.id.textView4, model.getNow_state() + model.getNow_state_action());//几点卸货/装货
                                             holder.setText(R.id.textView5, "送货用时：" + model.getSend_time());//送货用时：time
@@ -722,6 +756,7 @@ public class Fragment2 extends BaseFragment {
 
                                             //费用列表
                                             LinearLayout ll_add2 = holder.getView(R.id.ll_add2);
+                                            ll_add2.removeAllViews();
                                             for (int i = 0; i < model.getPrice_detail().size(); i++) {
                                                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                                                         ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -888,6 +923,7 @@ public class Fragment2 extends BaseFragment {
 //                                            holder.setText(R.id.textView8, "" + model.get);//取消理由
                                             //费用列表
                                             LinearLayout ll_add2 = holder.getView(R.id.ll_add2);
+                                            ll_add2.removeAllViews();
                                             for (int i = 0; i < model.getPrice_detail().size(); i++) {
                                                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                                                         ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

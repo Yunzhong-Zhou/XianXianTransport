@@ -653,14 +653,16 @@ public class CommonUtil {
 //            }
 
             if (hour > 0) {
-                sb.append(String.format("%02d", hour) + ":");//小时-取两位小数
+                sb.append(String.format("%02d", hour) + "小时");//小时-取两位小数
 //            sb.append(Integer.valueOf(hour1+"") + ":");//小时-取整
+            }else {
+                sb.append(String.format("%02d", minute) + "分钟");//分
             }
-            if (minute > 0) {
-                sb.append(String.format("%02d", minute) + ":");//分
-            }
+            /*if (minute > 0) {
+
+            }*/
 //            if (second > 0) {
-            sb.append(String.format("%02d", second) + "s");//秒
+//            sb.append(String.format("%02d", second) + "s");//秒
 //            }
             /*if(milliSecond > 0) {
                 sb.append(milliSecond+"毫秒");//毫秒

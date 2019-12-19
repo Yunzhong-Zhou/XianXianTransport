@@ -78,7 +78,8 @@ public class Fragment2Model1 implements Serializable {
     private int status;
     private String created_at;
     private int is_attach_fee;
-    private String user_type;
+    private String use_type;
+    private int use_type_id;
     private String send_name;
     private String send_mobile;
     private String send_head;
@@ -171,12 +172,20 @@ public class Fragment2Model1 implements Serializable {
         this.is_attach_fee = is_attach_fee;
     }
 
-    public String getUser_type() {
-        return user_type;
+    public String getUse_type() {
+        return use_type;
     }
 
-    public void setUser_type(String user_type) {
-        this.user_type = user_type;
+    public void setUse_type(String use_type) {
+        this.use_type = use_type;
+    }
+
+    public int getUse_type_id() {
+        return use_type_id;
+    }
+
+    public void setUse_type_id(int use_type_id) {
+        this.use_type_id = use_type_id;
     }
 
     public String getSend_name() {

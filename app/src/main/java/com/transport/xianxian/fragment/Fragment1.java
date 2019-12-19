@@ -446,7 +446,9 @@ public class Fragment1 extends BaseFragment {
 
                             holder.setText(R.id.tv1, model.getNow_state() + " 装货");
                             if (model.getNow_state_action() >= 0) {
-                                holder.setText(R.id.tv2, "离装货时间还有" + CommonUtil.timedate4(model.getNow_state_action() * 1000));//离装货时间还有0小时
+                                holder.setText(R.id.tv2, "已等待" + CommonUtil.timedate4(Math.abs(model.getNow_state_action()) * 1000));//离装货时间还有0小时
+                            }else {
+                                holder.setText(R.id.tv2, "已超过" + CommonUtil.timedate4(Math.abs(model.getNow_state_action()) * 1000));//离装货时间还有0小时
                             }
                             holder.setText(R.id.tv3, model.getRemark());//备注
                             holder.setText(R.id.tv4, model.getCreated_at() + " 发布");//发布时间
