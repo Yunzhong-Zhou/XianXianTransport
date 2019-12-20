@@ -434,13 +434,15 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
 //                                holder.setText(R.id.tv,bean);
                         TextView tv = holder.getView(R.id.tv);
                         tv.setText(bean);
-                        if (position == 0) {
+                        tv.setTextColor(getResources().getColor(R.color.black1));
+                        tv.setBackgroundResource(R.drawable.yuanjiao_3_huise);
+                        /*if (position == 0) {
                             tv.setTextColor(getResources().getColor(R.color.white));
                             tv.setBackgroundResource(R.drawable.yuanjiao_3_lanse);
                         } else {
                             tv.setTextColor(getResources().getColor(R.color.black1));
                             tv.setBackgroundResource(R.drawable.yuanjiao_3_huise);
-                        }
+                        }*/
                     }
 
                     @Override

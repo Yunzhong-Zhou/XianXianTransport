@@ -14,24 +14,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <ImageView
                 android:layout_width="86dp"
                 android:layout_height="86dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:src="@mipmap/headimg" />
+                android:src="@mipmap/ic_launcher" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="@drawable/yuanjiao_5_baise"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
                 android:orientation="vertical">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/yuanjiao_5_huise"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -48,21 +50,19 @@
                         android:background="@color/transparent"
                         android:hint="请输入手机号"
                         android:inputType="number"
-                        android:padding="16dp"
+                        android:padding="13dp"
                         android:textColor="@color/black1"
                         android:textColorHint="@color/black3"
                         android:textSize="15sp" />
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/xian" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/yuanjiao_5_huise"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -76,61 +76,33 @@
                         android:id="@+id/editText2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:background="@color/transparent"
                         android:hint="请输入密码"
                         android:inputType="textPassword"
-                        android:padding="16dp"
+                        android:padding="13dp"
                         android:textColor="@color/black1"
                         android:textColorHint="@color/black3"
                         android:textSize="15sp" />
 
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onClick"
+                        android:padding="13dp"
+                        android:text="@string/login_h4"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:onClick="onClick"
-                android:paddingLeft="15dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="15dp"
-                android:text="忘记密码" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="@drawable/btn_lanse"
-                android:gravity="center"
-                android:onClick="onClick"
-                android:padding="16dp"
-                android:text="登录"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/btn_juse"
-                android:gravity="center"
-                android:onClick="onClick"
-                android:padding="16dp"
-                android:text="注册"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -146,7 +118,6 @@
                     android:layout_height="wrap_content"
                     android:text="登录即表示同意并遵守"
                     android:textColor="@color/black3"
-
                     android:textSize="12sp" />
 
                 <TextView
@@ -159,6 +130,34 @@
                     android:textSize="12sp" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/btn_lanse"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:padding="12dp"
+                android:text="登录"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/btn_juse"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:padding="12dp"
+                android:text="注册"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
         </LinearLayout>
 
     </ScrollView>

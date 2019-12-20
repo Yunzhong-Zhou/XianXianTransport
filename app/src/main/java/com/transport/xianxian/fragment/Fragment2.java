@@ -591,28 +591,36 @@ public class Fragment2 extends BaseFragment {
                                             ((FlowLayout) holder.getView(R.id.flowLayout1)).setAdapter(flowLayoutAdapter1);
 
                                             //货物描述
-                                            FlowLayoutAdapter<String> flowLayoutAdapter2;
+                                            LinearLayout ll_huowumiaoshu = holder.getView(R.id.ll_huowumiaoshu);
+                                            if (model.getGoods_desc().size() >0){
+                                                ll_huowumiaoshu.setVisibility(View.VISIBLE);
+                                                FlowLayoutAdapter<String> flowLayoutAdapter2;
                                                 /*List<String> tagList2 = new ArrayList<>();
                                                 for (int i = 0; i < model.getGoods_desc().size(); i++) {
                                                     tagList2.add(model.getGoods_desc().get(i));
                                                 }*/
-                                            flowLayoutAdapter2 = new FlowLayoutAdapter<String>(model.getGoods_desc()) {
-                                                @Override
-                                                public void bindDataToView(FlowLayoutAdapter.ViewHolder holder, int position, String bean) {
-                                                    TextView tv = holder.getView(R.id.tv);
-                                                    tv.setText(bean);
-                                                }
+                                                flowLayoutAdapter2 = new FlowLayoutAdapter<String>(model.getGoods_desc()) {
+                                                    @Override
+                                                    public void bindDataToView(FlowLayoutAdapter.ViewHolder holder, int position, String bean) {
+                                                        TextView tv = holder.getView(R.id.tv);
+                                                        tv.setText(bean);
+                                                    }
 
-                                                @Override
-                                                public void onItemClick(int position, String bean) {
-                                                }
+                                                    @Override
+                                                    public void onItemClick(int position, String bean) {
+                                                    }
 
-                                                @Override
-                                                public int getItemLayoutID(int position, String bean) {
-                                                    return R.layout.item_flowlayout;
-                                                }
-                                            };
-                                            ((FlowLayout) holder.getView(R.id.flowLayout2)).setAdapter(flowLayoutAdapter2);
+                                                    @Override
+                                                    public int getItemLayoutID(int position, String bean) {
+                                                        return R.layout.item_flowlayout;
+                                                    }
+                                                };
+                                                ((FlowLayout) holder.getView(R.id.flowLayout2)).setAdapter(flowLayoutAdapter2);
+                                            }else {
+                                                ll_huowumiaoshu.setVisibility(View.GONE);
+                                            }
+
+
 
                                             //顺风车订单
                                             holder.getView(R.id.tv_shunfengche).setOnClickListener(new View.OnClickListener() {
@@ -812,24 +820,34 @@ public class Fragment2 extends BaseFragment {
                                             ((FlowLayout) holder.getView(R.id.flowLayout1)).setAdapter(flowLayoutAdapter1);
 
                                             //货物描述
-                                            FlowLayoutAdapter<String> flowLayoutAdapter2;
-                                            flowLayoutAdapter2 = new FlowLayoutAdapter<String>(model.getGoods_desc()) {
-                                                @Override
-                                                public void bindDataToView(FlowLayoutAdapter.ViewHolder holder, int position, String bean) {
-                                                    TextView tv = holder.getView(R.id.tv);
-                                                    tv.setText(bean);
-                                                }
+                                            LinearLayout ll_huowumiaoshu = holder.getView(R.id.ll_huowumiaoshu);
+                                            if (model.getGoods_desc().size() >0){
+                                                ll_huowumiaoshu.setVisibility(View.VISIBLE);
+                                                FlowLayoutAdapter<String> flowLayoutAdapter2;
+                                                /*List<String> tagList2 = new ArrayList<>();
+                                                for (int i = 0; i < model.getGoods_desc().size(); i++) {
+                                                    tagList2.add(model.getGoods_desc().get(i));
+                                                }*/
+                                                flowLayoutAdapter2 = new FlowLayoutAdapter<String>(model.getGoods_desc()) {
+                                                    @Override
+                                                    public void bindDataToView(FlowLayoutAdapter.ViewHolder holder, int position, String bean) {
+                                                        TextView tv = holder.getView(R.id.tv);
+                                                        tv.setText(bean);
+                                                    }
 
-                                                @Override
-                                                public void onItemClick(int position, String bean) {
-                                                }
+                                                    @Override
+                                                    public void onItemClick(int position, String bean) {
+                                                    }
 
-                                                @Override
-                                                public int getItemLayoutID(int position, String bean) {
-                                                    return R.layout.item_flowlayout;
-                                                }
-                                            };
-                                            ((FlowLayout) holder.getView(R.id.flowLayout2)).setAdapter(flowLayoutAdapter2);
+                                                    @Override
+                                                    public int getItemLayoutID(int position, String bean) {
+                                                        return R.layout.item_flowlayout;
+                                                    }
+                                                };
+                                                ((FlowLayout) holder.getView(R.id.flowLayout2)).setAdapter(flowLayoutAdapter2);
+                                            }else {
+                                                ll_huowumiaoshu.setVisibility(View.GONE);
+                                            }
 
                                             //收取附加费
                                             holder.getView(R.id.tv_shouqu).setOnClickListener(new View.OnClickListener() {

@@ -16,6 +16,7 @@ public class LoginModel implements Serializable {
 
     private String id;
     private String mobile;
+    private int is_certification;
     private int identity;
     private String fresh_token;
     private String hx_username;
@@ -50,6 +51,14 @@ public class LoginModel implements Serializable {
 
     public void setIdentity(int identity) {
         this.identity = identity;
+    }
+
+    public int getIs_certification() {
+        return is_certification;
+    }
+
+    public void setIs_certification(int is_certification) {
+        this.is_certification = is_certification;
     }
 
     public String getFresh_token() {

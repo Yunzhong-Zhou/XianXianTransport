@@ -299,7 +299,9 @@ public class RegisteredActivity extends BaseActivity {
                     /*//保存用户昵称
                     String nickname = jObj1.getString("nickname");
                     localUserInfo.setNickname(nickname);*/
-
+                    //保存是否认证
+                    String identity = jObj1.getString("is_certification");
+                    localUserInfo.setIsVerified(identity);//1 认证 2 未认证
                     //环信注册
                     new Thread(new Runnable() {
                         @Override

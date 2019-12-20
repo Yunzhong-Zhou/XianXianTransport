@@ -6,6 +6,16 @@ import java.io.Serializable;
  * Created by zyz on 2019-10-17.
  */
 public class Auth_CheZhuModel implements Serializable {
+    private int is_certification;
+
+    public int getIs_certification() {
+        return is_certification;
+    }
+
+    public void setIs_certification(int is_certification) {
+        this.is_certification = is_certification;
+    }
+
     /**
      * is_identity : 1
      * is_license : 1
@@ -17,6 +27,7 @@ public class Auth_CheZhuModel implements Serializable {
      * is_car_number : 1
      * is_car_image : 1
      */
+
 
     private int is_identity;
     private int is_license;

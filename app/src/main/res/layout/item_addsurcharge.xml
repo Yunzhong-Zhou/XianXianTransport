@@ -67,6 +67,7 @@
             android:textColor="@color/black1"
             android:textColorHint="@color/black3"
             android:textSize="13sp"
+            android:imeOptions="actionDone"
             android:inputType="numberDecimal"
             android:background="@drawable/yuanjiaobiankuang_5_huise"
             android:hint="输入金额"

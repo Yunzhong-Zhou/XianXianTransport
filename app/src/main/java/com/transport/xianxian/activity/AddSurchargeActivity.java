@@ -2,9 +2,11 @@ package com.transport.xianxian.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -105,6 +107,7 @@ public class AddSurchargeActivity extends BaseActivity {
                 break;
             case R.id.tv_baocun:
                 //保存
+                addMoney();
                 if (match()) {
                     showProgress(true, "正在上传数据，请稍后...");
                     params.put("token", localUserInfo.getToken());//token
@@ -117,6 +120,7 @@ public class AddSurchargeActivity extends BaseActivity {
                 break;
             case R.id.tv_queren:
                 //发送客户确认
+                addMoney();
                 if (match()) {
                     showProgress(true, "正在上传数据，请稍后...");
                     params.put("token", localUserInfo.getToken());//token
@@ -271,6 +275,16 @@ public class AddSurchargeActivity extends BaseActivity {
                     MyLogger.i(">>>>>>>>>>" + editText_2.getText().toString().trim());
                     addMoney();
                 }
+            }
+        });
+        editText_2.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_DONE) {
+                    MyLogger.i(">>>>>>>>>"+editText_2.getText().toString().trim());
+                    addMoney();
+                }
+                return true;
             }
         });
         add_ll.addView(view);

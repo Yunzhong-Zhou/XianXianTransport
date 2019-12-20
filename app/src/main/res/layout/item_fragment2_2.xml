@@ -404,7 +404,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="客户要求"
+        android:text="其他需求"
         android:textColor="@color/black2"
         android:textSize="11sp" />
     <!--客户要求-->
@@ -423,28 +423,35 @@
         android:layout_marginTop="10dp"
         android:background="@color/xian" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="其他需求"
-        android:textColor="@color/black2"
-        android:textSize="11sp" />
-    <!--货物描述-->
-    <com.cy.cyflowlayoutlibrary.FlowLayout
-        android:id="@+id/flowLayout2"
+    <LinearLayout
+        android:id="@+id/ll_huowumiaoshu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:height_space="10dp"
-        app:width_space="10dp" />
+        android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/xian" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="货物描述"
+            android:textColor="@color/black2"
+            android:textSize="11sp" />
+        <!--货物描述-->
+        <com.cy.cyflowlayoutlibrary.FlowLayout
+            android:id="@+id/flowLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            app:height_space="10dp"
+            app:width_space="10dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/xian" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"

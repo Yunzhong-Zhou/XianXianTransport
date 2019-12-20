@@ -522,12 +522,12 @@ public class LocalUserInfo {
         }
         return "无";
     }
-    public String getIsrealnamevalidated(){
+    public String getIsVerified(){
         String isrealnamevalidated=getString(ISREALNAMEVALIDATED);
         if (!TextUtils.isEmpty(isrealnamevalidated)) {
             return isrealnamevalidated;
         }
-        return "";
+        return "2";//1 认证 2 未认证
     }
     public String getMobile_State_Code(){
         String string=getString(Mobile_State_Code);

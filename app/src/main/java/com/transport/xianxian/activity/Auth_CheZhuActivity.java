@@ -121,6 +121,8 @@ public class Auth_CheZhuActivity extends BaseActivity {
                     public void onResponse(final Auth_CheZhuModel response) {
                         hideProgress();
                         MyLogger.i(">>>>>>>>>车主认证" + response);
+                        //保存是否认证
+                        localUserInfo.setIsVerified(response.getIs_certification()+"");//1 认证 2 未认证
                         //身份证
                         switch (response.getIs_identity()) {
                             case 1:
