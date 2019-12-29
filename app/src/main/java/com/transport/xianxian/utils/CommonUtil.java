@@ -1,6 +1,5 @@
 package com.transport.xianxian.utils;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
+import android.provider.Settings;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -32,7 +31,6 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 /**
@@ -447,7 +445,7 @@ public class CommonUtil {
      */
     public static String getIMEI(Context context) {
 
-        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+       /* TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -458,8 +456,38 @@ public class CommonUtil {
             // for ActivityCompat#requestPermissions for more details.
 
         }
-        String IMEI = tm.getDeviceId();
-        return IMEI;
+        String IMEI = tm.getDeviceId();*/
+
+        String androidId = Settings.System.getString(context.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+
+
+        /*String  deviceInfo = new StringBuilder()
+                .append(Build.BOARD).append("#")
+                .append(Build.BRAND).append("#")
+                //CPU_ABI，这个值和appp使用的so库是arm64-v8a还是armeabi-v7a有关，舍弃
+                //.append(Build.CPU_ABI).append("#")
+                .append(Build.DEVICE).append("#")
+                .append(Build.DISPLAY).append("#")
+                .append(Build.HOST).append("#")
+                .append(Build.ID).append("#")
+                .append(Build.MANUFACTURER).append("#")
+                .append(Build.MODEL).append("#")
+                .append(Build.PRODUCT).append("#")
+                .append(Build.TAGS).append("#")
+                .append(Build.TYPE).append("#")
+                .append(Build.USER).append("#")
+                .toString();
+        try {
+            //22a49a46-b39e-36d1-b75f-a0d0b9c72d6c
+            return UUID.nameUUIDFromBytes(deviceInfo.getBytes("utf8")).toString();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String androidId = Settings.System.getString(context.getContentResolver(),
+                Settings.Secure.ANDROID_ID);*/
+
+        return androidId;
     }
 
     /**

@@ -458,7 +458,7 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                 ((FlowLayout) findViewByID_My(R.id.flowLayout)).setAdapter(flowLayoutAdapter);
 
                 switch (model.getTindent().getStatus()) {
-                    case 0://未接单
+                    case -1://未接单
                         if (model.getTindent().getIs_appoint() == 1) {//平台指派，可以拒绝
                             tv_left.setText("拒绝此单");//左边按钮
                             tv_left.setBackgroundResource(R.drawable.btn_juse);

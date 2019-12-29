@@ -1,5 +1,6 @@
 package com.transport.xianxian.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -29,6 +30,15 @@ public class JiangLiHuoDongActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.linearLayout1:
                 //分享APP
+                Intent share_intent1 = new Intent();
+                share_intent1.setAction(Intent.ACTION_SEND);
+//                    share_intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                share_intent1.setType("text/plain");
+                share_intent1.putExtra(Intent.EXTRA_TEXT, "鲜鲜拉\n"
+                        +"www.baidu.com");
+
+                share_intent1 = Intent.createChooser(share_intent1, "分享");
+                startActivity(share_intent1);
                 /*Bundle bundle1 = new Bundle();
                 bundle1.putInt("type",1);
                 CommonUtil.gotoActivityWithData(this,JiFenLieBiaoActivity.class,bundle1,false);*/
