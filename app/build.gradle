@@ -94,7 +94,7 @@ dependencies {
     implementation 'com.hjm:BottomTabBar:1.2.2'
 
     //toast提示框
-    implementation 'com.hjq:toast:3.0'
+    implementation 'com.hjq:toast:8.0'
 
     //侧滑返回
     implementation 'me.imid.swipebacklayout.lib:library:1.1.0'

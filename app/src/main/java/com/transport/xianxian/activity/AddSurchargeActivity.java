@@ -319,14 +319,17 @@ public class AddSurchargeActivity extends BaseActivity {
         //材料消耗
         JSONArray moneyArray = new JSONArray();
         try {
+
             JSONObject object1 = new JSONObject();
             object1.put("name", "逾时等候费");
             object1.put("money", money1);
             moneyArray.put(object1);
+
             JSONObject object2 = new JSONObject();
             object2.put("name", "路桥费");
             object2.put("money", money2);
             moneyArray.put(object2);
+
             JSONObject object3 = new JSONObject();
             object3.put("name", "搬运费");
             object3.put("money", money3);

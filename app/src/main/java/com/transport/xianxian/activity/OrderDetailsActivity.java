@@ -482,10 +482,10 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
 
                         tv_right.setText("去卸货");//右边按钮
                         break;
+                    case 4://订单完成
                     case 7://订单完成
                         tv_left.setText("返回列表");//左边按钮
                         tv_left.setBackgroundResource(R.drawable.btn_juse);
-
                         tv_right.setText("配送完毕");//右边按钮
                         break;
                 }
@@ -638,13 +638,17 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                         CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, MapNavigationActivity.class, bundle, false);
                         break;
                     case "配送完毕":
-                        //停止轨迹上报
-                        aMapTrackClient.stopTrack(new TrackParam(Constants.SERVICE_ID, terminalId), onTrackListener);
-                        aMapTrackClient.stopGather(onTrackListener);
-                        //跳转附加费
-                        Bundle bundle2 = new Bundle();
-                        bundle2.putString("id", model.getTindent().getId());
-                        CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, AddSurchargeActivity.class, bundle2, true);
+                        if (model.getTindent().getStatus() == 7) {
+                            //停止轨迹上报
+                            aMapTrackClient.stopTrack(new TrackParam(Constants.SERVICE_ID, terminalId), onTrackListener);
+                            aMapTrackClient.stopGather(onTrackListener);
+                            //跳转附加费
+                            Bundle bundle2 = new Bundle();
+                            bundle2.putString("id", model.getTindent().getId());
+                            CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, AddSurchargeActivity.class, bundle2, true);
+                        } else {
+                            finish();
+                        }
                         break;
                     /*case "确认装货"://确认装货
                         showToast("确认装货吗？", "确认", "取消", new View.OnClickListener() {
@@ -699,7 +703,7 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                 if (!info.equals("")) {
                     myToast(info);
                 }
-                if (i ==2){
+                if (i == 2) {
                     //接单错误-停止轨迹
                     //停止轨迹上报
                     aMapTrackClient.stopTrack(new TrackParam(Constants.SERVICE_ID, terminalId), onTrackListener);

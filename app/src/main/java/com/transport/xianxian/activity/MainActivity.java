@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
             //定位
             android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.ACCESS_COARSE_LOCATION,
-            android.Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+//            android.Manifest.permission.ACCESS_BACKGROUND_LOCATION,
             //录音权限
             Manifest.permission.RECORD_AUDIO,
             Manifest.permission.VIBRATE
