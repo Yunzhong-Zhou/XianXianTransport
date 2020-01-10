@@ -592,7 +592,7 @@ public class Fragment2 extends BaseFragment {
 
                                             //货物描述
                                             LinearLayout ll_huowumiaoshu = holder.getView(R.id.ll_huowumiaoshu);
-                                            if (model.getGoods_desc().size() >0){
+                                            if (model.getGoods_desc().size() > 0) {
                                                 ll_huowumiaoshu.setVisibility(View.VISIBLE);
                                                 FlowLayoutAdapter<String> flowLayoutAdapter2;
                                                 /*List<String> tagList2 = new ArrayList<>();
@@ -616,10 +616,9 @@ public class Fragment2 extends BaseFragment {
                                                     }
                                                 };
                                                 ((FlowLayout) holder.getView(R.id.flowLayout2)).setAdapter(flowLayoutAdapter2);
-                                            }else {
+                                            } else {
                                                 ll_huowumiaoshu.setVisibility(View.GONE);
                                             }
-
 
 
                                             //顺风车订单
@@ -743,7 +742,6 @@ public class Fragment2 extends BaseFragment {
                                                     tv_3.setBackgroundResource(R.drawable.yuanjiao_3_hongse);
                                                     break;
                                             }
-//                                            holder.setText(R.id.textView3, );//附加费未收取
                                             holder.setText(R.id.textView4, model.getNow_state() + model.getNow_state_action());//几点卸货/装货
                                             holder.setText(R.id.textView5, "送货用时：" + model.getSend_time());//送货用时：time
                                             holder.setText(R.id.textView6, "比预定卸货时间：" + model.getCompare_time());//比预定卸货时间：time
@@ -821,7 +819,7 @@ public class Fragment2 extends BaseFragment {
 
                                             //货物描述
                                             LinearLayout ll_huowumiaoshu = holder.getView(R.id.ll_huowumiaoshu);
-                                            if (model.getGoods_desc().size() >0){
+                                            if (model.getGoods_desc().size() > 0) {
                                                 ll_huowumiaoshu.setVisibility(View.VISIBLE);
                                                 FlowLayoutAdapter<String> flowLayoutAdapter2;
                                                 /*List<String> tagList2 = new ArrayList<>();
@@ -845,26 +843,17 @@ public class Fragment2 extends BaseFragment {
                                                     }
                                                 };
                                                 ((FlowLayout) holder.getView(R.id.flowLayout2)).setAdapter(flowLayoutAdapter2);
-                                            }else {
+                                            } else {
                                                 ll_huowumiaoshu.setVisibility(View.GONE);
                                             }
 
-                                            //收取附加费
-                                            holder.getView(R.id.tv_shouqu).setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    Bundle bundle = new Bundle();
-                                                    bundle.putString("id", model.getId());
-                                                    CommonUtil.gotoActivityWithData(getActivity(), AddSurchargeActivity.class, bundle, false);
-                                                }
-                                            });
                                             //行驶轨迹
                                             holder.getView(R.id.tv_guiji).setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
                                                     Bundle bundle = new Bundle();
-                                                    bundle.putSerializable("Fragment2Model1",model);
-                                                    CommonUtil.gotoActivityWithData(getActivity(), TrackSearchActivity.class,bundle, false);
+                                                    bundle.putSerializable("Fragment2Model1", model);
+                                                    CommonUtil.gotoActivityWithData(getActivity(), TrackSearchActivity.class, bundle, false);
 
                                                 }
                                             });
@@ -906,13 +895,39 @@ public class Fragment2 extends BaseFragment {
 
                                                 }
                                             });
+                                            //收取附加费
+                                            TextView tv_shouqu = holder.getView(R.id.tv_shouqu);
+                                            if (model.getIs_attach_fee() == 1) {
+                                                //已收取
+                                                holder.setText(R.id.textView3, "附加费已收取");//附加费未收取
+                                                tv_shouqu.setText("已收取");
+                                                holder.setText(R.id.tv_fujiafei, "附加费已收取");//附加费未收取
+                                            } else {
+                                                holder.setText(R.id.textView3, "附加费未收取");//附加费未收取
+                                                tv_shouqu.setText("去收取");
+                                                holder.setText(R.id.tv_fujiafei, "附加费未收取");//附加费未收取
+                                            }
+                                            tv_shouqu.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    if (model.getIs_attach_fee() == 2) {
+                                                        //已收取
+                                                        Bundle bundle = new Bundle();
+                                                        bundle.putString("id", model.getId());
+                                                        CommonUtil.gotoActivityWithData(getActivity(), AddSurchargeActivity.class, bundle, false);
+                                                    }
+                                                }
+                                            });
                                             //附加费
                                             holder.getView(R.id.tv_fujiafei).setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                                    Bundle bundle = new Bundle();
-                                                    bundle.putString("id", model.getId());
-                                                    CommonUtil.gotoActivityWithData(getActivity(), AddSurchargeActivity.class, bundle, false);
+                                                    if (model.getIs_attach_fee() == 2) {
+                                                        //已收取
+                                                        Bundle bundle = new Bundle();
+                                                        bundle.putString("id", model.getId());
+                                                        CommonUtil.gotoActivityWithData(getActivity(), AddSurchargeActivity.class, bundle, false);
+                                                    }
                                                 }
                                             });
                                         }
