@@ -316,7 +316,6 @@
                 android:layout_height="wrap_content"
                 android:minLines="2"
                 android:layout_marginTop="4dp"
-                android:textSize="13sp"
                 android:text="address2" />
             <LinearLayout
                 android:layout_width="match_parent"

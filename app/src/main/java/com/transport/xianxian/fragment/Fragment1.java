@@ -91,7 +91,7 @@ public class Fragment1 extends BaseFragment {
     ImageView btn_right;
     LinearLayout ll_xiaoxi, ll_pingfen;
     TextView tv_zijintongji, tv_type, tv_distance, tv_temperature, tv_timestart, tv_timestop,
-            tv_kaishijiedan, tv_hint;
+            tv_kaishijiedan, tv_hint,tv_chongzhi;
     int i1 = 0, i2 = 0, i3 = 0, i4 = 0, i5 = 0;
 
     Boolean isStartJieDan = false;//是否开始接单
@@ -203,6 +203,8 @@ public class Fragment1 extends BaseFragment {
         tv_kaishijiedan = findViewByID_My(R.id.tv_kaishijiedan);
         tv_kaishijiedan.setOnClickListener(this);
         tv_hint = findViewByID_My(R.id.tv_hint);
+        tv_chongzhi = findViewByID_My(R.id.tv_chongzhi);
+        tv_chongzhi.setOnClickListener(this);
 
         imageView1 = findViewByID_My(R.id.imageView1);
         textView1 = findViewByID_My(R.id.textView1);
@@ -441,6 +443,23 @@ public class Fragment1 extends BaseFragment {
                             (getActivity(), R.layout.item_fragment1, list) {
                         @Override
                         protected void convert(ViewHolder holder, Fragment1ListModel model, int position) {
+                            //车型
+                            TextView tv_type = holder.getView(R.id.tv_type);
+                            tv_type.setText(model.getUse_type_text());
+                            switch (model.getUse_type()) {
+                                case 1:
+                                    //专车
+                                    tv_type.setBackgroundResource(R.drawable.yuanjiao_3_lanse);
+                                    break;
+                                case 2:
+                                    //顺风车
+                                    tv_type.setBackgroundResource(R.drawable.yuanjiao_3_huangse);
+                                    break;
+                                case 3:
+                                    //快递
+                                    tv_type.setBackgroundResource(R.drawable.yuanjiao_3_hongse);
+                                    break;
+                            }
                             //订单号
                             holder.setText(R.id.tv_ordernum, "订单号：" + model.getSn());
 
@@ -619,6 +638,20 @@ public class Fragment1 extends BaseFragment {
 
 //                    stopAlarm();
                 }
+                break;
+            case R.id.tv_chongzhi:
+                //重置
+                indent_use_type = "";
+                distance = "";
+                temperature = "";
+                time_start = "";
+                time_end = "";
+                tv_type.setText("订单类型");
+                tv_distance.setText("距离筛选");
+                tv_temperature.setText("温层选择");
+                tv_timestart.setText("接单时间起");
+                tv_timestop.setText("接单时间止");
+                requestlist();
                 break;
             case R.id.tv_type:
                 //订单类型

@@ -162,7 +162,7 @@ public class WalletActivity extends BaseActivity {
                                 tv_money.setTextColor(getResources().getColor(R.color.red));
                                 tv_money.setText("-" + model.getMoney());
                             }
-                            holder.setText(R.id.textView4, model.getSn());
+                            holder.setText(R.id.textView4, model.getRemark());
                         }
                     };
                     recyclerView.setAdapter(mAdapter);

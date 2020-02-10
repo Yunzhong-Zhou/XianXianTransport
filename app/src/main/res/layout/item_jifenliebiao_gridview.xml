@@ -14,6 +14,7 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:scaleType="fitXY"
         android:background="@drawable/dryuanjiao_5_huise_top" />
 
     <TextView

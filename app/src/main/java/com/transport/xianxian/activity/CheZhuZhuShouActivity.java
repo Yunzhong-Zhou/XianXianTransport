@@ -5,12 +5,14 @@ import android.view.View;
 
 import com.transport.xianxian.R;
 import com.transport.xianxian.base.BaseActivity;
+import com.transport.xianxian.utils.CommonUtil;
 
 /**
  * Created by zyz on 2019-10-01.
  * 车主助手
  */
 public class CheZhuZhuShouActivity extends BaseActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +22,6 @@ public class CheZhuZhuShouActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
     }
 
     @Override
@@ -42,7 +43,7 @@ public class CheZhuZhuShouActivity extends BaseActivity {
                 break;
             case R.id.linearLayout3:
                 //问题反馈
-//                CommonUtil.gotoActivity(this,,false);
+                CommonUtil.gotoActivity(this,FeedBackActivity.class,false);
                 break;
             default:
                 break;

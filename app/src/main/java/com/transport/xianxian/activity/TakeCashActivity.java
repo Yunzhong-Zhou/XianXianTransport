@@ -191,10 +191,15 @@ public class TakeCashActivity extends BaseActivity {
             case R.id.textView:
                 //提现
                 if (!editText1.getText().toString().trim().equals("")) {
-                    params.put("token", localUserInfo.getToken());//token
-                    params.put("way", way + "");
-                    params.put("money", editText1.getText().toString().trim());
-                    RequestTakeCash(params);
+                    if (Double.valueOf(editText1.getText().toString().trim()) > Double.valueOf(model.getLow_money())){
+                        params.put("token", localUserInfo.getToken());//token
+                        params.put("way", way + "");
+                        params.put("money", editText1.getText().toString().trim());
+                        RequestTakeCash(params);
+                    }else {
+                        myToast("提现金额不能小于"+model.getLow_money());
+                    }
+
                 } else {
                     myToast("请输入提现金额");
                 }
@@ -223,6 +228,7 @@ public class TakeCashActivity extends BaseActivity {
                 try {
                     jObj = new JSONObject(response);
                     myToast(jObj.getString("msg"));
+                    finish();
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

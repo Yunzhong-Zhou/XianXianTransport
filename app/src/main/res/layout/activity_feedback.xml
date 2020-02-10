@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minLines="5"
+        android:lineSpacingExtra="4dp"
+        android:background="@color/transparent"
+        android:hint="请输入反馈"
+        android:gravity="top"
+        android:textColorHint="@color/black3"
+        android:textColor="@color/black1"
+        android:padding="14dp"/>
+
+    <!--图片选择器-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="14dp">
+
+        <com.transport.xianxian.view.photochooser.AutoHeightGridView
+            android:id="@+id/gridView01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnWidth="86dp"
+            android:numColumns="auto_fit"
+            android:scrollbars="none" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="14dp"
+        android:background="@drawable/btn_lanse"
+        android:gravity="center"
+        android:onClick="onClick"
+        android:padding="16dp"
+        android:text="提交"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+</LinearLayout>

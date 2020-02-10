@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.transport.xianxian.R;
 import com.transport.xianxian.model.JiFenLieBiaoModel;
 
@@ -86,7 +88,8 @@ public class JiFenLieBiao_GridViewAdapter extends BaseAdapter {
         if (!list.get(position).getImage().equals(""))
             Glide.with(convertView)
                     .load(IMGHOST + list.get(position).getImage())
-                    .centerCrop()
+//                    .centerCrop()
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
 //                                    .placeholder(R.mipmap.headimg)//加载站位图
 //                                    .error(R.mipmap.headimg)//加载失败
                     .into(holder.imageView);//加载图片

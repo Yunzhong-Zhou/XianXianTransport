@@ -21,6 +21,8 @@ public class Fragment1ListModel implements Serializable {
 
     private String id;
     private String sn;
+    private int use_type;
+    private String use_type_text;
     private String now_state;
     private long now_state_action;
     private String remark;
@@ -28,6 +30,22 @@ public class Fragment1ListModel implements Serializable {
     private String price;
     private List<AddrListBean> addr_list;
     private List<String> tag;
+
+    public int getUse_type() {
+        return use_type;
+    }
+
+    public void setUse_type(int use_type) {
+        this.use_type = use_type;
+    }
+
+    public String getUse_type_text() {
+        return use_type_text;
+    }
+
+    public void setUse_type_text(String use_type_text) {
+        this.use_type_text = use_type_text;
+    }
 
     public String getId() {
         return id;

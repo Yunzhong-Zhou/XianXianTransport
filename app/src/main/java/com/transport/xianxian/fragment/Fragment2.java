@@ -518,12 +518,26 @@ public class Fragment2 extends BaseFragment {
                                                 if (i == 0) {
                                                     tv1.setText("起");
                                                     tv1.setBackgroundResource(R.drawable.yuanxing_lanse);
+
+                                                    //起点 开始点为 当前所在点  终点为这个点的坐标
+                                                    mEndPoint = new DPoint(Double.valueOf(model.getAddr_list().get(i).getLat()), Double.valueOf(model.getAddr_list().get(i).getLng()));//终点，39.995576,116.481288
+                                                    tv6.setText("接货距离" + CommonUtil.distanceFormat(CoordinateConverter.calculateLineDistance(mStartPoint, mEndPoint)));//送货路程
                                                 } else if (i == (model.getAddr_list().size() - 1)) {
                                                     tv1.setText("终");
                                                     tv1.setBackgroundResource(R.drawable.yuanxing_juse);
+
+                                                    //开始点为 上一个点的坐标  终点为这个点的坐标
+                                                    mStartPoint = new DPoint(Double.valueOf(model.getAddr_list().get(i-1).getLat()), Double.valueOf(model.getAddr_list().get(i-1).getLng()));//起点
+                                                    mEndPoint = new DPoint(Double.valueOf(model.getAddr_list().get(i).getLat()), Double.valueOf(model.getAddr_list().get(i).getLng()));//终点，39.995576,116.481288
+                                                    tv6.setText("送货路程" + CommonUtil.distanceFormat(CoordinateConverter.calculateLineDistance(mStartPoint, mEndPoint)));//送货路程
                                                 } else {
                                                     tv1.setText("" + i);
                                                     tv1.setBackgroundResource(R.drawable.yuanxing_huise);
+
+                                                    //开始点为 上一个点的坐标  终点为这个点的坐标
+                                                    mStartPoint = new DPoint(Double.valueOf(model.getAddr_list().get(i-1).getLat()), Double.valueOf(model.getAddr_list().get(i-1).getLng()));//起点
+                                                    mEndPoint = new DPoint(Double.valueOf(model.getAddr_list().get(i).getLat()), Double.valueOf(model.getAddr_list().get(i).getLng()));//终点，39.995576,116.481288
+                                                    tv6.setText("送货路程" + CommonUtil.distanceFormat(CoordinateConverter.calculateLineDistance(mStartPoint, mEndPoint)));//送货路程
                                                 }
                                                 tv2.setText(model.getAddr_list().get(i).getArrive_time() + " " + model.getAddr_list().get(i).getStatus_text());//time 装货
                                                 /*if (i == 0){
@@ -534,9 +548,7 @@ public class Fragment2 extends BaseFragment {
                                                 }*/
                                                 tv4.setText(model.getAddr_list().get(i).getAddr());//地址
                                                 tv5.setText(model.getAddr_list().get(i).getAddr_detail());//地址详情
-                                                mEndPoint = new DPoint(Double.valueOf(model.getAddr_list().get(i).getLat()), Double.valueOf(model.getAddr_list().get(i).getLng()));//终点，39.995576,116.481288
 //                                                    juli = CoordinateConverter.calculateLineDistance(mStartPoint, mEndPoint);
-                                                tv6.setText("送货路程" + CommonUtil.distanceFormat(CoordinateConverter.calculateLineDistance(mStartPoint, mEndPoint)));//送货路程
                                                 if (!model.getAddr_list().get(i).getOther().equals("")) {
                                                     tv7.setVisibility(View.VISIBLE);
                                                     tv7.setText(model.getAddr_list().get(i).getOther());//备注

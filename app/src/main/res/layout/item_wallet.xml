@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="2019年10月03日16:02:27"
+                android:text="原因"
                 android:textColor="@color/black3"
                 android:textSize="10sp" />
 
