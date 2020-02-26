@@ -48,7 +48,7 @@ import static com.transport.xianxian.net.OkHttpClientManager.IMGHOST;
  */
 public class Fragment3 extends BaseFragment {
     ImageView imageView1;
-    TextView textView1, textView2,tv_banbenhao,tv_xiaoxinum;
+    TextView textView1, textView2,tv_banbenhao,tv_xiaoxinum,tv_xiaoxinum2;
     LinearLayout linearLayout1, linearLayout2, linearLayout3, linearLayout4, linearLayout5, linearLayout6,
             linearLayout7, linearLayout8, linearLayout9,linearLayout10,linearLayout11,linearLayout12;
 
@@ -74,7 +74,12 @@ public class Fragment3 extends BaseFragment {
         if (MainActivity.item == 2) {
             requestServer();
         }
-        tv_xiaoxinum.setText(EMClient.getInstance().chatManager().getUnreadMessageCount()+"");
+        if (EMClient.getInstance().chatManager().getUnreadMessageCount() >0){
+            tv_xiaoxinum.setVisibility(View.VISIBLE);
+            tv_xiaoxinum.setText(EMClient.getInstance().chatManager().getUnreadMessageCount()+"");
+        }else {
+            tv_xiaoxinum.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -148,6 +153,7 @@ public class Fragment3 extends BaseFragment {
         tv_banbenhao.setText("版本号："+CommonUtil.getVersionName(getActivity()));
 
         tv_xiaoxinum = findViewByID_My(R.id.tv_xiaoxinum);
+        tv_xiaoxinum2 = findViewByID_My(R.id.tv_xiaoxinum2);
     }
 
     @Override
@@ -183,6 +189,14 @@ public class Fragment3 extends BaseFragment {
                             .into(imageView1);//加载图片
                 else
                     imageView1.setImageResource(R.mipmap.headimg);
+
+                //未读信息
+                if (response.getMsg() > 0){
+                    tv_xiaoxinum2.setVisibility(View.VISIBLE);
+                    tv_xiaoxinum2.setText(response.getMsg()+"");
+                }else {
+                    tv_xiaoxinum2.setVisibility(View.GONE);
+                }
 
                 hideProgress();
             }

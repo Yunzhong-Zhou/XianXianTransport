@@ -57,6 +57,7 @@
                 android:background="@color/transparent"
                 android:hint="请输入被保险人身份证号码"
                 android:padding="14dp"
+                android:maxLength="18"
                 android:textColor="@color/black1"
                 android:textColorHint="@color/black3" />
 

@@ -34,6 +34,7 @@ public class WalletActivity extends BaseActivity {
     ImageView imageView1;
     TextView textView1, textView2, textView3, textView4, textView5, textView6;
 
+    boolean isShowList = true;
     int page = 1;
     private RecyclerView recyclerView;
     List<WalletModel.TmoneyDataBean> list = new ArrayList<>();
@@ -96,6 +97,15 @@ public class WalletActivity extends BaseActivity {
                 CommonUtil.gotoActivity(WalletActivity.this, TakeCashActivity.class);
                 break;
 
+            case R.id.tv_detail:
+                //明细
+                isShowList = !isShowList;
+                if (isShowList){
+                    recyclerView.setVisibility(View.VISIBLE);
+                }else {
+                    recyclerView.setVisibility(View.GONE);
+                }
+                break;
             default:
                 break;
         }

@@ -934,7 +934,7 @@ public class Fragment2 extends BaseFragment {
                                             holder.getView(R.id.tv_fujiafei).setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                                    if (model.getIs_attach_fee() == 2) {
+                                                    if (model.getIs_attach_fee() == 2) {//未收取
                                                         //已收取
                                                         Bundle bundle = new Bundle();
                                                         bundle.putString("id", model.getId());

@@ -1,6 +1,8 @@
 package com.transport.xianxian.activity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -58,7 +60,33 @@ public class TakeCashActivity extends BaseActivity {
         editText1 = findViewByID_My(R.id.editText1);
 
         imageView1 = findViewByID_My(R.id.imageView1);
+        editText1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String editStr = editable.toString().trim();
+                int posDot = editStr.indexOf(".");
+                //不允许输入3位小数,超过三位就删掉
+                if (posDot < 0) {
+                    return;
+                }
+                if (editStr.length() - posDot - 1 > 2) {
+                    editable.delete(posDot + 3, posDot + 4);
+                } else {
+                    //TODO...这里写逻辑
+
+                }
+            }
+        });
     }
 
     @Override

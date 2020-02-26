@@ -14,7 +14,7 @@ public class Fragment3Model implements Serializable {
 
     private String nickname;
     private String head;
-
+    private int msg;
     public String getNickname() {
         return nickname;
     }
@@ -29,5 +29,13 @@ public class Fragment3Model implements Serializable {
 
     public void setHead(String head) {
         this.head = head;
+    }
+
+    public int getMsg() {
+        return msg;
+    }
+
+    public void setMsg(int msg) {
+        this.msg = msg;
     }
 }

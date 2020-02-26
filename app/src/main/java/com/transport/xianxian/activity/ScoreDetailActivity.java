@@ -1,6 +1,7 @@
 package com.transport.xianxian.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -30,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * 评分详情
  */
 public class ScoreDetailActivity extends BaseActivity {
+    boolean isShowList = true;
     int page = 1;
     private RecyclerView recyclerView;
     List<ScoreDetailModel> list = new ArrayList<>();
@@ -72,6 +74,23 @@ public class ScoreDetailActivity extends BaseActivity {
     protected void initData() {
         requestServer();
     }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()){
+            case R.id.tv_detail:
+                //明细
+                isShowList = !isShowList;
+                if (isShowList){
+                    recyclerView.setVisibility(View.VISIBLE);
+                }else {
+                    recyclerView.setVisibility(View.GONE);
+                }
+                break;
+        }
+    }
+
     @Override
     public void requestServer() {
         super.requestServer();

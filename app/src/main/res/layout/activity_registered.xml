@@ -37,6 +37,7 @@
                         android:textColor="@color/black1"
                         android:inputType="number"
                         android:padding="16dp"
+                        android:maxLength="11"
                         android:textSize="15sp" />
 
                 </LinearLayout>

@@ -23,6 +23,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/yuanjiao_5_baise"
                 android:hint="姓"
+                android:maxLength="7"
                 android:textColorHint="@color/black3"
                 android:textColor="@color/black1"
                 android:inputType="text"
@@ -37,6 +38,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/yuanjiao_5_baise"
                 android:hint="名"
+                android:maxLength="7"
                 android:textColorHint="@color/black3"
                 android:textColor="@color/black1"
                 android:inputType="text"
@@ -55,6 +57,7 @@
             android:textColorHint="@color/black3"
             android:textColor="@color/black1"
             android:inputType="text"
+            android:maxLength="18"
             android:padding="16dp"
             android:textSize="15sp" />
         <TextView
