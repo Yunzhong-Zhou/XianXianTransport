@@ -50,7 +50,10 @@
 
         </LinearLayout>
 
+
     </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/tv_quxiao"

@@ -71,6 +71,7 @@
             android:gravity="center"
             android:paddingLeft="7dp"
             android:paddingTop="4dp"
+            android:visibility="gone"
             android:paddingBottom="4dp"
             android:text="搜索顺风车订单"
             android:textColor="@color/black2"

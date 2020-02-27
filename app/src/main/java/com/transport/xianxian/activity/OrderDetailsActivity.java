@@ -701,7 +701,13 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
 //                showErrorPage();
                 hideProgress();
                 if (!info.equals("")) {
-                    myToast(info);
+                    showToast(info, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            finish();
+                        }
+                    });
                 }
                 if (i == 2) {
                     //接单错误-停止轨迹
@@ -727,7 +733,8 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                         bundle.putDouble("lat", lat);
                         bundle.putDouble("lng", lng);
                         bundle.putSerializable("OrderDetailsModel", model);
-                        CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, MapNavigationActivity.class, bundle, false);
+                        CommonUtil.gotoActivityWithData(OrderDetailsActivity.this,
+                                MapNavigationActivity.class, bundle, false);
                     } else {//拒单
                         finish();
                     }

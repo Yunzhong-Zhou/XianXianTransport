@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -20,6 +21,7 @@ import com.amap.api.location.DPoint;
 import com.bumptech.glide.Glide;
 import com.cy.cyflowlayoutlibrary.FlowLayout;
 import com.cy.cyflowlayoutlibrary.FlowLayoutAdapter;
+import com.cy.dialog.BaseDialog;
 import com.hyphenate.easeui.EaseConstant;
 import com.liaoinstan.springview.widget.SpringView;
 import com.squareup.okhttp.Request;
@@ -81,6 +83,8 @@ public class Fragment2 extends BaseFragment {
     double lat = 0, lng = 0, juli = 0;
     private DPoint mStartPoint = null;
     private DPoint mEndPoint = null;
+
+    int scale = 20;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -645,20 +649,73 @@ public class Fragment2 extends BaseFragment {
                                             holder.getView(R.id.tv_zhuandan).setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                                    showToast("确认转派订单吗？", "确认", "取消", new View.OnClickListener() {
+                                                    BaseDialog dialog1 = new BaseDialog(getActivity());
+                                                    dialog1.contentView(R.layout.dialog_zhuandan)
+                                                            .layoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                                                    ViewGroup.LayoutParams.WRAP_CONTENT))
+                                                            .animType(BaseDialog.AnimInType.CENTER)
+                                                            .canceledOnTouchOutside(true)
+                                                            .dimAmount(0.8f)
+                                                            .show();
+                                                    TextView tv_bili = dialog1.findViewById(R.id.tv_bili);
+                                                    SeekBar seekBar = dialog1.findViewById(R.id.seekBar);
+
+                                                    seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                                        @Override
+                                                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                                            scale = progress;
+                                                            tv_bili.setText("金额比例："+progress+"%");
+                                                        }
+
+                                                        @Override
+                                                        public void onStartTrackingTouch(SeekBar seekBar) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onStopTrackingTouch(SeekBar seekBar) {
+
+                                                        }
+                                                    });
+                                                    dialog1.findViewById(R.id.textView3).setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            dialog1.dismiss();
+                                                            Bundle bundle = new Bundle();
+                                                            bundle.putString("id", model.getId());
+                                                            bundle.putString("lat", lat+"");
+                                                            bundle.putString("lng", lng+"");
+                                                            bundle.putString("scale", scale+"");
+                                                            CommonUtil.gotoActivityWithData(getActivity(), ZhuanDanActivity.class, bundle, false);
+                                                        }
+                                                    });
+                                                    dialog1.findViewById(R.id.textView4).setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            dialog1.dismiss();
+                                                        }
+                                                    });
+                                                    dialog1.findViewById(R.id.dismiss).setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            dialog1.dismiss();
+                                                        }
+                                                    });
+
+                                                    /*showToast("确认转派订单吗？", "确认", "取消", new View.OnClickListener() {
                                                         @Override
                                                         public void onClick(View v) {
                                                             dialog.dismiss();
-                                                            Bundle bundle = new Bundle();
-                                                            bundle.putString("id", model.getId());
-                                                            CommonUtil.gotoActivityWithData(getActivity(), ZhuanDanActivity.class, bundle, false);
+
+
+
                                                         }
                                                     }, new View.OnClickListener() {
                                                         @Override
                                                         public void onClick(View v) {
                                                             dialog.dismiss();
                                                         }
-                                                    });
+                                                    });*/
                                                 }
                                             });
                                             //去聊天

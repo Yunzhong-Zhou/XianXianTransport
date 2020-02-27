@@ -24,7 +24,7 @@ import java.util.Map;
  * 转单
  */
 public class ZhuanDanActivity extends BaseActivity {
-    String id = "";
+    String id = "", lat = "", lng = "", scale = "";
     ImageView imageView1;
 
     @Override
@@ -47,15 +47,22 @@ public class ZhuanDanActivity extends BaseActivity {
     @Override
     protected void initData() {
         id = getIntent().getStringExtra("id");
-
+        lat = getIntent().getStringExtra("lat");
+        lng = getIntent().getStringExtra("lng");
+        scale = getIntent().getStringExtra("scale");
         showProgress(true, getString(R.string.app_loading));
+
         Map<String, String> params = new HashMap<>();
         params.put("token", localUserInfo.getToken());
         params.put("t_indent_id", id);
         params.put("type", "5");//转单确认
+        params.put("lat", lat + "");
+        params.put("lng", lng + "");
+        params.put("scale", scale);//动态比例
         RequestZhuanDan(params);
 
     }
+
     private void RequestZhuanDan(Map<String, String> params) {
         OkHttpClientManager.postAsyn(ZhuanDanActivity.this, URLs.OrderDetails_ZhuangHuo, params, new OkHttpClientManager.ResultCallback<String>() {
             @Override

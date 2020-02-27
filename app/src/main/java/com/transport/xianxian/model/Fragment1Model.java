@@ -41,6 +41,7 @@ public class Fragment1Model {
     private String comment_score;
     private String money;
     private String today_money;
+    private String is_certification;
     private String is_work;
     private String lat;
     private String lng;
@@ -58,6 +59,14 @@ public class Fragment1Model {
     private List<TimeEndListBean> time_end_list;
     private List<NoticeListBean> notice_list;
     private List<WaitTindentBean> wait_tindent;
+
+    public String getIs_certification() {
+        return is_certification;
+    }
+
+    public void setIs_certification(String is_certification) {
+        this.is_certification = is_certification;
+    }
 
     public String getToday_money() {
         return today_money;

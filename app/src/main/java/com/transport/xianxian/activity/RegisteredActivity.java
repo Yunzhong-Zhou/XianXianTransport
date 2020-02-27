@@ -161,6 +161,10 @@ public class RegisteredActivity extends BaseActivity {
             myToast(getString(R.string.registered_h1));
             return false;
         }
+        if (phonenum.length() !=11){
+            myToast("请输入11位手机号");
+            return false;
+        }
         code = editText2.getText().toString().trim();
         if (TextUtils.isEmpty(code)) {
             myToast(getString(R.string.registered_h2));

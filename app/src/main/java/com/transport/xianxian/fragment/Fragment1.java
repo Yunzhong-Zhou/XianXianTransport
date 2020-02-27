@@ -311,6 +311,9 @@ public class Fragment1 extends BaseFragment {
                 showContentPage();
                 hideProgress();
                 MyLogger.i(">>>>>>>>>首页" + response);
+                //保存是否认证
+                localUserInfo.setIsVerified(response.getIs_certification()+"");//1 认证 2 未认证
+
                 model = response;
                 textView1.setText(response.getNickname());//昵称
                 textView2.setText("¥ " + response.getToday_money());//今日流水
@@ -376,7 +379,6 @@ public class Fragment1 extends BaseFragment {
                 } else {
                     ll_xiaoxi.setVisibility(View.GONE);
                 }
-
 
                 //订单类型
                 indent_use_type = response.getIndent_use_type_list().get(0).getKey() + "";
@@ -463,7 +465,9 @@ public class Fragment1 extends BaseFragment {
                             //订单号
                             holder.setText(R.id.tv_ordernum, "订单号：" + model.getSn());
 
+
                             holder.setText(R.id.tv1, model.getNow_state() + " 装货");
+
                             if (model.getNow_state_action() >= 0) {
                                 holder.setText(R.id.tv2, "已等待" + CommonUtil.timedate4(Math.abs(model.getNow_state_action()) * 1000));//离装货时间还有0小时
                             }else {
@@ -636,6 +640,11 @@ public class Fragment1 extends BaseFragment {
                         recyclerView.removeAllViews();
                     }
 
+                    //调用关闭接单接口
+                    Map<String, String> params = new HashMap<>();
+                    params.put("token", localUserInfo.getToken());
+                    params.put("work_close", "1");
+                    RequestClose(params);
 //                    stopAlarm();
                 }
                 break;
@@ -1143,6 +1152,36 @@ public class Fragment1 extends BaseFragment {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+
+            }
+        }, false);
+    }
+    private void RequestClose(Map<String, String> params) {
+        OkHttpClientManager.postAsyn(getActivity(), URLs.Fragment1List, params, new OkHttpClientManager.ResultCallback<String>() {
+            @Override
+            public void onError(Request request, String info, Exception e) {
+//                showErrorPage();
+                hideProgress();
+                if (!info.equals("")) {
+                    myToast(info);
+                }
+            }
+
+            @Override
+            public void onResponse(String response) {
+//                showContentPage();
+                hideProgress();
+                MyLogger.i(">>>>>>>>>司机-关闭接单" + response);
+//                myToast("关闭成功");
+                /*JSONObject jObj;
+                try {
+                    jObj = new JSONObject(response);
+                    myToast(jObj.getString("msg"));
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }*/
 
             }
         }, false);

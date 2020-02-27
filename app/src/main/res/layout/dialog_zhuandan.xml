@@ -32,6 +32,7 @@
 
         </LinearLayout>
 
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
@@ -41,9 +42,52 @@
             android:gravity="center"
             android:lineSpacingExtra="5dp"
             android:paddingBottom="14dp"
-            android:text=""
+            android:text="确认转单吗？如果确认转单请设置转单金额比例"
             android:textColor="@color/txt_black1"
             android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0%" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100%" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+            <TextView
+                android:id="@+id/tv_bili"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="14dp"
+                android:layout_centerInParent="true"
+                android:text="金额比例：20%" />
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:max="100"
+                android:min="0"
+                android:paddingBottom="20dp"
+                android:progress="20" />
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
@@ -94,6 +138,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:padding="8dp"
-        android:visibility="gone"
-        android:src="@mipmap/ic_delete" />
+        android:src="@mipmap/ic_delete"
+        android:visibility="gone" />
 </LinearLayout>
