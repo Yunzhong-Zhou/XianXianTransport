@@ -83,8 +83,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:max="100"
-                android:min="0"
+                android:max="99"
+                android:min="1"
                 android:paddingBottom="20dp"
                 android:progress="20" />
         </RelativeLayout>
