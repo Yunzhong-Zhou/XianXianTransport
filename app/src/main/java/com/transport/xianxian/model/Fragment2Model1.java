@@ -68,6 +68,25 @@ public class Fragment2Model1 implements Serializable {
         this.track_id = track_id;
     }
 
+    private int is_plan;
+    private String plan_time;
+
+    public String getPlan_time() {
+        return plan_time;
+    }
+
+    public void setPlan_time(String plan_time) {
+        this.plan_time = plan_time;
+    }
+
+    public int getIs_plan() {
+        return is_plan;
+    }
+
+    public void setIs_plan(int is_plan) {
+        this.is_plan = is_plan;
+    }
+
     private String send_time;
     private String compare_time;
     private String now_state;

@@ -452,6 +452,15 @@ public class Fragment2 extends BaseFragment {
 
                                             holder.setText(R.id.textView1, model.getNow_state_action());//状态
                                             holder.setText(R.id.textView2, model.getNow_state_sub_action());//配送中
+
+                                            TextView tv_yuyue = holder.getView(R.id.tv_yuyue);
+                                            if (model.getIs_plan() == 1){
+                                                tv_yuyue.setVisibility(View.VISIBLE);
+                                                tv_yuyue.setText("预约时间："+model.getPlan_time());//预约时间
+                                            }else {
+                                                tv_yuyue.setVisibility(View.GONE);
+                                            }
+
                                             //车型
                                             TextView tv_3 = holder.getView(R.id.textView3);
                                             tv_3.setText(model.getUse_type());
@@ -923,7 +932,6 @@ public class Fragment2 extends BaseFragment {
                                                     Bundle bundle = new Bundle();
                                                     bundle.putSerializable("Fragment2Model1", model);
                                                     CommonUtil.gotoActivityWithData(getActivity(), TrackSearchActivity.class, bundle, false);
-
                                                 }
                                             });
                                             //去聊天
@@ -1020,8 +1028,6 @@ public class Fragment2 extends BaseFragment {
                                             holder.setText(R.id.textView3, model.getCreated_at() + " 发布");//发布时间
                                             holder.setText(R.id.textView4, model.getRemark());//备注
                                             holder.setText(R.id.textView5, "¥ " + model.getPrice());//订单金额
-                                            holder.setText(R.id.textView6, "" + model.getPrice() + "元");//起步价
-                                            holder.setText(R.id.textView7, "" + model.getPrice() + "元");//里程费
 //                                            holder.setText(R.id.textView8, "" + model.get);//取消理由
                                             //费用列表
                                             LinearLayout ll_add2 = holder.getView(R.id.ll_add2);
