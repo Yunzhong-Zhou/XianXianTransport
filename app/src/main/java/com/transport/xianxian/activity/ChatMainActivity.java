@@ -6,15 +6,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.hyphenate.EMMessageListener;
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
+import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseBaseActivity;
 import com.hyphenate.easeui.ui.EaseContactListFragment;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
+import com.hyphenate.util.EMLog;
 import com.transport.xianxian.R;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import androidx.fragment.app.Fragment;
@@ -71,6 +76,50 @@ public class ChatMainActivity extends EaseBaseActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, conversationListFragment)
                 .add(R.id.fragment_container, contactListFragment).hide(contactListFragment).show(conversationListFragment)
                 .commit();
+
+        //注册一个监听连接状态的listener
+        EMClient.getInstance().chatManager().addMessageListener(new EMMessageListener() {
+            @Override
+            public void onMessageReceived(List<EMMessage> list) {
+                for (EMMessage message : list) {
+                    EMLog.d("会话列表", "onMessageReceived id : " + message.getMsgId());
+                    //接收并处理扩展消息
+                    String userName = message.getStringAttribute("user_name", "");
+                    String userId = message.getStringAttribute("user", "");
+                    String userPic = message.getStringAttribute("head_img_url", "");
+                    String hxIdFrom = message.getFrom();
+                    EaseUser easeUser = new EaseUser(hxIdFrom);
+                    easeUser.setAvatar(userPic);
+                    easeUser.setNickname(userName);
+                    getSharedPreferences("user",MODE_PRIVATE).edit().putString(hxIdFrom,userName+"&"+userPic).commit();
+                }
+            }
+
+            @Override
+            public void onCmdMessageReceived(List<EMMessage> list) {
+
+            }
+
+            @Override
+            public void onMessageRead(List<EMMessage> list) {
+
+            }
+
+            @Override
+            public void onMessageDelivered(List<EMMessage> list) {
+
+            }
+
+            @Override
+            public void onMessageRecalled(List<EMMessage> list) {
+
+            }
+
+            @Override
+            public void onMessageChanged(EMMessage emMessage, Object o) {
+
+            }
+        });
     }
 
     /**

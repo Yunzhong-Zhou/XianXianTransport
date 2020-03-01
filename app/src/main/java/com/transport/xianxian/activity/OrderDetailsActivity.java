@@ -15,8 +15,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,7 @@ import com.amap.api.track.query.model.QueryTerminalResponse;
 import com.bumptech.glide.Glide;
 import com.cy.cyflowlayoutlibrary.FlowLayout;
 import com.cy.cyflowlayoutlibrary.FlowLayoutAdapter;
+import com.cy.dialog.BaseDialog;
 import com.hyphenate.easeui.EaseConstant;
 import com.squareup.okhttp.Request;
 import com.transport.xianxian.R;
@@ -103,6 +106,8 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
     List<OrderDetailsModel.TindentBean.AddrListBean> list2 = new ArrayList<>();
     CommonAdapter<OrderDetailsModel.TindentBean.AddrListBean> mAdapter2;
 
+    int scale = 20;
+
     //开始点、结束点、计算距离
     double lat = 0, lng = 0, juli = 0;
     private DPoint mStartDPoint = null;
@@ -158,7 +163,6 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                 /*Toast.makeText(TrackServiceActivity.this,
                         "error onStopTrackCallback, status: " + status + ", msg: " + msg,
                         Toast.LENGTH_LONG).show();*/
-
             }
         }
 
@@ -586,22 +590,60 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                         });
                         break;
                     case "转派订单":
-                        showToast("确认转派订单吗？", "确认", "取消", new View.OnClickListener() {
+                        BaseDialog dialog1 = new BaseDialog(OrderDetailsActivity.this);
+                        dialog1.contentView(R.layout.dialog_zhuandan)
+                                .layoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT))
+                                .animType(BaseDialog.AnimInType.CENTER)
+                                .canceledOnTouchOutside(true)
+                                .dimAmount(0.8f)
+                                .show();
+                        TextView tv_bili = dialog1.findViewById(R.id.tv_bili);
+                        SeekBar seekBar = dialog1.findViewById(R.id.seekBar);
+
+                        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                            @Override
+                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                scale = progress;
+                                tv_bili.setText("金额比例："+progress+"%");
+                            }
+
+                            @Override
+                            public void onStartTrackingTouch(SeekBar seekBar) {
+
+                            }
+
+                            @Override
+                            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                            }
+                        });
+                        dialog1.findViewById(R.id.textView3).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                dialog.dismiss();
+                                dialog1.dismiss();
                                 //停止轨迹上报
                                 aMapTrackClient.stopTrack(new TrackParam(Constants.SERVICE_ID, terminalId), onTrackListener);
                                 aMapTrackClient.stopGather(onTrackListener);
-                                //跳转转单
+
                                 Bundle bundle = new Bundle();
-                                bundle.putString("id", model.getTindent().getId());
+                                bundle.putString("id", id);
+                                bundle.putString("lat", lat+"");
+                                bundle.putString("lng", lng+"");
+                                bundle.putString("scale", scale+"");
                                 CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, ZhuanDanActivity.class, bundle, false);
                             }
-                        }, new View.OnClickListener() {
+                        });
+                        dialog1.findViewById(R.id.textView4).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                dialog.dismiss();
+                                dialog1.dismiss();
+                            }
+                        });
+                        dialog1.findViewById(R.id.dismiss).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog1.dismiss();
                             }
                         });
                         break;

@@ -14,6 +14,8 @@ import com.bumptech.glide.Glide;
 import com.cy.dialog.BaseDialog;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.EaseUI;
+import com.hyphenate.easeui.domain.EaseUser;
 import com.liaoinstan.springview.widget.SpringView;
 import com.squareup.okhttp.Request;
 import com.transport.xianxian.R;
@@ -48,9 +50,9 @@ import static com.transport.xianxian.net.OkHttpClientManager.IMGHOST;
  */
 public class Fragment3 extends BaseFragment {
     ImageView imageView1;
-    TextView textView1, textView2,tv_banbenhao,tv_xiaoxinum,tv_xiaoxinum2;
+    TextView textView1, textView2, tv_banbenhao, tv_xiaoxinum, tv_xiaoxinum2;
     LinearLayout linearLayout1, linearLayout2, linearLayout3, linearLayout4, linearLayout5, linearLayout6,
-            linearLayout7, linearLayout8, linearLayout9,linearLayout10,linearLayout11,linearLayout12;
+            linearLayout7, linearLayout8, linearLayout9, linearLayout10, linearLayout11, linearLayout12;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,10 +76,10 @@ public class Fragment3 extends BaseFragment {
         if (MainActivity.item == 2) {
             requestServer();
         }
-        if (EMClient.getInstance().chatManager().getUnreadMessageCount() >0){
+        if (EMClient.getInstance().chatManager().getUnreadMessageCount() > 0) {
             tv_xiaoxinum.setVisibility(View.VISIBLE);
-            tv_xiaoxinum.setText(EMClient.getInstance().chatManager().getUnreadMessageCount()+"");
-        }else {
+            tv_xiaoxinum.setText(EMClient.getInstance().chatManager().getUnreadMessageCount() + "");
+        } else {
             tv_xiaoxinum.setVisibility(View.GONE);
         }
     }
@@ -109,7 +111,7 @@ public class Fragment3 extends BaseFragment {
         textView1 = findViewByID_My(R.id.textView1);
         textView1.setOnClickListener(this);
         textView2 = findViewByID_My(R.id.textView2);
-        if (!localUserInfo.getNickname().equals("")){
+        if (!localUserInfo.getNickname().equals("")) {
             textView1.setText(localUserInfo.getNickname());
         }
 
@@ -133,7 +135,7 @@ public class Fragment3 extends BaseFragment {
         linearLayout7 = findViewByID_My(R.id.linearLayout7);
         linearLayout8 = findViewByID_My(R.id.linearLayout8);
         linearLayout9 = findViewByID_My(R.id.linearLayout9);
-        linearLayout10= findViewByID_My(R.id.linearLayout10);
+        linearLayout10 = findViewByID_My(R.id.linearLayout10);
         linearLayout11 = findViewByID_My(R.id.linearLayout11);
         linearLayout12 = findViewByID_My(R.id.linearLayout12);
         linearLayout1.setOnClickListener(this);
@@ -150,7 +152,7 @@ public class Fragment3 extends BaseFragment {
         linearLayout12.setOnClickListener(this);
 
         tv_banbenhao = findViewByID_My(R.id.tv_banbenhao);
-        tv_banbenhao.setText("版本号："+CommonUtil.getVersionName(getActivity()));
+        tv_banbenhao.setText("版本号：" + CommonUtil.getVersionName(getActivity()));
 
         tv_xiaoxinum = findViewByID_My(R.id.tv_xiaoxinum);
         tv_xiaoxinum2 = findViewByID_My(R.id.tv_xiaoxinum2);
@@ -191,12 +193,14 @@ public class Fragment3 extends BaseFragment {
                     imageView1.setImageResource(R.mipmap.headimg);
 
                 //未读信息
-                if (response.getMsg() > 0){
+                if (response.getMsg() > 0) {
                     tv_xiaoxinum2.setVisibility(View.VISIBLE);
-                    tv_xiaoxinum2.setText(response.getMsg()+"");
-                }else {
+                    tv_xiaoxinum2.setText(response.getMsg() + "");
+                } else {
                     tv_xiaoxinum2.setVisibility(View.GONE);
                 }
+
+                setEaseUser();//设置环信昵称、头像
 
                 hideProgress();
             }
@@ -392,4 +396,27 @@ public class Fragment3 extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    private void setEaseUser() {
+        EaseUI easeUI = EaseUI.getInstance();
+        easeUI.setUserProfileProvider(new EaseUI.EaseUserProfileProvider() {
+            @Override
+            public EaseUser getUser(String username) {
+                return getUserInfo(username);
+            }
+        });
+    }
+
+    private EaseUser getUserInfo(String username) {
+        EaseUser easeUser = new EaseUser(username);
+        if (username.equals(localUserInfo.getHxid())) {
+            easeUser.setNickname(localUserInfo.getNickname());
+            easeUser.setAvatar(OkHttpClientManager.IMGHOST + localUserInfo.getUserImage());
+        } else {
+           /* Connections friend = new FriendDao(getApplicationContext()).getFriendByUsername(username);
+            easeUser.setNickname(friend.getRealname());
+            easeUser.setAvatar(friend.getHeadimg());*/
+        }
+        return easeUser;
+    }//即可正常显示头像昵称
 }

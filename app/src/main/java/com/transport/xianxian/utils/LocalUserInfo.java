@@ -42,7 +42,7 @@ public class LocalUserInfo {
     public static final String ISREALNAMEVALIDATED = "isRealNameValidated";//用户是否实名验证
     public static final String USERREALNAME = "userRealName";//用户真实姓名
 
-    public static final String WINNUM = "winNum";//中奖信息
+    public static final String HXID = "hx_id";//环信id
     public static final String WINNUM1 = "winNum1";//中奖信息
     public static final String LOSENUM = "loseNum";//未中奖信息
     public static final String LOSENUM1 = "loseNum1";//未中奖信息
@@ -198,9 +198,9 @@ public class LocalUserInfo {
         editor.commit();
     }
 
-    //保存中奖信息
-    public void setWinnum(String string) {
-        editor.putString(WINNUM, string);
+    //保存环信ID
+    public void setHxid(String string) {
+        editor.putString(HXID, string);
         editor.commit();
     }
     //保存中奖信息
@@ -566,9 +566,9 @@ public class LocalUserInfo {
         return "";
     }
 
-    //获取中奖信息
-    public String getWinnum() {
-        String string = getString(WINNUM);
+    //获取环信ID
+    public String getHxid() {
+        String string = getString(HXID);
         if (!TextUtils.isEmpty(string)) {
             return string;
         }

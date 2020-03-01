@@ -306,6 +306,9 @@ public class RegisteredActivity extends BaseActivity {
                     //保存是否认证
                     String identity = jObj1.getString("is_certification");
                     localUserInfo.setIsVerified(identity);//1 认证 2 未认证
+                    //保存环信ID
+                    localUserInfo.setHxid(jObj1.getString("hx_username"));
+
                     //环信注册
                     new Thread(new Runnable() {
                         @Override
