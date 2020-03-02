@@ -1,5 +1,6 @@
 package com.transport.xianxian.activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,7 +33,7 @@ import static com.transport.xianxian.net.OkHttpClientManager.IMGHOST;
  */
 public class WalletActivity extends BaseActivity {
     ImageView imageView1;
-    TextView textView1, textView2, textView3, textView4, textView5, textView6;
+    TextView textView1, textView2, textView3, textView4, textView5, textView6, tv_detail;
 
     boolean isShowList = true;
     int page = 1;
@@ -84,6 +85,7 @@ public class WalletActivity extends BaseActivity {
         textView4 = findViewByID_My(R.id.textView4);
         textView5 = findViewByID_My(R.id.textView5);
         textView6 = findViewByID_My(R.id.textView6);
+        tv_detail = findViewByID_My(R.id.tv_detail);
         imageView1 = findViewByID_My(R.id.imageView1);
 
     }
@@ -99,10 +101,16 @@ public class WalletActivity extends BaseActivity {
 
             case R.id.tv_detail:
                 //明细
+                Drawable drawable1 = getResources().getDrawable(R.mipmap.ic_down_black);//选中-蓝色
+                Drawable drawable2 = getResources().getDrawable(R.mipmap.ic_next_black);//未选-灰色
+                drawable1.setBounds(0, 0, drawable1.getMinimumWidth(), drawable1.getMinimumHeight());
+                drawable2.setBounds(0, 0, drawable2.getMinimumWidth(), drawable2.getMinimumHeight());
                 isShowList = !isShowList;
-                if (isShowList){
+                if (isShowList) {
+                    tv_detail.setCompoundDrawables(null, null, drawable1, null);
                     recyclerView.setVisibility(View.VISIBLE);
-                }else {
+                } else {
+                    tv_detail.setCompoundDrawables(null, null, drawable2, null);
                     recyclerView.setVisibility(View.GONE);
                 }
                 break;
@@ -143,11 +151,11 @@ public class WalletActivity extends BaseActivity {
                 hideProgress();
                 MyLogger.i(">>>>>>>>>钱包" + response);
                 textView1.setText(response.getNickname());//昵称
-                textView2.setText("¥ "+response.getMoney());//余额
-                textView3.setText("¥ "+response.getWait_money());//未完成收入
-                textView4.setText("¥ "+response.getFrozen_money());//冻结
-                textView5.setText("¥ "+response.getTotal_money());//总收入
-                textView6.setText("¥ "+response.getWithdrawal_money());//总提现
+                textView2.setText("¥ " + response.getMoney());//余额
+                textView3.setText("¥ " + response.getWait_money());//未完成收入
+                textView4.setText("¥ " + response.getFrozen_money());//冻结
+                textView5.setText("¥ " + response.getTotal_money());//总收入
+                textView6.setText("¥ " + response.getWithdrawal_money());//总提现
                 if (!response.getHead().equals(""))
                     Glide.with(WalletActivity.this)
                             .load(IMGHOST + response.getHead())

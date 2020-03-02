@@ -1,5 +1,6 @@
 package com.transport.xianxian.activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,8 +33,8 @@ import static com.transport.xianxian.net.OkHttpClientManager.IMGHOST;
  */
 public class CapitalStatisticsActivity extends BaseActivity {
     ImageView imageView1;
-    TextView textView1, textView2, textView3, textView4, textView5;
-
+    TextView textView1, textView2, textView3, textView4, textView5, tv_detail;
+    boolean isShowList = true;
     int page = 1;
     private RecyclerView recyclerView;
     List<CapitalStatisticsModel.TmoneyDataBean> list = new ArrayList<>();
@@ -76,6 +77,7 @@ public class CapitalStatisticsActivity extends BaseActivity {
         textView3 = findViewByID_My(R.id.textView3);
         textView4 = findViewByID_My(R.id.textView4);
         textView5 = findViewByID_My(R.id.textView5);
+        tv_detail = findViewByID_My(R.id.tv_detail);
         imageView1 = findViewByID_My(R.id.imageView1);
     }
 
@@ -88,6 +90,21 @@ public class CapitalStatisticsActivity extends BaseActivity {
 //                Bundle bundle = new Bundle();
 //                bundle.putString("money",);
                 CommonUtil.gotoActivity(CapitalStatisticsActivity.this, TakeCashActivity.class);
+                break;
+            case R.id.tv_detail:
+                //明细
+                Drawable drawable1 = getResources().getDrawable(R.mipmap.ic_down_black);//选中-蓝色
+                Drawable drawable2 = getResources().getDrawable(R.mipmap.ic_next_black);//未选-灰色
+                drawable1.setBounds(0, 0, drawable1.getMinimumWidth(), drawable1.getMinimumHeight());
+                drawable2.setBounds(0, 0, drawable2.getMinimumWidth(), drawable2.getMinimumHeight());
+                isShowList = !isShowList;
+                if (isShowList) {
+                    tv_detail.setCompoundDrawables(null, null, drawable1, null);
+                    recyclerView.setVisibility(View.VISIBLE);
+                } else {
+                    tv_detail.setCompoundDrawables(null, null, drawable2, null);
+                    recyclerView.setVisibility(View.GONE);
+                }
                 break;
             default:
                 break;
@@ -126,10 +143,10 @@ public class CapitalStatisticsActivity extends BaseActivity {
                 hideProgress();
                 MyLogger.i(">>>>>>>>>资金统计" + response);
                 textView1.setText(response.getNickname());//昵称
-                textView2.setText("¥ "+response.getMoney());//账户余额
-                textView3.setText("¥ "+response.getWait_money());//未完成收入
-                textView4.setText("¥ "+response.getFrozen_money());//冻结
-                textView5.setText("¥ "+response.getToday_money());//今日收入
+                textView2.setText("¥ " + response.getMoney());//账户余额
+                textView3.setText("¥ " + response.getWait_money());//未完成收入
+                textView4.setText("¥ " + response.getFrozen_money());//冻结
+                textView5.setText("¥ " + response.getToday_money());//今日收入
                 if (!response.getHead().equals(""))
                     Glide.with(CapitalStatisticsActivity.this)
                             .load(IMGHOST + response.getHead())

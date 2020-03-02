@@ -136,7 +136,10 @@ public class Registered2Activity extends BaseActivity {
             myToast("请输入身份证号码");
             return false;
         }
-
+        if (identity_number.length() !=18){
+            myToast("请输入18位身份证号码");
+            return false;
+        }
         if (!isgouxuan) {
             myToast("注册请勾选同意遵守《用户注册协议》");
             return false;
