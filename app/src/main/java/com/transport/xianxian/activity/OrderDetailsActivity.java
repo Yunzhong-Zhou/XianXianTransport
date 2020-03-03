@@ -59,6 +59,8 @@ import com.transport.xianxian.net.OkHttpClientManager;
 import com.transport.xianxian.net.URLs;
 import com.transport.xianxian.utils.CommonUtil;
 import com.transport.xianxian.utils.MyLogger;
+import com.transport.xianxian.utils.huanxin.APPConfig;
+import com.transport.xianxian.utils.huanxin.SharedPreferencesUtils;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -75,6 +77,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import overlay.AMapUtil;
 import overlay.TruckRouteColorfulOverLay;
 
+import static com.transport.xianxian.net.OkHttpClientManager.HOST;
 import static com.transport.xianxian.net.OkHttpClientManager.IMGHOST;
 
 /**
@@ -492,6 +495,12 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                         tv_left.setBackgroundResource(R.drawable.btn_juse);
                         tv_right.setText("配送完毕");//右边按钮
                         break;
+                    case 6://转单
+                        tv_left.setText("返回列表");//左边按钮
+                        tv_left.setBackgroundResource(R.drawable.btn_juse);
+                        tv_right.setText("确认接单");//右边按钮
+                        break;
+
                 }
             }
         });
@@ -503,9 +512,22 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
         switch (v.getId()) {
             case R.id.iv_xinxi:
                 //聊天
-                Bundle bundle1 = new Bundle();
+                /*Bundle bundle1 = new Bundle();
                 bundle1.putString(EaseConstant.EXTRA_USER_ID, model.getTindent().getHx_username());
-                CommonUtil.gotoActivityWithData(this, ChatActivity.class, bundle1, false);
+                CommonUtil.gotoActivityWithData(this, ChatActivity.class, bundle1, false);*/
+                //设置要发送出去的昵称
+                SharedPreferencesUtils.setParam(this, APPConfig.USER_NAME,localUserInfo.getNickname());
+                //设置要发送出去的头像
+                SharedPreferencesUtils.setParam(this,APPConfig.USER_HEAD_IMG,HOST+localUserInfo.getUserImage());
+
+                Intent intent=new Intent(this,MyChatActivity.class);
+                //传入参数
+                Bundle args=new Bundle();
+                args.putInt(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
+                args.putString(EaseConstant.EXTRA_USER_ID,model.getTindent().getHx_username());
+                intent.putExtra("conversation",args);
+
+                startActivity(intent);
                 break;
             case R.id.iv_dianhua:
                 //打电话
@@ -600,12 +622,11 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                                 .show();
                         TextView tv_bili = dialog1.findViewById(R.id.tv_bili);
                         SeekBar seekBar = dialog1.findViewById(R.id.seekBar);
-
                         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                             @Override
                             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                scale = progress;
-                                tv_bili.setText("金额比例："+progress+"%");
+                                scale = progress+1;
+                                tv_bili.setText("金额比例："+scale+"%");
                             }
 
                             @Override
@@ -631,7 +652,7 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                                 bundle.putString("lat", lat+"");
                                 bundle.putString("lng", lng+"");
                                 bundle.putString("scale", scale+"");
-                                CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, ZhuanDanActivity.class, bundle, false);
+                                CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, ZhuanDanActivity.class, bundle, true);
                             }
                         });
                         dialog1.findViewById(R.id.textView4).setOnClickListener(new View.OnClickListener() {

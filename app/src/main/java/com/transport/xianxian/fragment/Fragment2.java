@@ -27,9 +27,9 @@ import com.liaoinstan.springview.widget.SpringView;
 import com.squareup.okhttp.Request;
 import com.transport.xianxian.R;
 import com.transport.xianxian.activity.AddSurchargeActivity;
-import com.transport.xianxian.activity.ChatActivity;
 import com.transport.xianxian.activity.MainActivity;
 import com.transport.xianxian.activity.MapNavigationActivity;
+import com.transport.xianxian.activity.MyChatActivity;
 import com.transport.xianxian.activity.OrderDetailsActivity;
 import com.transport.xianxian.activity.TrackSearchActivity;
 import com.transport.xianxian.activity.ZhuanDanActivity;
@@ -40,6 +40,8 @@ import com.transport.xianxian.net.OkHttpClientManager;
 import com.transport.xianxian.net.URLs;
 import com.transport.xianxian.utils.CommonUtil;
 import com.transport.xianxian.utils.MyLogger;
+import com.transport.xianxian.utils.huanxin.APPConfig;
+import com.transport.xianxian.utils.huanxin.SharedPreferencesUtils;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -54,6 +56,7 @@ import java.util.List;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.transport.xianxian.net.OkHttpClientManager.HOST;
 import static com.transport.xianxian.net.OkHttpClientManager.IMGHOST;
 
 
@@ -454,10 +457,10 @@ public class Fragment2 extends BaseFragment {
                                             holder.setText(R.id.textView2, model.getNow_state_sub_action());//配送中
 
                                             TextView tv_yuyue = holder.getView(R.id.tv_yuyue);
-                                            if (model.getIs_plan() == 1){
+                                            if (model.getIs_plan() == 1) {
                                                 tv_yuyue.setVisibility(View.VISIBLE);
-                                                tv_yuyue.setText("预约时间："+model.getPlan_time());//预约时间
-                                            }else {
+                                                tv_yuyue.setText("预约时间：" + model.getPlan_time());//预约时间
+                                            } else {
                                                 tv_yuyue.setVisibility(View.GONE);
                                             }
 
@@ -540,7 +543,7 @@ public class Fragment2 extends BaseFragment {
                                                     tv1.setBackgroundResource(R.drawable.yuanxing_juse);
 
                                                     //开始点为 上一个点的坐标  终点为这个点的坐标
-                                                    mStartPoint = new DPoint(Double.valueOf(model.getAddr_list().get(i-1).getLat()), Double.valueOf(model.getAddr_list().get(i-1).getLng()));//起点
+                                                    mStartPoint = new DPoint(Double.valueOf(model.getAddr_list().get(i - 1).getLat()), Double.valueOf(model.getAddr_list().get(i - 1).getLng()));//起点
                                                     mEndPoint = new DPoint(Double.valueOf(model.getAddr_list().get(i).getLat()), Double.valueOf(model.getAddr_list().get(i).getLng()));//终点，39.995576,116.481288
                                                     tv6.setText("送货路程" + CommonUtil.distanceFormat(CoordinateConverter.calculateLineDistance(mStartPoint, mEndPoint)));//送货路程
                                                 } else {
@@ -548,7 +551,7 @@ public class Fragment2 extends BaseFragment {
                                                     tv1.setBackgroundResource(R.drawable.yuanxing_huise);
 
                                                     //开始点为 上一个点的坐标  终点为这个点的坐标
-                                                    mStartPoint = new DPoint(Double.valueOf(model.getAddr_list().get(i-1).getLat()), Double.valueOf(model.getAddr_list().get(i-1).getLng()));//起点
+                                                    mStartPoint = new DPoint(Double.valueOf(model.getAddr_list().get(i - 1).getLat()), Double.valueOf(model.getAddr_list().get(i - 1).getLng()));//起点
                                                     mEndPoint = new DPoint(Double.valueOf(model.getAddr_list().get(i).getLat()), Double.valueOf(model.getAddr_list().get(i).getLng()));//终点，39.995576,116.481288
                                                     tv6.setText("送货路程" + CommonUtil.distanceFormat(CoordinateConverter.calculateLineDistance(mStartPoint, mEndPoint)));//送货路程
                                                 }
@@ -672,8 +675,8 @@ public class Fragment2 extends BaseFragment {
                                                     seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                                                         @Override
                                                         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                                            scale = progress;
-                                                            tv_bili.setText("金额比例："+progress+"%");
+                                                            scale = progress + 1;
+                                                            tv_bili.setText("金额比例：" + scale + "%");
                                                         }
 
                                                         @Override
@@ -692,9 +695,9 @@ public class Fragment2 extends BaseFragment {
                                                             dialog1.dismiss();
                                                             Bundle bundle = new Bundle();
                                                             bundle.putString("id", model.getId());
-                                                            bundle.putString("lat", lat+"");
-                                                            bundle.putString("lng", lng+"");
-                                                            bundle.putString("scale", scale+"");
+                                                            bundle.putString("lat", lat + "");
+                                                            bundle.putString("lng", lng + "");
+                                                            bundle.putString("scale", scale + "");
                                                             CommonUtil.gotoActivityWithData(getActivity(), ZhuanDanActivity.class, bundle, false);
                                                         }
                                                     });
@@ -731,9 +734,22 @@ public class Fragment2 extends BaseFragment {
                                             holder.getView(R.id.iv_xinxi).setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                                    Bundle bundle = new Bundle();
+                                                   /* Bundle bundle = new Bundle();
                                                     bundle.putString(EaseConstant.EXTRA_USER_ID, model.getHx_username());
-                                                    CommonUtil.gotoActivityWithData(getActivity(), ChatActivity.class, bundle, false);
+                                                    CommonUtil.gotoActivityWithData(getActivity(), ChatActivity.class, bundle, false);*/
+                                                    //设置要发送出去的昵称
+                                                    SharedPreferencesUtils.setParam(getActivity(), APPConfig.USER_NAME, localUserInfo.getNickname());
+                                                    //设置要发送出去的头像
+                                                    SharedPreferencesUtils.setParam(getActivity(), APPConfig.USER_HEAD_IMG, HOST + localUserInfo.getUserImage());
+
+                                                    Intent intent = new Intent(getActivity(), MyChatActivity.class);
+                                                    //传入参数
+                                                    Bundle args = new Bundle();
+                                                    args.putInt(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
+                                                    args.putString(EaseConstant.EXTRA_USER_ID, model.getHx_username());
+                                                    intent.putExtra("conversation", args);
+
+                                                    startActivity(intent);
                                                 }
                                             });
                                             //拨打电话
@@ -938,9 +954,22 @@ public class Fragment2 extends BaseFragment {
                                             holder.getView(R.id.iv_xinxi).setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                                    Bundle bundle = new Bundle();
+                                                    /*Bundle bundle = new Bundle();
                                                     bundle.putString(EaseConstant.EXTRA_USER_ID, model.getHx_username());
-                                                    CommonUtil.gotoActivityWithData(getActivity(), ChatActivity.class, bundle, false);
+                                                    CommonUtil.gotoActivityWithData(getActivity(), ChatActivity.class, bundle, false);*/
+                                                    //设置要发送出去的昵称
+                                                    SharedPreferencesUtils.setParam(getActivity(), APPConfig.USER_NAME, localUserInfo.getNickname());
+                                                    //设置要发送出去的头像
+                                                    SharedPreferencesUtils.setParam(getActivity(), APPConfig.USER_HEAD_IMG, HOST + localUserInfo.getUserImage());
+
+                                                    Intent intent = new Intent(getActivity(), MyChatActivity.class);
+                                                    //传入参数
+                                                    Bundle args = new Bundle();
+                                                    args.putInt(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
+                                                    args.putString(EaseConstant.EXTRA_USER_ID, model.getHx_username());
+                                                    intent.putExtra("conversation", args);
+
+                                                    startActivity(intent);
                                                 }
                                             });
                                             //拨打电话

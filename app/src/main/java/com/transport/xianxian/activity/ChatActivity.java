@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.ui.EaseBaseActivity;
 import com.transport.xianxian.R;
-import com.transport.xianxian.fragment.MyChatFragment;
+import com.transport.xianxian.utils.huanxin.MyChatFragment;
 
 
 public class ChatActivity extends EaseBaseActivity {

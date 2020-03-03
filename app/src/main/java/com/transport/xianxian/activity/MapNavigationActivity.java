@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +48,7 @@ import com.autonavi.tbt.TrafficFacilityInfo;
 import com.bumptech.glide.Glide;
 import com.cy.cyflowlayoutlibrary.FlowLayout;
 import com.cy.cyflowlayoutlibrary.FlowLayoutAdapter;
+import com.cy.dialog.BaseDialog;
 import com.hyphenate.easeui.EaseConstant;
 import com.squareup.okhttp.Request;
 import com.transport.xianxian.R;
@@ -58,6 +61,8 @@ import com.transport.xianxian.net.OkHttpClientManager;
 import com.transport.xianxian.net.URLs;
 import com.transport.xianxian.utils.CommonUtil;
 import com.transport.xianxian.utils.MyLogger;
+import com.transport.xianxian.utils.huanxin.APPConfig;
+import com.transport.xianxian.utils.huanxin.SharedPreferencesUtils;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -69,6 +74,7 @@ import java.util.Map;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.transport.xianxian.net.OkHttpClientManager.HOST;
 import static com.transport.xianxian.net.OkHttpClientManager.IMGHOST;
 
 /**
@@ -94,6 +100,8 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
     CommonAdapter<OrderDetailsModel.TindentBean.PriceDetailBean> mAdapter;
     double lat = 0, lng = 0;
     float juli = 0;
+
+    int scale = 20;
 
     //轨迹
     private static final String TAG = "TrackServiceActivity";
@@ -381,12 +389,19 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
 
                 tv_right.setText("确认卸货");//右边按钮
                 break;
+
             case 7://订单完成
                 tv_left.setText("返回详情");//左边按钮
                 tv_left.setBackgroundResource(R.drawable.btn_juse);
 
                 tv_right.setText("配送完毕");//右边按钮
                 break;
+
+            /*case 6://转单
+                tv_left.setText("返回详情");//左边按钮
+                tv_left.setBackgroundResource(R.drawable.btn_juse);
+                tv_right.setText("确认接单");//右边按钮
+                break;*/
 
         }
     }
@@ -431,9 +446,22 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
             case R.id.iv_xinxi:
             case R.id.iv_xinxi_2:
                 //聊天
-                Bundle bundle1 = new Bundle();
+                /*Bundle bundle1 = new Bundle();
                 bundle1.putString(EaseConstant.EXTRA_USER_ID, model.getTindent().getHx_username());
-                CommonUtil.gotoActivityWithData(this, ChatActivity.class, bundle1, false);
+                CommonUtil.gotoActivityWithData(this, ChatActivity.class, bundle1, false);*/
+                //设置要发送出去的昵称
+                SharedPreferencesUtils.setParam(this, APPConfig.USER_NAME,localUserInfo.getNickname());
+                //设置要发送出去的头像
+                SharedPreferencesUtils.setParam(this,APPConfig.USER_HEAD_IMG,HOST+localUserInfo.getUserImage());
+
+                Intent intent=new Intent(this,MyChatActivity.class);
+                //传入参数
+                Bundle args=new Bundle();
+                args.putInt(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
+                args.putString(EaseConstant.EXTRA_USER_ID,model.getTindent().getHx_username());
+                intent.putExtra("conversation",args);
+
+                startActivity(intent);
                 break;
             case R.id.iv_dianhua:
             case R.id.iv_dianhua_2:
@@ -505,24 +533,61 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
                         });
                         break;
                     case "转派订单":
-                        showToast("确认转派订单吗？", "确认", "取消", new View.OnClickListener() {
+                        BaseDialog dialog1 = new BaseDialog(MapNavigationActivity.this);
+                        dialog1.contentView(R.layout.dialog_zhuandan)
+                                .layoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT))
+                                .animType(BaseDialog.AnimInType.CENTER)
+                                .canceledOnTouchOutside(true)
+                                .dimAmount(0.8f)
+                                .show();
+                        TextView tv_bili = dialog1.findViewById(R.id.tv_bili);
+                        SeekBar seekBar = dialog1.findViewById(R.id.seekBar);
+                        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                            @Override
+                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                scale = progress+1;
+                                tv_bili.setText("金额比例："+scale+"%");
+                            }
+
+                            @Override
+                            public void onStartTrackingTouch(SeekBar seekBar) {
+
+                            }
+
+                            @Override
+                            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                            }
+                        });
+                        dialog1.findViewById(R.id.textView3).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                dialog1.dismiss();
                                 //停止轨迹上报
                                 if (!model.getTindent().getTerminal_id().equals("")){
                                     aMapTrackClient.stopTrack(new TrackParam(Constants.SERVICE_ID, Long.valueOf(model.getTindent().getTerminal_id())), onTrackListener);
                                     aMapTrackClient.stopGather(onTrackListener);
                                 }
 
-                                dialog.dismiss();
                                 Bundle bundle = new Bundle();
                                 bundle.putString("id", model.getTindent().getId());
-                                CommonUtil.gotoActivityWithData(MapNavigationActivity.this, ZhuanDanActivity.class, bundle, false);
+                                bundle.putString("lat", lat+"");
+                                bundle.putString("lng", lng+"");
+                                bundle.putString("scale", scale+"");
+                                CommonUtil.gotoActivityWithData(MapNavigationActivity.this, ZhuanDanActivity.class, bundle, true);
                             }
-                        }, new View.OnClickListener() {
+                        });
+                        dialog1.findViewById(R.id.textView4).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                dialog.dismiss();
+                                dialog1.dismiss();
+                            }
+                        });
+                        dialog1.findViewById(R.id.dismiss).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog1.dismiss();
                             }
                         });
                         break;
