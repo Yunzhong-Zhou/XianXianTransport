@@ -904,6 +904,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         }
         if(chatFragmentHelper != null){
             //set extension
+            Log.i(">>>>>>>>",">>>>>onSetMessageAttributes>>>>>>>");
             chatFragmentHelper.onSetMessageAttributes(message);
         }
         if (chatType == EaseConstant.CHATTYPE_GROUP){

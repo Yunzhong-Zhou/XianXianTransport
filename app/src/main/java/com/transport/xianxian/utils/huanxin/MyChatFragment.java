@@ -14,8 +14,11 @@ import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.ui.EaseChatFragment.EaseChatFragmentHelper;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.hyphenate.easeui.widget.presenter.EaseChatRowPresenter;
+import com.transport.xianxian.utils.LocalUserInfo;
 
 import java.util.Map;
+
+import static com.transport.xianxian.net.OkHttpClientManager.HOST;
 
 /**
  * Created by Administrator on 2017/1/11.
@@ -70,14 +73,14 @@ public class MyChatFragment extends EaseChatFragment implements EaseChatFragment
             message.setAttribute("em_robot_message", isRobot);
         }
         //设置要发送扩展消息用户昵称
-        message.setAttribute(Constant.USER_NAME, (String) SharedPreferencesUtils.getParam(getActivity().getApplicationContext(), APPConfig.USER_NAME,"nike"));
-        message.setAttribute(Constant.USER_ID, (String) SharedPreferencesUtils.getParam(getActivity().getApplicationContext(), APPConfig.USER_NAME,"nike"));
+        message.setAttribute(Constant.USER_NAME, (String) SharedPreferencesUtils.getParam(getActivity().getApplicationContext(), APPConfig.USER_NAME, LocalUserInfo.getInstance(getActivity()).getNickname()));
+        message.setAttribute(Constant.USER_ID, (String) SharedPreferencesUtils.getParam(getActivity().getApplicationContext(), APPConfig.USER_NAME, LocalUserInfo.getInstance(getActivity()).getNickname()));
         //设置要发送扩展消息用户头像
-        String headImgUrl=(String)SharedPreferencesUtils.getParam(getActivity().getApplicationContext(),APPConfig.USER_HEAD_IMG,"http://www.qqzhi.com/uploadpic/2014-09-14/070503273.jpg");
+        String headImgUrl=(String)SharedPreferencesUtils.getParam(getActivity().getApplicationContext(),APPConfig.USER_HEAD_IMG,HOST+ LocalUserInfo.getInstance(getActivity()).getUserImage());
         message.setAttribute(Constant.HEAD_IMAGE_URL, headImgUrl);
         message.setAttribute(Constant.SEX,"1");
-        message.setAttribute(Constant.RECEIVOR_HEAD_IMAGE_URL,"http://www.qqzhi.com/uploadpic/2014-09-14/070503273.jpg");
-        message.setAttribute(Constant.RECEIVOR_USER_NAME,"honey");
+        message.setAttribute(Constant.RECEIVOR_HEAD_IMAGE_URL,HOST+ LocalUserInfo.getInstance(getActivity()).getUserImage());
+        message.setAttribute(Constant.RECEIVOR_USER_NAME, LocalUserInfo.getInstance(getActivity()).getNickname());
         message.setAttribute(Constant.RECEIVOR_USER_SEX,"2");
         message.setAttribute(Constant.RECEIVOR_USERID,"150");
 

@@ -1,6 +1,6 @@
 <resources>
     <!--司机端-->
-    <string name="app_name">鲜鲜拉</string>
+    <string name="app_name">鲜鲜拉司机版</string>
 
     <string name="paizhao">拍照</string>
     <string name="xiangce">相册</string>

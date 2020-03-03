@@ -200,7 +200,7 @@ public class Fragment3 extends BaseFragment {
                     tv_xiaoxinum2.setVisibility(View.GONE);
                 }
 
-                setEaseUser();//设置环信昵称、头像
+//                setEaseUser();//设置环信昵称、头像
 
                 hideProgress();
             }

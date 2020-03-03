@@ -5,8 +5,8 @@ package com.transport.xianxian.utils.huanxin;
  */
 
 public class APPConfig {
-    public static final String serverSign="ef016a8ce847533d888ee020857d0403";
-    public static final String sendValidNumSign="ef016a8ce847533d888ee020857d0403";
+    public static final String serverSign="";
+    public static final String sendValidNumSign="";
     //token
     public static final String TOKEN="token";
     //用户id
@@ -37,7 +37,7 @@ public class APPConfig {
     //用户二维码
     public static final String USER_VERIFY_CODE="verify_code";
     //测试使用的头像
-    public static final String MY_HEADER_IMG="http://img5.duitang.com/uploads/item/201508/30/20150830132007_TjANX.thumb.224_0.jpeg";
+    public static final String MY_HEADER_IMG="";
     //测试使用的昵称
     public static final String NICK_NAME="zhangs";
 
