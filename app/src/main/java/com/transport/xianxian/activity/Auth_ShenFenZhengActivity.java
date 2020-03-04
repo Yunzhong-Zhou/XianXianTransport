@@ -2,6 +2,7 @@ package com.transport.xianxian.activity;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -9,7 +10,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,14 +24,16 @@ import com.transport.xianxian.base.BaseActivity;
 import com.transport.xianxian.model.Auth_ShenFenZhengModel;
 import com.transport.xianxian.net.OkHttpClientManager;
 import com.transport.xianxian.net.URLs;
-import com.transport.xianxian.utils.MyChooseImages;
 import com.transport.xianxian.utils.FileUtil;
+import com.transport.xianxian.utils.MyChooseImages;
 import com.transport.xianxian.utils.MyLogger;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import id.zelory.compressor.Compressor;
 
@@ -44,12 +49,14 @@ public class Auth_ShenFenZhengActivity extends BaseActivity {
     //选择图片及上传
     ArrayList<String> listFileNames = new ArrayList<>();
     ArrayList<File> listFiles = new ArrayList<>();
-    String type = "";
+    String type = "",identity_name = "",identity_number = "";
 
     ImageView imageView1, imageView2;
     LinearLayout linearLayout1, linearLayout2;
 
     TextView textView1;
+
+    EditText editText1,editText2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +70,8 @@ public class Auth_ShenFenZhengActivity extends BaseActivity {
         imageView2 = findViewByID_My(R.id.imageView2);
         linearLayout1 = findViewByID_My(R.id.linearLayout1);
         linearLayout2 = findViewByID_My(R.id.linearLayout2);
+        editText1 = findViewByID_My(R.id.editText1);
+        editText2 = findViewByID_My(R.id.editText2);
 
         textView1 = findViewByID_My(R.id.textView1);
 
@@ -108,6 +117,8 @@ public class Auth_ShenFenZhengActivity extends BaseActivity {
                         files = listFiles.toArray(new File[i]);
                     }
                     HashMap<String, String> params = new HashMap<>();
+                    params.put("identity_name", identity_name);
+                    params.put("identity_number", identity_number);
                     params.put("type", "post_identity");
                     params.put("token", localUserInfo.getToken());
                     RequestUpData(filenames, files, params);//
@@ -122,22 +133,22 @@ public class Auth_ShenFenZhengActivity extends BaseActivity {
     private void RequestUpData(String[] fileKeys, File[] files, HashMap<String, String> params) {
         OkHttpClientManager.postAsyn(this, URLs.Auth_CheZhu, fileKeys, files, params,
                 new OkHttpClientManager.ResultCallback<String>() {
-            @Override
-            public void onError(Request request, String info, Exception e) {
-                hideProgress();
-                if (!info.equals("")) {
-                    showToast(info);
-                }
-            }
+                    @Override
+                    public void onError(Request request, String info, Exception e) {
+                        hideProgress();
+                        if (!info.equals("")) {
+                            showToast(info);
+                        }
+                    }
 
-            @Override
-            public void onResponse(String response) {
-                hideProgress();
-                MyLogger.i(">>>>>>>>>上传身份认证" + response);
-                myToast("上传成功");
-                finish();
-            }
-        }, false);
+                    @Override
+                    public void onResponse(String response) {
+                        hideProgress();
+                        MyLogger.i(">>>>>>>>>上传身份认证" + response);
+                        myToast("上传成功");
+                        finish();
+                    }
+                }, false);
 
     }
 
@@ -171,7 +182,7 @@ public class Auth_ShenFenZhengActivity extends BaseActivity {
                     public void onResponse(final Auth_ShenFenZhengModel response) {
                         hideProgress();
                         MyLogger.i(">>>>>>>>>车主认证-身份认证" + response);
-                        if (!response.getIdentity_front_image().equals("")){
+                        if (!response.getIdentity_front_image().equals("")) {
                             imageView1.setVisibility(View.VISIBLE);
                             linearLayout1.setVisibility(View.GONE);
                             Glide.with(Auth_ShenFenZhengActivity.this)
@@ -180,11 +191,11 @@ public class Auth_ShenFenZhengActivity extends BaseActivity {
 //                    .placeholder(R.mipmap.headimg)//加载站位图
 //                    .error(R.mipmap.headimg)//加载失败
                                     .into(imageView1);//加载图片
-                        }else {
+                        } else {
                             imageView1.setVisibility(View.GONE);
                             linearLayout1.setVisibility(View.VISIBLE);
                         }
-                        if (!response.getIdentity_reverse_image().equals("")){
+                        if (!response.getIdentity_reverse_image().equals("")) {
                             imageView2.setVisibility(View.VISIBLE);
                             linearLayout2.setVisibility(View.GONE);
                             Glide.with(Auth_ShenFenZhengActivity.this)
@@ -193,7 +204,7 @@ public class Auth_ShenFenZhengActivity extends BaseActivity {
 //                    .placeholder(R.mipmap.headimg)//加载站位图
 //                    .error(R.mipmap.headimg)//加载失败
                                     .into(imageView2);//加载图片
-                        }else {
+                        } else {
                             imageView2.setVisibility(View.GONE);
                             linearLayout2.setVisibility(View.VISIBLE);
                         }
@@ -203,11 +214,65 @@ public class Auth_ShenFenZhengActivity extends BaseActivity {
     }
 
     private boolean match() {
+        identity_name = editText1.getText().toString().trim();
+        if (TextUtils.isEmpty(identity_name)) {
+            myToast("请输入姓名");
+            return false;
+        }
+        identity_number = editText2.getText().toString().trim();
+        if (TextUtils.isEmpty(identity_number)) {
+            myToast("请输入身份证号");
+            return false;
+        }
         if (listFiles.size() != 2) {
             myToast("请上传身份证正反面图片");
             return false;
         }
+        if (isIdNO(this,identity_number) == false){
+            return false;
+        }
         return true;
+    }
+
+    /**
+     * 身份证号码验证
+     */
+    private boolean isIdNO(Context context, String num) {
+        // 去掉所有空格
+        num = num.replace(" ", "");
+
+        Pattern idNumPattern = Pattern.compile("(\\d{17}[0-9xX])");
+
+        //通过Pattern获得Matcher
+        Matcher idNumMatcher = idNumPattern.matcher(num);
+
+        //判断用户输入是否为身份证号
+        if (idNumMatcher.matches()) {
+            System.out.println("您的出生年月日是：");
+            //如果是，定义正则表达式提取出身份证中的出生日期
+            Pattern birthDatePattern = Pattern.compile("\\d{6}(\\d{4})(\\d{2})(\\d{2}).*");//身份证上的前6位以及出生年月日
+
+            //通过Pattern获得Matcher
+            Matcher birthDateMather = birthDatePattern.matcher(num);
+
+            //通过Matcher获得用户的出生年月日
+            if (birthDateMather.find()) {
+                String year = birthDateMather.group(1);
+                String month = birthDateMather.group(2);
+                String date = birthDateMather.group(3);
+                if (Integer.parseInt(year) < 1900 // 如果年份是1900年之前
+                        || Integer.parseInt(month) > 12 // 月份>12月
+                        || Integer.parseInt(date) > 31 // 日期是>31号
+                ) {
+                    myToast("身份证号码不正确, 请检查");
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            myToast("请输入正确的身份证号码");
+            return false;
+        }
     }
 
     @Override

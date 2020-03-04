@@ -751,8 +751,13 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                         });
                         break;*/
                 }
+                break;
 
-
+            case R.id.tv_fujiafei:
+                //附加费
+                Bundle bundle = new Bundle();
+                bundle.putString("id", model.getTindent().getId());
+                CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, AddSurchargeActivity.class, bundle, false);
                 break;
         }
     }

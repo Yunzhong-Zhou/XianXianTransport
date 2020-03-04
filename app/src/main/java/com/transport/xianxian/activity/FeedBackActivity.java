@@ -25,6 +25,7 @@ import com.transport.xianxian.base.BaseActivity;
 import com.transport.xianxian.model.PhotoData;
 import com.transport.xianxian.net.OkHttpClientManager;
 import com.transport.xianxian.net.URLs;
+import com.transport.xianxian.utils.CommonUtil;
 import com.transport.xianxian.utils.FileUtil;
 import com.transport.xianxian.utils.MyLogger;
 import com.transport.xianxian.view.photochooser.ImagePagerActivity;
@@ -88,15 +89,20 @@ public class FeedBackActivity extends BaseActivity implements AdapterView.OnItem
                         filenames = listFileNames.toArray(new String[i]);
                         files = listFiles.toArray(new File[i]);
                     }
-                    params.put("text", text);
+                    params.put("msg", text);
                     params.put("token", localUserInfo.getToken());
+                    params.put("software_version", CommonUtil.getVersionName(FeedBackActivity.this));
+                    params.put("facility", "手机厂商：" + CommonUtil.getDeviceBrand()
+                            + "手机型号：" + CommonUtil.getSystemModel()
+                            + "Android系统版本：" + CommonUtil.getSystemVersion() +
+                            "本程序版本：" + CommonUtil.getVersionName(FeedBackActivity.this));
                     RequestUpData(filenames, files, params);
                 }
             }
         });
     }
     private void RequestUpData(String[] fileKeys, File[] files, HashMap<String, String> params) {
-        OkHttpClientManager.postAsyn(this, URLs.Auth_CheZhu, fileKeys, files, params,
+        OkHttpClientManager.postAsyn(this, URLs.FeedBack, fileKeys, files, params,
                 new OkHttpClientManager.ResultCallback<String>() {
                     @Override
                     public void onError(Request request, String info, Exception e) {

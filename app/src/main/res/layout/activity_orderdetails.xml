@@ -71,7 +71,7 @@
                             <TextView
                                 android:id="@+id/textView1"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:text="NAME"
                                 android:textColor="@color/black1"
                                 android:textSize="15sp" />
@@ -391,6 +391,19 @@
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/tv_fujiafei"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/yuanjiao_3_lanse"
+                        android:drawableRight="@mipmap/ic_next_white1"
+                        android:onClick="onClick"
+                        android:padding="4dp"
+                        android:text="编辑附加费"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/textView11"
@@ -437,7 +450,7 @@
                 android:background="@drawable/btn_juse"
                 android:gravity="center"
                 android:onClick="onClick"
-                android:text="返回列表"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -450,7 +463,7 @@
                 android:background="@drawable/btn_lanse"
                 android:gravity="center"
                 android:onClick="onClick"
-                android:text="确认接单"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 

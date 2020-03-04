@@ -676,16 +676,21 @@ public class CommonUtil {
             Long milliSecond = time - day * dd - hour * hh - minute * mi - second * ss;
 
             StringBuffer sb = new StringBuffer();
-//            if(day > 0) {
-//                sb.append(day+"天");//天
-//            }
 
-            if (hour > 0) {
+            if (day > 0) {
+                sb.append(day + "天");//天
+
                 sb.append(String.format("%02d", hour) + "小时");//小时-取两位小数
+            } else {
+                if (hour > 0) {
+                    sb.append(String.format("%02d", hour) + "小时");//小时-取两位小数
 //            sb.append(Integer.valueOf(hour1+"") + ":");//小时-取整
-            }else {
-                sb.append(String.format("%02d", minute) + "分钟");//分
+                } else {
+                    sb.append(String.format("%02d", minute) + "分钟");//分
+                }
             }
+
+
             /*if (minute > 0) {
 
             }*/
@@ -725,11 +730,11 @@ public class CommonUtil {
                 sb.append(day + "天");//天
                 sb.append(String.format("%02d", hour) + "时");//小时-取两位小数
 //                sb.append(String.format("%02d", minute) + "分");//分
-            }else {
+            } else {
                 if (hour > 0) {
                     sb.append(String.format("%02d", hour) + "时");//小时-取两位小数
                     sb.append(String.format("%02d", minute) + "分");//分
-                }else {
+                } else {
                     sb.append(String.format("%02d", minute) + "分");//分
                     sb.append(String.format("%02d", second) + "秒");//秒
                 }

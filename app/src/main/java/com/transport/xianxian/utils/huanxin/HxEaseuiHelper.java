@@ -287,10 +287,10 @@ public class HxEaseuiHelper {
                     dao.saveContactList(users);
 
 
-
                     // in background, do not refresh UI, notify it in notification bar
                     //设置本地消息推送通知
                     if(!easeUI.hasForegroundActivies()){
+
                         getNotifier().notify(message);
                     }
                 }

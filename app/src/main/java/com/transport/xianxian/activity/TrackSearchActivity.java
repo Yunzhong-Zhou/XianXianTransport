@@ -41,7 +41,7 @@ import java.util.List;
  * 2、演示如何查询终端最近上报的轨迹点及其所属轨迹信息，分别绘制出每条轨迹下的所有轨迹点
  */
 public class TrackSearchActivity extends BaseActivity {
-    Fragment2Model1 model;
+    Fragment2Model1.TindentListBean model;
 
     private AMapTrackClient aMapTrackClient;
 
@@ -57,7 +57,7 @@ public class TrackSearchActivity extends BaseActivity {
         textureMapView = findViewByID_My(R.id.activity_track_search_map);
         textureMapView.onCreate(savedInstanceState);
 
-        model = (Fragment2Model1) getIntent().getSerializableExtra("Fragment2Model1");
+        model = (Fragment2Model1.TindentListBean) getIntent().getSerializableExtra("Fragment2Model1");
         MyLogger.i(">>>>>>>>开始时间：" + CommonUtil.timedate1(model.getTake_time()*1000 + "") +
                 "\n>>>>>>>>>>>>>结束时间：" + CommonUtil.timedate1(model.getEnd_time()*1000 + ""));
 

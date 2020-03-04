@@ -152,9 +152,9 @@ public class URLs {
      */
     public static final String Auth_CheZhu = "/api/driver/center/identification";
     /**
-     * 充值详情
+     * 问题反馈
      */
-    public static final String RechargeDetail = "/api/top-up/detail";
+    public static final String FeedBack = "/api/guestbook";
     /**
      * 取消充值
      */

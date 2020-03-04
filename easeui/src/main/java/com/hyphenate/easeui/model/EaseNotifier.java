@@ -56,9 +56,9 @@ public class EaseNotifier {
     protected final static String MSG_ENG = "%s contacts sent %s messages";
     protected final static String MSG_CH = "%s个联系人发来%s条消息";
 
-    protected static int NOTIFY_ID = 0525; // start notification id
+    protected static int NOTIFY_ID = 0527; // start notification id
 
-    protected static final String CHANNEL_ID = "hyphenate_chatuidemo_notification";
+    protected static final String CHANNEL_ID = "XianXianLaSiJi";
     protected static final long[] VIBRATION_PATTERN = new long[]{0, 180, 80, 120};
 
     protected NotificationManager notificationManager = null;
@@ -82,7 +82,7 @@ public class EaseNotifier {
         if (Build.VERSION.SDK_INT >= 26) {
             // Create the notification channel for Android 8.0
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
-                    "hyphenate chatuidemo message default channel.", NotificationManager.IMPORTANCE_DEFAULT);
+                    "XianXianLaSiJi.", NotificationManager.IMPORTANCE_DEFAULT);
             channel.setVibrationPattern(VIBRATION_PATTERN);
             notificationManager.createNotificationChannel(channel);
         }
@@ -123,22 +123,24 @@ public class EaseNotifier {
      * @param message
      */
     public synchronized void notify(EMMessage message) {
-        if (EaseCommonUtils.isSilentMessage(message)) {
+        /*if (EaseCommonUtils.isSilentMessage(message)) {
             return;
-        }
-
-        EaseSettingsProvider settingsProvider = EaseUI.getInstance().getSettingsProvider();
+        }*/
+        //是否允许消息通知
+        /*EaseSettingsProvider settingsProvider = EaseUI.getInstance().getSettingsProvider();
         if (!settingsProvider.isMsgNotifyAllowed(message)) {
             return;
-        }
-
-        // check if app running background
-        if (!EasyUtils.isAppRunningForeground(appContext)) {
-            EMLog.d(TAG, "app is running in background");
+        }*/
+        notificationNum++;
+        fromUsers.add(message.getFrom());
+        handleMessage(message);
+        // 检查APP是否在运行
+        /*if (!EasyUtils.isAppRunningForeground(appContext)) {
+            Log.i(TAG, "app is running in background");
             notificationNum++;
             fromUsers.add(message.getFrom());
             handleMessage(message);
-        }
+        }*/
     }
 
     public synchronized void notify(List<EMMessage> messages) {
