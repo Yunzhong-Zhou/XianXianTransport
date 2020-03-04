@@ -9,12 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
             android:paddingTop="10dp"
             android:paddingRight="15dp"
+            android:visibility="gone"
             android:textSize="12sp"
             android:textColor="@color/black2"
             android:text="实名认证（提供姓名、身份证号、身份证正反面照片）" />
@@ -25,6 +27,7 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:paddingLeft="15dp"
+            android:visibility="gone"
             android:paddingRight="15dp">
 
             <TextView
@@ -51,6 +54,7 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:paddingLeft="15dp"
+            android:visibility="gone"
             android:paddingRight="15dp">
 
             <TextView

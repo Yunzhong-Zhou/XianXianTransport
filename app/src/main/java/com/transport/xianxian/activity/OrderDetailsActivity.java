@@ -466,6 +466,8 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
 
                 switch (model.getTindent().getStatus()) {
                     case -1://未接单
+                        tv_left.setVisibility(View.VISIBLE);
+                        tv_right.setVisibility(View.VISIBLE);
                         if (model.getTindent().getIs_appoint() == 1) {//平台指派，可以拒绝
                             tv_left.setText("拒绝此单");//左边按钮
                             tv_left.setBackgroundResource(R.drawable.btn_juse);
@@ -477,6 +479,8 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                         tv_right.setText("确认接单");//右边按钮
                         break;
                     case 1://已接单
+                        tv_left.setVisibility(View.VISIBLE);
+                        tv_right.setVisibility(View.VISIBLE);
                         tv_left.setText("取消订单");//左边按钮
                         tv_left.setBackgroundResource(R.drawable.btn_juse);
 
@@ -484,21 +488,33 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                         break;
                     case 2://已装货
                     case 3://已卸货
+                        tv_left.setVisibility(View.VISIBLE);
+                        tv_right.setVisibility(View.VISIBLE);
                         tv_left.setText("转派订单");//左边按钮
                         tv_left.setBackgroundResource(R.drawable.btn_juse);
 
                         tv_right.setText("去卸货");//右边按钮
                         break;
                     case 4://订单完成
+
                     case 7://订单完成
+                        tv_left.setVisibility(View.VISIBLE);
+                        tv_right.setVisibility(View.VISIBLE);
                         tv_left.setText("返回列表");//左边按钮
                         tv_left.setBackgroundResource(R.drawable.btn_juse);
                         tv_right.setText("配送完毕");//右边按钮
                         break;
                     case 6://转单
+                        tv_left.setVisibility(View.VISIBLE);
+                        tv_right.setVisibility(View.VISIBLE);
                         tv_left.setText("返回列表");//左边按钮
                         tv_left.setBackgroundResource(R.drawable.btn_juse);
                         tv_right.setText("确认接单");//右边按钮
+                        break;
+
+                    default:
+                        tv_left.setVisibility(View.GONE);
+                        tv_right.setVisibility(View.GONE);
                         break;
 
                 }
@@ -516,16 +532,16 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                 bundle1.putString(EaseConstant.EXTRA_USER_ID, model.getTindent().getHx_username());
                 CommonUtil.gotoActivityWithData(this, ChatActivity.class, bundle1, false);*/
                 //设置要发送出去的昵称
-                SharedPreferencesUtils.setParam(this, APPConfig.USER_NAME,localUserInfo.getNickname());
+                SharedPreferencesUtils.setParam(this, APPConfig.USER_NAME, localUserInfo.getNickname());
                 //设置要发送出去的头像
-                SharedPreferencesUtils.setParam(this,APPConfig.USER_HEAD_IMG,HOST+localUserInfo.getUserImage());
+                SharedPreferencesUtils.setParam(this, APPConfig.USER_HEAD_IMG, HOST + localUserInfo.getUserImage());
 
-                Intent intent=new Intent(this,MyChatActivity.class);
+                Intent intent = new Intent(this, MyChatActivity.class);
                 //传入参数
-                Bundle args=new Bundle();
+                Bundle args = new Bundle();
                 args.putInt(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
-                args.putString(EaseConstant.EXTRA_USER_ID,model.getTindent().getHx_username());
-                intent.putExtra("conversation",args);
+                args.putString(EaseConstant.EXTRA_USER_ID, model.getTindent().getHx_username());
+                intent.putExtra("conversation", args);
 
                 startActivity(intent);
                 break;
@@ -625,8 +641,8 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                             @Override
                             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                scale = progress+1;
-                                tv_bili.setText("金额比例："+scale+"%");
+                                scale = progress + 1;
+                                tv_bili.setText("金额比例：" + scale + "%");
                             }
 
                             @Override
@@ -649,9 +665,9 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
 
                                 Bundle bundle = new Bundle();
                                 bundle.putString("id", id);
-                                bundle.putString("lat", lat+"");
-                                bundle.putString("lng", lng+"");
-                                bundle.putString("scale", scale+"");
+                                bundle.putString("lat", lat + "");
+                                bundle.putString("lng", lng + "");
+                                bundle.putString("scale", scale + "");
                                 CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, ZhuanDanActivity.class, bundle, true);
                             }
                         });

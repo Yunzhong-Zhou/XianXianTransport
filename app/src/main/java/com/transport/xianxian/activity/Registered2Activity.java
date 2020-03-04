@@ -1,8 +1,8 @@
 package com.transport.xianxian.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,6 +20,8 @@ import com.transport.xianxian.utils.MyLogger;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.transport.xianxian.net.OkHttpClientManager.HOST;
 
@@ -136,15 +138,60 @@ public class Registered2Activity extends BaseActivity {
             myToast("请输入身份证号码");
             return false;
         }
-        if (identity_number.length() !=18){
+        /*if (identity_number.length() !=18){
             myToast("请输入18位身份证号码");
             return false;
-        }
+        }*/
         if (!isgouxuan) {
             myToast("注册请勾选同意遵守《用户注册协议》");
             return false;
         }
+
+        if (isIdNO(this,identity_number) == false){
+            return false;
+        }
         return true;
+    }
+
+    /**
+     * 身份证号码验证
+     */
+    private boolean isIdNO(Context context, String num) {
+        // 去掉所有空格
+        num = num.replace(" ", "");
+
+        Pattern idNumPattern = Pattern.compile("(\\d{17}[0-9xX])");
+
+        //通过Pattern获得Matcher
+        Matcher idNumMatcher = idNumPattern.matcher(num);
+
+        //判断用户输入是否为身份证号
+        if (idNumMatcher.matches()) {
+            System.out.println("您的出生年月日是：");
+            //如果是，定义正则表达式提取出身份证中的出生日期
+            Pattern birthDatePattern = Pattern.compile("\\d{6}(\\d{4})(\\d{2})(\\d{2}).*");//身份证上的前6位以及出生年月日
+
+            //通过Pattern获得Matcher
+            Matcher birthDateMather = birthDatePattern.matcher(num);
+
+            //通过Matcher获得用户的出生年月日
+            if (birthDateMather.find()) {
+                String year = birthDateMather.group(1);
+                String month = birthDateMather.group(2);
+                String date = birthDateMather.group(3);
+                if (Integer.parseInt(year) < 1900 // 如果年份是1900年之前
+                        || Integer.parseInt(month) > 12 // 月份>12月
+                        || Integer.parseInt(date) > 31 // 日期是>31号
+                ) {
+                    myToast("身份证号码不正确, 请检查");
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            myToast("请输入正确的身份证号码");
+            return false;
+        }
     }
 
     //注册
@@ -194,7 +241,6 @@ public class Registered2Activity extends BaseActivity {
                         });
                     }
                 });
-
             }
         }, false);
 
@@ -203,14 +249,14 @@ public class Registered2Activity extends BaseActivity {
     @Override
     protected void updateView() {
         titleView.setTitle("注册");
-        titleView.hideLeftBtn();
+//        titleView.hideLeftBtn();
     }
 
-    //屏蔽返回键
+    /*//屏蔽返回键
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK)
             return true;//不执行父类点击事件
         return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
-    }
+    }*/
 }

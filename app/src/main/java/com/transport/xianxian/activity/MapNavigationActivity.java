@@ -377,6 +377,8 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
                 tv_right.setText("确认接单");//右边按钮
                 break;*/
             case 1://已接单
+                tv_left.setVisibility(View.VISIBLE);
+                tv_right.setVisibility(View.VISIBLE);
                 tv_left.setText("取消订单");//左边按钮
                 tv_left.setBackgroundResource(R.drawable.btn_juse);
 
@@ -384,6 +386,8 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
                 break;
             case 2://已装货
             case 3://部分卸货
+                tv_left.setVisibility(View.VISIBLE);
+                tv_right.setVisibility(View.VISIBLE);
                 tv_left.setText("转派订单");//左边按钮
                 tv_left.setBackgroundResource(R.drawable.btn_juse);
 
@@ -391,6 +395,8 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
                 break;
 
             case 7://订单完成
+                tv_left.setVisibility(View.VISIBLE);
+                tv_right.setVisibility(View.VISIBLE);
                 tv_left.setText("返回详情");//左边按钮
                 tv_left.setBackgroundResource(R.drawable.btn_juse);
 
@@ -402,6 +408,10 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
                 tv_left.setBackgroundResource(R.drawable.btn_juse);
                 tv_right.setText("确认接单");//右边按钮
                 break;*/
+            default:
+                tv_left.setVisibility(View.GONE);
+                tv_right.setVisibility(View.GONE);
+                break;
 
         }
     }

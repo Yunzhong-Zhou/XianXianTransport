@@ -1,5 +1,6 @@
 package com.transport.xianxian.activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -36,6 +37,8 @@ public class ScoreDetailActivity extends BaseActivity {
     private RecyclerView recyclerView;
     List<ScoreDetailModel> list = new ArrayList<>();
     CommonAdapter<ScoreDetailModel> mAdapter;
+
+    TextView tv_detail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +67,7 @@ public class ScoreDetailActivity extends BaseActivity {
                 RequestMore(string);
             }
         });
+        tv_detail = findViewByID_My(R.id.tv_detail);
 
         recyclerView = findViewByID_My(R.id.recyclerView);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(ScoreDetailActivity.this);
@@ -81,10 +85,16 @@ public class ScoreDetailActivity extends BaseActivity {
         switch (v.getId()){
             case R.id.tv_detail:
                 //明细
+                Drawable drawable1 = getResources().getDrawable(R.mipmap.ic_down_black);//选中-蓝色
+                Drawable drawable2 = getResources().getDrawable(R.mipmap.ic_next_black);//未选-灰色
+                drawable1.setBounds(0, 0, drawable1.getMinimumWidth(), drawable1.getMinimumHeight());
+                drawable2.setBounds(0, 0, drawable2.getMinimumWidth(), drawable2.getMinimumHeight());
                 isShowList = !isShowList;
-                if (isShowList){
+                if (isShowList) {
+                    tv_detail.setCompoundDrawables(null, null, drawable1, null);
                     recyclerView.setVisibility(View.VISIBLE);
-                }else {
+                } else {
+                    tv_detail.setCompoundDrawables(null, null, drawable2, null);
                     recyclerView.setVisibility(View.GONE);
                 }
                 break;

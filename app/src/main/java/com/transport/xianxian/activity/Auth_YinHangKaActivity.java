@@ -113,9 +113,13 @@ public class Auth_YinHangKaActivity extends BaseActivity {
     }
 
     private boolean match() {
-        bank_card = editText1.getText().toString().trim();
+        bank_card = editText1.getText().toString().trim().replaceAll(" ","");
         if (TextUtils.isEmpty(bank_card)) {
             myToast("请输入本人银行卡号");
+            return false;
+        }
+        if (bank_card.length() != 16 || bank_card.length() != 19) {
+            myToast("请输入正确银行卡号");
             return false;
         }
         bank_name = editText2.getText().toString().trim();

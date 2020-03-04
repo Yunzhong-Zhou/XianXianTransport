@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -117,8 +116,8 @@ public class Auth_ShenFenZhengActivity extends BaseActivity {
                         files = listFiles.toArray(new File[i]);
                     }
                     HashMap<String, String> params = new HashMap<>();
-                    params.put("identity_name", identity_name);
-                    params.put("identity_number", identity_number);
+//                    params.put("identity_name", identity_name);
+//                    params.put("identity_number", identity_number);
                     params.put("type", "post_identity");
                     params.put("token", localUserInfo.getToken());
                     RequestUpData(filenames, files, params);//
@@ -214,7 +213,7 @@ public class Auth_ShenFenZhengActivity extends BaseActivity {
     }
 
     private boolean match() {
-        identity_name = editText1.getText().toString().trim();
+        /*identity_name = editText1.getText().toString().trim();
         if (TextUtils.isEmpty(identity_name)) {
             myToast("请输入姓名");
             return false;
@@ -223,7 +222,7 @@ public class Auth_ShenFenZhengActivity extends BaseActivity {
         if (TextUtils.isEmpty(identity_number)) {
             myToast("请输入身份证号");
             return false;
-        }
+        }*/
         if (listFiles.size() != 2) {
             myToast("请上传身份证正反面图片");
             return false;

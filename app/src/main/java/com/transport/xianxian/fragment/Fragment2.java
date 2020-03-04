@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -12,6 +13,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.DPoint;
+import com.cy.dialog.BaseDialog;
 import com.liaoinstan.springview.widget.SpringView;
 import com.squareup.okhttp.Request;
 import com.transport.xianxian.R;
@@ -19,6 +21,7 @@ import com.transport.xianxian.activity.AddSurchargeActivity;
 import com.transport.xianxian.activity.MainActivity;
 import com.transport.xianxian.activity.OrderDetailsActivity;
 import com.transport.xianxian.activity.TrackSearchActivity;
+import com.transport.xianxian.activity.ZhuanDanActivity;
 import com.transport.xianxian.base.BaseFragment;
 import com.transport.xianxian.model.Fragment2Model1;
 import com.transport.xianxian.net.OkHttpClientManager;
@@ -497,6 +500,70 @@ public class Fragment2 extends BaseFragment {
                                     });
                                 }else {
                                     tv_guiji.setVisibility(View.GONE);
+                                }
+                                //转单
+                                TextView tv_zhuandan = holder.getView(R.id.tv_zhuandan);
+                                if (status == 1){
+                                    tv_zhuandan.setVisibility(View.VISIBLE);
+                                    tv_zhuandan.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            BaseDialog dialog1 = new BaseDialog(getActivity());
+                                            dialog1.contentView(R.layout.dialog_zhuandan)
+                                                    .layoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                                            ViewGroup.LayoutParams.WRAP_CONTENT))
+                                                    .animType(BaseDialog.AnimInType.CENTER)
+                                                    .canceledOnTouchOutside(true)
+                                                    .dimAmount(0.8f)
+                                                    .show();
+                                            TextView tv_bili = dialog1.findViewById(R.id.tv_bili);
+                                            SeekBar seekBar = dialog1.findViewById(R.id.seekBar);
+
+                                            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                                @Override
+                                                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                                    scale = progress + 1;
+                                                    tv_bili.setText("金额比例：" + scale + "%");
+                                                }
+
+                                                @Override
+                                                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                                                }
+
+                                                @Override
+                                                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                                                }
+                                            });
+                                            dialog1.findViewById(R.id.textView3).setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    dialog1.dismiss();
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("id", model.getId());
+                                                    bundle.putString("lat", lat + "");
+                                                    bundle.putString("lng", lng + "");
+                                                    bundle.putString("scale", scale + "");
+                                                    CommonUtil.gotoActivityWithData(getActivity(), ZhuanDanActivity.class, bundle, false);
+                                                }
+                                            });
+                                            dialog1.findViewById(R.id.textView4).setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    dialog1.dismiss();
+                                                }
+                                            });
+                                            dialog1.findViewById(R.id.dismiss).setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    dialog1.dismiss();
+                                                }
+                                            });
+                                        }
+                                    });
+                                }else {
+                                    tv_zhuandan.setVisibility(View.GONE);
                                 }
 
 
