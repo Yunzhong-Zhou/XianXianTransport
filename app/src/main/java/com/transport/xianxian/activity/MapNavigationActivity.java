@@ -178,6 +178,7 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -293,7 +294,7 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
         }*/
         NaviLatLng mEndLatlng = new NaviLatLng(Double.valueOf(model.getTindent().getNext_addr().getLat())
                 , Double.valueOf(model.getTindent().getNext_addr().getLng()));
-        eList.add(mEndLatlng);
+        eList.add(mEndLatlng);//结束点
 
         if (!model.getTindent().getSend_head().equals("")) {
             Glide.with(MapNavigationActivity.this)
@@ -460,16 +461,16 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
                 bundle1.putString(EaseConstant.EXTRA_USER_ID, model.getTindent().getHx_username());
                 CommonUtil.gotoActivityWithData(this, ChatActivity.class, bundle1, false);*/
                 //设置要发送出去的昵称
-                SharedPreferencesUtils.setParam(this, APPConfig.USER_NAME,localUserInfo.getNickname());
+                SharedPreferencesUtils.setParam(this, APPConfig.USER_NAME, localUserInfo.getNickname());
                 //设置要发送出去的头像
-                SharedPreferencesUtils.setParam(this,APPConfig.USER_HEAD_IMG,HOST+localUserInfo.getUserImage());
+                SharedPreferencesUtils.setParam(this, APPConfig.USER_HEAD_IMG, HOST + localUserInfo.getUserImage());
 
-                Intent intent=new Intent(this,MyChatActivity.class);
+                Intent intent = new Intent(this, MyChatActivity.class);
                 //传入参数
-                Bundle args=new Bundle();
+                Bundle args = new Bundle();
                 args.putInt(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
-                args.putString(EaseConstant.EXTRA_USER_ID,model.getTindent().getHx_username());
-                intent.putExtra("conversation",args);
+                args.putString(EaseConstant.EXTRA_USER_ID, model.getTindent().getHx_username());
+                intent.putExtra("conversation", args);
 
                 startActivity(intent);
                 break;
@@ -524,7 +525,7 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
                         showToast("确认取消订单吗？", "确认", "取消", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (!model.getTindent().getTerminal_id().equals("")){
+                                if (!model.getTindent().getTerminal_id().equals("")) {
                                     aMapTrackClient.stopTrack(new TrackParam(Constants.SERVICE_ID, Long.valueOf(model.getTindent().getTerminal_id())), onTrackListener);
                                     aMapTrackClient.stopGather(onTrackListener);
                                 }
@@ -556,8 +557,8 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
                         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                             @Override
                             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                scale = progress+1;
-                                tv_bili.setText("金额比例："+scale+"%");
+                                scale = progress + 1;
+                                tv_bili.setText("金额比例：" + scale + "%");
                             }
 
                             @Override
@@ -575,16 +576,16 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
                             public void onClick(View v) {
                                 dialog1.dismiss();
                                 //停止轨迹上报
-                                if (!model.getTindent().getTerminal_id().equals("")){
+                                if (!model.getTindent().getTerminal_id().equals("")) {
                                     aMapTrackClient.stopTrack(new TrackParam(Constants.SERVICE_ID, Long.valueOf(model.getTindent().getTerminal_id())), onTrackListener);
                                     aMapTrackClient.stopGather(onTrackListener);
                                 }
 
                                 Bundle bundle = new Bundle();
                                 bundle.putString("id", model.getTindent().getId());
-                                bundle.putString("lat", lat+"");
-                                bundle.putString("lng", lng+"");
-                                bundle.putString("scale", scale+"");
+                                bundle.putString("lat", lat + "");
+                                bundle.putString("lng", lng + "");
+                                bundle.putString("scale", scale + "");
                                 CommonUtil.gotoActivityWithData(MapNavigationActivity.this, ZhuanDanActivity.class, bundle, true);
                             }
                         });
@@ -655,7 +656,7 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
                         });
                         break;
                     case "配送完毕":
-                        if (!model.getTindent().getTerminal_id().equals("")){
+                        if (!model.getTindent().getTerminal_id().equals("")) {
                             aMapTrackClient.stopTrack(new TrackParam(Constants.SERVICE_ID, Long.valueOf(model.getTindent().getTerminal_id())), onTrackListener);
                             aMapTrackClient.stopGather(onTrackListener);
                         }
@@ -938,11 +939,14 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
     @Override
     public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
         //当GPS位置有更新时的回调函数
-//        MyLogger.i(">>>>>>>>>GPS位置" + aMapNaviLocation.getCoord().getLatitude());
-        DPoint mStartDPoint = new DPoint(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());//起点
-        DPoint mEndDPoint = new DPoint(lat, lng);//终点，39.995576,116.481288
+        MyLogger.i(">>>>>>>>>GPS位置" + aMapNaviLocation.getCoord().getLatitude());
+        DPoint mStartDPoint = new DPoint(aMapNaviLocation.getCoord().getLatitude(),
+                aMapNaviLocation.getCoord().getLongitude());//起点-当前坐标
+        DPoint mEndDPoint = new DPoint(lat, lng);//终点当前位置（为了测试，实际情况用下面参数）
+        /*DPoint mEndDPoint = new DPoint(Double.valueOf(model.getTindent().getNext_addr().getLat())
+                , Double.valueOf(model.getTindent().getNext_addr().getLng()));//终点*/
         juli = CoordinateConverter.calculateLineDistance(mStartDPoint, mEndDPoint);
-        MyLogger.i(">>>>>>>>距目的地剩余距离:>>>>>直线距离" + juli);
+        MyLogger.i(">>>>>>>>距目的地直线距离" + juli);
     }
 
     @Override
@@ -998,7 +1002,7 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
 
     @Override
     public void onNaviInfoUpdate(NaviInfo naviInfo) {
-        MyLogger.i(">>>>>>>>距目的地剩余距离:" + naviInfo.getPathRetainDistance());
+        MyLogger.i(">>>>>>>>距目的地实际距离:" + naviInfo.getPathRetainDistance());
 //        juli = naviInfo.getPathRetainDistance();
 
 //        MyLogger.i(">>>>>>>>距目的地剩余时间:"+naviInfo.getPathRetainTime());
