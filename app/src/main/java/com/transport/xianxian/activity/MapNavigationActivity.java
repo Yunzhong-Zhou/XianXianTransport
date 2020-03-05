@@ -365,8 +365,8 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
 //        requestServer();
 
         switch (model.getTindent().getStatus()) {
-            /*case 0://未接单-到不了导航页面
-                if (model.getTindent().getIs_appoint() == 1) {//平台指派，可以拒绝
+            case -1://未接单-到不了导航页面
+                /*if (model.getTindent().getIs_appoint() == 1) {//平台指派，可以拒绝
                     tv_left.setText("拒绝此单");//左边按钮
                     tv_left.setBackgroundResource(R.drawable.btn_huise);
 
