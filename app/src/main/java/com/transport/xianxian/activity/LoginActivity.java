@@ -260,7 +260,7 @@ public class LoginActivity extends BaseActivity {
         }
 
         if (!isgouxuan) {
-            myToast("登录请勾选同意遵守《用户协议》");
+            myToast("登录请勾选同意遵守《用户登录协议和用户隐私协议》");
             return false;
         }
 

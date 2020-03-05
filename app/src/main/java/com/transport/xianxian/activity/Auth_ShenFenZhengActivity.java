@@ -227,9 +227,9 @@ public class Auth_ShenFenZhengActivity extends BaseActivity {
             myToast("请上传身份证正反面图片");
             return false;
         }
-        if (isIdNO(this,identity_number) == false){
+        /*if (isIdNO(this,identity_number) == false){
             return false;
-        }
+        }*/
         return true;
     }
 

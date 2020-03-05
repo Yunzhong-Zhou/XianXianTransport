@@ -118,7 +118,7 @@ public class Auth_YinHangKaActivity extends BaseActivity {
             myToast("请输入本人银行卡号");
             return false;
         }
-        if (bank_card.length() != 16 || bank_card.length() != 19) {
+        if (bank_card.length() != 16 && bank_card.length() != 19) {
             myToast("请输入正确银行卡号");
             return false;
         }

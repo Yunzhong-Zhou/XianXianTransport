@@ -178,7 +178,7 @@
                     android:onClick="onClick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="《用户注册协议》"
+                    android:text="《用户注册协议和用户隐私协议》"
                     android:textSize="12sp"
                     android:textColor="@color/blue" />
 

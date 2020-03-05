@@ -186,7 +186,7 @@ public class RegisteredActivity extends BaseActivity {
         }
 
         if (!isgouxuan) {
-            myToast("注册请勾选同意遵守《用户注册协议》");
+            myToast("注册请勾选同意遵守《用户注册协议和用户隐私协议》");
             return false;
         }
         /*num = editText5.getText().toString().trim();

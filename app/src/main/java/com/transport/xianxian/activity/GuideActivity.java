@@ -105,6 +105,7 @@ public class GuideActivity extends Activity {
         });
 
         Map<String, String> params = new HashMap<>();
+        params.put("apkname","com.transport.xianxian");//司机
         Request(params);
 
     }
