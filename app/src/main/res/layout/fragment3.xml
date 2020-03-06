@@ -348,10 +348,11 @@
                             android:paddingBottom="16dp">
 
                             <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:padding="3dp"
                                 android:layout_marginLeft="16dp"
-                                android:src="@mipmap/ic_fragment5_7" />
+                                android:src="@mipmap/ic_fragment5_10" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -467,10 +468,11 @@
                             android:paddingBottom="16dp">
 
                             <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
                                 android:layout_marginLeft="16dp"
-                                android:src="@mipmap/ic_fragment5_7" />
+                                android:padding="3dp"
+                                android:src="@mipmap/ic_fragment5_10" />
 
                             <TextView
                                 android:layout_width="match_parent"
