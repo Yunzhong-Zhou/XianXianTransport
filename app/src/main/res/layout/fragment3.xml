@@ -264,6 +264,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:onClick="onClick"
+                            android:visibility="gone"
                             android:orientation="horizontal"
                             android:paddingTop="16dp"
                             android:paddingBottom="16dp">
