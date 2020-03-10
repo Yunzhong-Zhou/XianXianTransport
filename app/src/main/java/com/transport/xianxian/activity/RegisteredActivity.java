@@ -41,7 +41,7 @@ public class RegisteredActivity extends BaseActivity {
     private ImageView imageView1;
     boolean isgouxuan = true;
 
-    String phonenum = "", password1 = "", password2 = "", code = "", num = "", nickname = "", register_addr = "",hx_username = "";
+    String phonenum = "", password1 = "", password2 = "", code = "", num = "", nickname = "", register_addr = "", hx_username = "";
 
     private TimeCount time;
 
@@ -161,7 +161,7 @@ public class RegisteredActivity extends BaseActivity {
             myToast(getString(R.string.registered_h1));
             return false;
         }
-        if (phonenum.length() !=11){
+        if (phonenum.length() != 11) {
             myToast("请输入11位手机号");
             return false;
         }
@@ -179,6 +179,9 @@ public class RegisteredActivity extends BaseActivity {
         if (TextUtils.isEmpty(password2)) {
             myToast(getString(R.string.registered_h4));
             return false;
+        }
+        if (password1.length() < 8) {
+            myToast("密码过于简单，请重新设置");
         }
         if (!password1.equals(password2)) {
             myToast(getString(R.string.registered_h12));

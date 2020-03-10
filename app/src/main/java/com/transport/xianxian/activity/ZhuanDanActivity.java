@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
 import com.transport.xianxian.R;
@@ -24,8 +25,10 @@ import java.util.Map;
  * 转单
  */
 public class ZhuanDanActivity extends BaseActivity {
+    int status = 1;
     String id = "", lat = "", lng = "", scale = "";
     ImageView imageView1;
+    TextView tv_quxiao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +39,32 @@ public class ZhuanDanActivity extends BaseActivity {
     @Override
     protected void initView() {
         imageView1 = findViewByID_My(R.id.imageView1);
-        findViewByID_My(R.id.tv_quxiao).setOnClickListener(new View.OnClickListener() {
+        tv_quxiao = findViewByID_My(R.id.tv_quxiao);
+
+        tv_quxiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if (status ==1) {//等待接单
+                    showToast("确认取消转单该订单吗？", "确定", "取消", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            Map<String, String> params = new HashMap<>();
+                            params.put("token", localUserInfo.getToken());
+                            params.put("t_indent_confirm_id", id);
+                            params.put("type", "transfter_cancel");//转单确认
+                            RequestQuXiao(params);
+                        }
+                    }, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                }else {
+                    finish();
+                }
             }
         });
     }
@@ -67,16 +92,19 @@ public class ZhuanDanActivity extends BaseActivity {
         OkHttpClientManager.postAsyn(ZhuanDanActivity.this, URLs.OrderDetails_ZhuangHuo, params, new OkHttpClientManager.ResultCallback<String>() {
             @Override
             public void onError(Request request, String info, Exception e) {
-//                showErrorPage();
                 hideProgress();
                 if (!info.equals("")) {
-                    myToast(info);
+                    showToast(info, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            finish();
+                        }
+                    });
                 }
             }
 
             @Override
             public void onResponse(String response) {
-//                showContentPage();
                 hideProgress();
                 MyLogger.i(">>>>>>>>>司机-转单确认" + response);
 //                myToast("确认成功");
@@ -87,6 +115,14 @@ public class ZhuanDanActivity extends BaseActivity {
                     //生成二维码
                     Bitmap mBitmap = ZxingUtils.createQRCodeBitmap(data.getString("id"), 480, 480);
                     imageView1.setImageBitmap(mBitmap);
+                    status =  data.getInt("status");
+                    if (status ==1){//等待接单
+                        tv_quxiao.setText("取消");
+                    }else {
+                        tv_quxiao.setText("已转派,点击按钮返回");
+                    }
+
+
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -94,7 +130,33 @@ public class ZhuanDanActivity extends BaseActivity {
             }
         }, false);
     }
+    private void RequestQuXiao(Map<String, String> params) {
+        OkHttpClientManager.postAsyn(ZhuanDanActivity.this, URLs.OrderDetails_ZhuangHuo, params, new OkHttpClientManager.ResultCallback<String>() {
+            @Override
+            public void onError(Request request, String info, Exception e) {
+                hideProgress();
+                if (!info.equals("")) {
+                    myToast(info);
+                }
+            }
 
+            @Override
+            public void onResponse(String response) {
+                hideProgress();
+                MyLogger.i(">>>>>>>>>取消转单" + response);
+                JSONObject jObj;
+                try {
+                    jObj = new JSONObject(response);
+                    myToast(jObj.getString("msg"));
+                    finish();
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        }, false);
+    }
     @Override
     protected void updateView() {
         titleView.setTitle("转单二维码");

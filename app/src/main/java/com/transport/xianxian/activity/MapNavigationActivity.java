@@ -544,63 +544,91 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
                         });
                         break;
                     case "转派订单":
-                        BaseDialog dialog1 = new BaseDialog(MapNavigationActivity.this);
-                        dialog1.contentView(R.layout.dialog_zhuandan)
-                                .layoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                                        ViewGroup.LayoutParams.WRAP_CONTENT))
-                                .animType(BaseDialog.AnimInType.CENTER)
-                                .canceledOnTouchOutside(true)
-                                .dimAmount(0.8f)
-                                .show();
-                        TextView tv_bili = dialog1.findViewById(R.id.tv_bili);
-                        SeekBar seekBar = dialog1.findViewById(R.id.seekBar);
-                        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                            @Override
-                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                scale = progress + 1;
-                                tv_bili.setText("金额比例：" + scale + "%");
-                            }
-
-                            @Override
-                            public void onStartTrackingTouch(SeekBar seekBar) {
-
-                            }
-
-                            @Override
-                            public void onStopTrackingTouch(SeekBar seekBar) {
-
-                            }
-                        });
-                        dialog1.findViewById(R.id.textView3).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog1.dismiss();
-                                //停止轨迹上报
-                                if (!model.getTindent().getTerminal_id().equals("")) {
-                                    aMapTrackClient.stopTrack(new TrackParam(Constants.SERVICE_ID, Long.valueOf(model.getTindent().getTerminal_id())), onTrackListener);
-                                    aMapTrackClient.stopGather(onTrackListener);
+                        if (model.getTindent().getStatus() == 6) {
+                            //正在转单
+                            Bundle bundle1 = new Bundle();
+                            bundle1.putString("id", model.getTindent().getId());
+                            bundle1.putString("lat", lat + "");
+                            bundle1.putString("lng", lng + "");
+                            bundle1.putString("scale", "20");
+                            CommonUtil.gotoActivityWithData(MapNavigationActivity.this, ZhuanDanActivity.class, bundle1, false);
+                        } else {
+                            BaseDialog dialog1 = new BaseDialog(MapNavigationActivity.this);
+                            dialog1.contentView(R.layout.dialog_zhuandan)
+                                    .layoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                            ViewGroup.LayoutParams.WRAP_CONTENT))
+                                    .animType(BaseDialog.AnimInType.CENTER)
+                                    .canceledOnTouchOutside(true)
+                                    .dimAmount(0.8f)
+                                    .show();
+                            TextView tv_bili = dialog1.findViewById(R.id.tv_bili);
+                            dialog1.findViewById(R.id.jianhao).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (scale > 1 && scale <= 100) {
+                                        scale = scale - 1;
+                                        tv_bili.setText("金额比例：" + scale + "%");
+                                    }
+                                }
+                            });
+                            dialog1.findViewById(R.id.jiahao).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (scale >= 0 && scale < 99) {
+                                        scale = scale + 1;
+                                        tv_bili.setText("金额比例：" + scale + "%");
+                                    }
+                                }
+                            });
+                            SeekBar seekBar = dialog1.findViewById(R.id.seekBar);
+                            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                @Override
+                                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                    scale = progress + 1;
+                                    tv_bili.setText("金额比例：" + scale + "%");
                                 }
 
-                                Bundle bundle = new Bundle();
-                                bundle.putString("id", model.getTindent().getId());
-                                bundle.putString("lat", lat + "");
-                                bundle.putString("lng", lng + "");
-                                bundle.putString("scale", scale + "");
-                                CommonUtil.gotoActivityWithData(MapNavigationActivity.this, ZhuanDanActivity.class, bundle, true);
-                            }
-                        });
-                        dialog1.findViewById(R.id.textView4).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog1.dismiss();
-                            }
-                        });
-                        dialog1.findViewById(R.id.dismiss).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog1.dismiss();
-                            }
-                        });
+                                @Override
+                                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                                }
+
+                                @Override
+                                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                                }
+                            });
+                            dialog1.findViewById(R.id.textView3).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog1.dismiss();
+                                    //停止轨迹上报
+                                    if (!model.getTindent().getTerminal_id().equals("")) {
+                                        aMapTrackClient.stopTrack(new TrackParam(Constants.SERVICE_ID, Long.valueOf(model.getTindent().getTerminal_id())), onTrackListener);
+                                        aMapTrackClient.stopGather(onTrackListener);
+                                    }
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("id", model.getTindent().getId());
+                                    bundle.putString("lat", lat + "");
+                                    bundle.putString("lng", lng + "");
+                                    bundle.putString("scale", scale + "");
+                                    CommonUtil.gotoActivityWithData(MapNavigationActivity.this, ZhuanDanActivity.class, bundle, true);
+                                }
+                            });
+                            dialog1.findViewById(R.id.textView4).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog1.dismiss();
+                                }
+                            });
+                            dialog1.findViewById(R.id.dismiss).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog1.dismiss();
+                                }
+                            });
+                        }
                         break;
                 }
 

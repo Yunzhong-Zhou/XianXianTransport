@@ -99,7 +99,7 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
     LinearLayout linearLayout1, ll_hint1, ll_hint2;
     ImageView imageView1, iv_xinxi, iv_dianhua, iv_xiangqing;
     TextView textView1, textView2, textView3, textView4, textView5, textView6, textView7, textView8, textView11,
-            tv_addr1, tv_title1, tv_juli1, tv_addr2, tv_title2, tv_juli2, tv_shouqi, tv_left, tv_right;
+            tv_addr1, tv_title1, tv_juli1, tv_addr2, tv_title2, tv_juli2, tv_shouqi, tv_left, tv_right, tv_fujiafei;
 
     RecyclerView recyclerView;
     List<OrderDetailsModel.TindentBean.PriceDetailBean> list = new ArrayList<>();
@@ -293,6 +293,8 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
         tv_left = findViewByID_My(R.id.tv_left);
         tv_right = findViewByID_My(R.id.tv_right);
 
+        tv_fujiafei = findViewByID_My(R.id.tv_fujiafei);
+
         //收起布局
         ll_hint1.setVisibility(View.GONE);
         ll_hint2.setVisibility(View.GONE);
@@ -477,6 +479,8 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                             tv_left.setBackgroundResource(R.drawable.btn_juse);
                         }
                         tv_right.setText("确认接单");//右边按钮
+
+                        tv_fujiafei.setVisibility(View.GONE);//附加费
                         break;
                     case 1://已接单
                         tv_left.setVisibility(View.VISIBLE);
@@ -485,6 +489,8 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                         tv_left.setBackgroundResource(R.drawable.btn_juse);
 
                         tv_right.setText("去装货");//右边按钮
+
+                        tv_fujiafei.setVisibility(View.VISIBLE);//附加费
                         break;
                     case 2://已装货
                     case 3://已卸货
@@ -494,6 +500,8 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                         tv_left.setBackgroundResource(R.drawable.btn_juse);
 
                         tv_right.setText("去卸货");//右边按钮
+
+                        tv_fujiafei.setVisibility(View.VISIBLE);//附加费
                         break;
                     case 4://订单完成
 
@@ -503,18 +511,25 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                         tv_left.setText("返回列表");//左边按钮
                         tv_left.setBackgroundResource(R.drawable.btn_juse);
                         tv_right.setText("配送完毕");//右边按钮
+
+                        tv_fujiafei.setVisibility(View.VISIBLE);//附加费
                         break;
-                    case 6://转单
+
+                    /*case 6://转单
                         tv_left.setVisibility(View.VISIBLE);
                         tv_right.setVisibility(View.VISIBLE);
                         tv_left.setText("返回列表");//左边按钮
                         tv_left.setBackgroundResource(R.drawable.btn_juse);
                         tv_right.setText("确认接单");//右边按钮
-                        break;
+
+                        tv_fujiafei.setVisibility(View.VISIBLE);//附加费
+                        break;*/
 
                     default:
                         tv_left.setVisibility(View.GONE);
                         tv_right.setVisibility(View.GONE);
+
+                        tv_fujiafei.setVisibility(View.GONE);//附加费
                         break;
 
                 }
@@ -628,61 +643,89 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                         });
                         break;
                     case "转派订单":
-                        BaseDialog dialog1 = new BaseDialog(OrderDetailsActivity.this);
-                        dialog1.contentView(R.layout.dialog_zhuandan)
-                                .layoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                                        ViewGroup.LayoutParams.WRAP_CONTENT))
-                                .animType(BaseDialog.AnimInType.CENTER)
-                                .canceledOnTouchOutside(true)
-                                .dimAmount(0.8f)
-                                .show();
-                        TextView tv_bili = dialog1.findViewById(R.id.tv_bili);
-                        SeekBar seekBar = dialog1.findViewById(R.id.seekBar);
-                        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                            @Override
-                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                scale = progress + 1;
-                                tv_bili.setText("金额比例：" + scale + "%");
-                            }
+                        if (model.getTindent().getStatus() == 6) {
+                            //正在转单
+                            Bundle bundle = new Bundle();
+                            bundle.putString("id", id);
+                            bundle.putString("lat", lat + "");
+                            bundle.putString("lng", lng + "");
+                            bundle.putString("scale", "20");
+                            CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, ZhuanDanActivity.class, bundle, false);
+                        } else {
+                            BaseDialog dialog1 = new BaseDialog(OrderDetailsActivity.this);
+                            dialog1.contentView(R.layout.dialog_zhuandan)
+                                    .layoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                            ViewGroup.LayoutParams.WRAP_CONTENT))
+                                    .animType(BaseDialog.AnimInType.CENTER)
+                                    .canceledOnTouchOutside(true)
+                                    .dimAmount(0.8f)
+                                    .show();
+                            TextView tv_bili = dialog1.findViewById(R.id.tv_bili);
+                            dialog1.findViewById(R.id.jianhao).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (scale > 1 && scale <= 100) {
+                                        scale = scale - 1;
+                                        tv_bili.setText("金额比例：" + scale + "%");
+                                    }
+                                }
+                            });
+                            dialog1.findViewById(R.id.jiahao).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (scale >= 0 && scale < 99) {
+                                        scale = scale + 1;
+                                        tv_bili.setText("金额比例：" + scale + "%");
+                                    }
+                                }
+                            });
+                            SeekBar seekBar = dialog1.findViewById(R.id.seekBar);
+                            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                @Override
+                                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                    scale = progress + 1;
+                                    tv_bili.setText("金额比例：" + scale + "%");
+                                }
 
-                            @Override
-                            public void onStartTrackingTouch(SeekBar seekBar) {
+                                @Override
+                                public void onStartTrackingTouch(SeekBar seekBar) {
 
-                            }
+                                }
 
-                            @Override
-                            public void onStopTrackingTouch(SeekBar seekBar) {
+                                @Override
+                                public void onStopTrackingTouch(SeekBar seekBar) {
 
-                            }
-                        });
-                        dialog1.findViewById(R.id.textView3).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog1.dismiss();
-                                //停止轨迹上报
-                                aMapTrackClient.stopTrack(new TrackParam(Constants.SERVICE_ID, terminalId), onTrackListener);
-                                aMapTrackClient.stopGather(onTrackListener);
+                                }
+                            });
+                            dialog1.findViewById(R.id.textView3).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog1.dismiss();
+                                    //停止轨迹上报
+                                    aMapTrackClient.stopTrack(new TrackParam(Constants.SERVICE_ID, terminalId), onTrackListener);
+                                    aMapTrackClient.stopGather(onTrackListener);
 
-                                Bundle bundle = new Bundle();
-                                bundle.putString("id", id);
-                                bundle.putString("lat", lat + "");
-                                bundle.putString("lng", lng + "");
-                                bundle.putString("scale", scale + "");
-                                CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, ZhuanDanActivity.class, bundle, true);
-                            }
-                        });
-                        dialog1.findViewById(R.id.textView4).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog1.dismiss();
-                            }
-                        });
-                        dialog1.findViewById(R.id.dismiss).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog1.dismiss();
-                            }
-                        });
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("id", id);
+                                    bundle.putString("lat", lat + "");
+                                    bundle.putString("lng", lng + "");
+                                    bundle.putString("scale", scale + "");
+                                    CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, ZhuanDanActivity.class, bundle, true);
+                                }
+                            });
+                            dialog1.findViewById(R.id.textView4).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog1.dismiss();
+                                }
+                            });
+                            dialog1.findViewById(R.id.dismiss).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog1.dismiss();
+                                }
+                            });
+                        }
                         break;
                 }
                 break;

@@ -475,7 +475,7 @@ public class Fragment2 extends BaseFragment {
                                 TextView tv_fujiafei = holder.getView(R.id.tv_fujiafei);
                                 if (status == 3) {//已取消
                                     tv_fujiafei.setVisibility(View.GONE);
-                                }else {
+                                } else {
                                     tv_fujiafei.setVisibility(View.VISIBLE);
                                     tv_fujiafei.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -498,71 +498,100 @@ public class Fragment2 extends BaseFragment {
                                             CommonUtil.gotoActivityWithData(getActivity(), TrackSearchActivity.class, bundle, false);
                                         }
                                     });
-                                }else {
+                                } else {
                                     tv_guiji.setVisibility(View.GONE);
                                 }
                                 //转单
                                 TextView tv_zhuandan = holder.getView(R.id.tv_zhuandan);
-                                if (status == 1){
+                                if (status == 1) {
                                     tv_zhuandan.setVisibility(View.VISIBLE);
                                     tv_zhuandan.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            BaseDialog dialog1 = new BaseDialog(getActivity());
-                                            dialog1.contentView(R.layout.dialog_zhuandan)
-                                                    .layoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                                                            ViewGroup.LayoutParams.WRAP_CONTENT))
-                                                    .animType(BaseDialog.AnimInType.CENTER)
-                                                    .canceledOnTouchOutside(true)
-                                                    .dimAmount(0.8f)
-                                                    .show();
-                                            TextView tv_bili = dialog1.findViewById(R.id.tv_bili);
-                                            SeekBar seekBar = dialog1.findViewById(R.id.seekBar);
+                                            if (model.getStatus() == 6) {
+                                                //正在转单
+                                                Bundle bundle = new Bundle();
+                                                bundle.putString("id", model.getId());
+                                                bundle.putString("lat", lat + "");
+                                                bundle.putString("lng", lng + "");
+                                                bundle.putString("scale", "20");
+                                                CommonUtil.gotoActivityWithData(getActivity(), ZhuanDanActivity.class, bundle, false);
+                                            } else {
+                                                BaseDialog dialog1 = new BaseDialog(getActivity());
+                                                dialog1.contentView(R.layout.dialog_zhuandan)
+                                                        .layoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                                                ViewGroup.LayoutParams.WRAP_CONTENT))
+                                                        .animType(BaseDialog.AnimInType.CENTER)
+                                                        .canceledOnTouchOutside(true)
+                                                        .dimAmount(0.8f)
+                                                        .show();
+                                                TextView tv_bili = dialog1.findViewById(R.id.tv_bili);
 
-                                            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                                                @Override
-                                                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                                    scale = progress + 1;
-                                                    tv_bili.setText("金额比例：" + scale + "%");
-                                                }
+                                                dialog1.findViewById(R.id.jianhao).setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        if (scale > 1 && scale <= 100) {
+                                                            scale = scale - 1;
+                                                            tv_bili.setText("金额比例：" + scale + "%");
+                                                        }
+                                                    }
+                                                });
+                                                dialog1.findViewById(R.id.jiahao).setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        if (scale >= 0 && scale < 99) {
+                                                            scale = scale + 1;
+                                                            tv_bili.setText("金额比例：" + scale + "%");
+                                                        }
+                                                    }
+                                                });
+                                                SeekBar seekBar = dialog1.findViewById(R.id.seekBar);
+                                                seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                                    @Override
+                                                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                                        scale = progress + 1;
+                                                        tv_bili.setText("金额比例：" + scale + "%");
+                                                    }
 
-                                                @Override
-                                                public void onStartTrackingTouch(SeekBar seekBar) {
+                                                    @Override
+                                                    public void onStartTrackingTouch(SeekBar seekBar) {
 
-                                                }
+                                                    }
 
-                                                @Override
-                                                public void onStopTrackingTouch(SeekBar seekBar) {
+                                                    @Override
+                                                    public void onStopTrackingTouch(SeekBar seekBar) {
 
-                                                }
-                                            });
-                                            dialog1.findViewById(R.id.textView3).setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    dialog1.dismiss();
-                                                    Bundle bundle = new Bundle();
-                                                    bundle.putString("id", model.getId());
-                                                    bundle.putString("lat", lat + "");
-                                                    bundle.putString("lng", lng + "");
-                                                    bundle.putString("scale", scale + "");
-                                                    CommonUtil.gotoActivityWithData(getActivity(), ZhuanDanActivity.class, bundle, false);
-                                                }
-                                            });
-                                            dialog1.findViewById(R.id.textView4).setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    dialog1.dismiss();
-                                                }
-                                            });
-                                            dialog1.findViewById(R.id.dismiss).setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    dialog1.dismiss();
-                                                }
-                                            });
+                                                    }
+                                                });
+                                                dialog1.findViewById(R.id.textView3).setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        dialog1.dismiss();
+                                                        Bundle bundle = new Bundle();
+                                                        bundle.putString("id", model.getId());
+                                                        bundle.putString("lat", lat + "");
+                                                        bundle.putString("lng", lng + "");
+                                                        bundle.putString("scale", scale + "");
+                                                        CommonUtil.gotoActivityWithData(getActivity(), ZhuanDanActivity.class, bundle, false);
+                                                    }
+                                                });
+                                                dialog1.findViewById(R.id.textView4).setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        dialog1.dismiss();
+                                                    }
+                                                });
+                                                dialog1.findViewById(R.id.dismiss).setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        dialog1.dismiss();
+                                                    }
+                                                });
+                                            }
+
                                         }
                                     });
-                                }else {
+                                } else {
                                     tv_zhuandan.setVisibility(View.GONE);
                                 }
 
