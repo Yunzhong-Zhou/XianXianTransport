@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +48,7 @@ import com.bumptech.glide.Glide;
 import com.cy.cyflowlayoutlibrary.FlowLayout;
 import com.cy.cyflowlayoutlibrary.FlowLayoutAdapter;
 import com.cy.dialog.BaseDialog;
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.EaseConstant;
 import com.squareup.okhttp.Request;
 import com.transport.xianxian.R;
@@ -71,6 +71,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -90,11 +91,11 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
     List<NaviLatLng> eList = new ArrayList<NaviLatLng>();//结束点
     List<NaviLatLng> mWayPointList = new ArrayList<NaviLatLng>();//途经点
 
-    ScrollView scrollView;
+    NestedScrollView scrollView;
     LinearLayout linearLayout1, ll_hint1, ll_hint2;
-    ImageView imageView1, imageView1_2, iv_xinxi, iv_xinxi_2, iv_dianhua, iv_dianhua_2;
+    ImageView imageView1, imageView1_2, iv_dianhua, iv_dianhua_2;
     TextView textView1, textView1_2, textView2, textView2_2, textView3, textView4, textView5, textView6, textView7, textView8, textView11,
-            tv_shouqi, tv_left, tv_right, tv_fujiafei;
+            tv_shouqi, tv_left, tv_right, tv_fujiafei,tv_xiaoxinum,tv_xiaoxinum_2;
     RecyclerView recyclerView;
     List<OrderDetailsModel.TindentBean.PriceDetailBean> list = new ArrayList<>();
     CommonAdapter<OrderDetailsModel.TindentBean.PriceDetailBean> mAdapter;
@@ -232,8 +233,8 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
 
         imageView1 = findViewByID_My(R.id.imageView1);
         imageView1_2 = findViewByID_My(R.id.imageView1_2);
-        iv_xinxi = findViewByID_My(R.id.iv_xinxi);
-        iv_xinxi_2 = findViewByID_My(R.id.iv_xinxi_2);
+        tv_xiaoxinum = findViewByID_My(R.id.tv_xiaoxinum);
+        tv_xiaoxinum_2 = findViewByID_My(R.id.tv_xiaoxinum_2);
         iv_dianhua = findViewByID_My(R.id.iv_dianhua);
         iv_dianhua_2 = findViewByID_My(R.id.iv_dianhua_2);
 
@@ -1030,6 +1031,17 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
 
     @Override
     public void onNaviInfoUpdate(NaviInfo naviInfo) {
+        //监听环信消息
+        if (EMClient.getInstance().chatManager().getUnreadMessageCount() > 0) {
+            tv_xiaoxinum.setVisibility(View.VISIBLE);
+            tv_xiaoxinum.setText(EMClient.getInstance().chatManager().getUnreadMessageCount() + "");
+            tv_xiaoxinum_2.setVisibility(View.VISIBLE);
+            tv_xiaoxinum_2.setText(EMClient.getInstance().chatManager().getUnreadMessageCount() + "");
+        } else {
+            tv_xiaoxinum.setVisibility(View.GONE);
+            tv_xiaoxinum_2.setVisibility(View.GONE);
+        }
+
         MyLogger.i(">>>>>>>>距目的地实际距离:" + naviInfo.getPathRetainDistance());
 //        juli = naviInfo.getPathRetainDistance();
 

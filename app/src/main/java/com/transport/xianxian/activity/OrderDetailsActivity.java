@@ -47,6 +47,7 @@ import com.bumptech.glide.Glide;
 import com.cy.cyflowlayoutlibrary.FlowLayout;
 import com.cy.cyflowlayoutlibrary.FlowLayoutAdapter;
 import com.cy.dialog.BaseDialog;
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.EaseConstant;
 import com.squareup.okhttp.Request;
 import com.transport.xianxian.R;
@@ -97,9 +98,9 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
     private ProgressDialog progDialog = null;// 搜索时进度条
 
     LinearLayout linearLayout1, ll_hint1, ll_hint2;
-    ImageView imageView1, iv_xinxi, iv_dianhua, iv_xiangqing;
+    ImageView imageView1, iv_dianhua, iv_xiangqing;
     TextView textView1, textView2, textView3, textView4, textView5, textView6, textView7, textView8, textView11,
-            tv_addr1, tv_title1, tv_juli1, tv_addr2, tv_title2, tv_juli2, tv_shouqi, tv_left, tv_right, tv_fujiafei;
+            tv_addr1, tv_title1, tv_juli1, tv_addr2, tv_title2, tv_juli2, tv_shouqi, tv_left, tv_right, tv_fujiafei, tv_xiaoxinum;
 
     RecyclerView recyclerView;
     List<OrderDetailsModel.TindentBean.PriceDetailBean> list = new ArrayList<>();
@@ -260,9 +261,10 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
         ll_hint2 = findViewByID_My(R.id.ll_hint2);
 
         imageView1 = findViewByID_My(R.id.imageView1);
-        iv_xinxi = findViewByID_My(R.id.iv_xinxi);
+
         iv_dianhua = findViewByID_My(R.id.iv_dianhua);
         iv_xiangqing = findViewByID_My(R.id.iv_xiangqing);
+        tv_xiaoxinum = findViewByID_My(R.id.tv_xiaoxinum);
 
         textView1 = findViewByID_My(R.id.textView1);
         textView2 = findViewByID_My(R.id.textView2);
@@ -515,6 +517,7 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                         tv_fujiafei.setVisibility(View.VISIBLE);//附加费
                         break;
 
+
                     /*case 6://转单
                         tv_left.setVisibility(View.VISIBLE);
                         tv_right.setVisibility(View.VISIBLE);
@@ -731,47 +734,67 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                 break;
             case R.id.tv_right:
                 //右边按钮
-                switch (tv_right.getText().toString().trim()) {
-                    case "确认接单":
-                        showToast("确认接受此单吗？", "确认", "取消", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
+                if (localUserInfo.getIsVerified().equals("2")) {
+                    showToast("您暂未完成认证，确定前往认证？", "去认证", "取消",
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    CommonUtil.gotoActivity(OrderDetailsActivity.this, Auth_CheZhuActivity.class, false);
+                                }
+                            }, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+                } else {
+                    switch (tv_right.getText().toString().trim()) {
+                        case "确认接单":
 
-                                //轨迹上报-创建成功后接单
-                                showProgress(true, "接单中，请稍候...");
-                                startTrack();
+                            showToast("确认接受此单吗？", "确认", "取消", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+
+                                    //轨迹上报-创建成功后接单
+                                    showProgress(true, "接单中，请稍候...");
+                                    startTrack();
 
 
+                                }
+                            }, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            break;
+                        case "去装货":
+                        case "去卸货":
+                            Bundle bundle = new Bundle();
+                            bundle.putDouble("lat", lat);
+                            bundle.putDouble("lng", lng);
+                            bundle.putSerializable("OrderDetailsModel", model);
+                            CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, MapNavigationActivity.class, bundle, false);
+                            break;
+                        case "配送完毕":
+                            if (model.getTindent().getStatus() == 7) {
+                                //停止轨迹上报
+                                aMapTrackClient.stopTrack(new TrackParam(Constants.SERVICE_ID, terminalId), onTrackListener);
+                                aMapTrackClient.stopGather(onTrackListener);
+                                //跳转附加费
+                                Bundle bundle2 = new Bundle();
+                                bundle2.putString("id", model.getTindent().getId());
+                                CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, AddSurchargeActivity.class, bundle2, true);
+                                //跳转上传回单
+
+
+                            } else {
+                                finish();
                             }
-                        }, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });
-                        break;
-                    case "去装货":
-                    case "去卸货":
-                        Bundle bundle = new Bundle();
-                        bundle.putDouble("lat", lat);
-                        bundle.putDouble("lng", lng);
-                        bundle.putSerializable("OrderDetailsModel", model);
-                        CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, MapNavigationActivity.class, bundle, false);
-                        break;
-                    case "配送完毕":
-                        if (model.getTindent().getStatus() == 7) {
-                            //停止轨迹上报
-                            aMapTrackClient.stopTrack(new TrackParam(Constants.SERVICE_ID, terminalId), onTrackListener);
-                            aMapTrackClient.stopGather(onTrackListener);
-                            //跳转附加费
-                            Bundle bundle2 = new Bundle();
-                            bundle2.putString("id", model.getTindent().getId());
-                            CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, AddSurchargeActivity.class, bundle2, true);
-                        } else {
-                            finish();
-                        }
-                        break;
+                            break;
                     /*case "确认装货"://确认装货
                         showToast("确认装货吗？", "确认", "取消", new View.OnClickListener() {
                             @Override
@@ -809,6 +832,7 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                             }
                         });
                         break;*/
+                    }
                 }
                 break;
 
@@ -828,13 +852,32 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
 //                showErrorPage();
                 hideProgress();
                 if (!info.equals("")) {
-                    showToast(info, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                            finish();
-                        }
-                    });
+                    if (info.contains("认证")) {
+                        showToast("您暂未完成认证，确定前往认证？",
+                                "去认证", "取消",
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        dialog.dismiss();
+                                        CommonUtil.gotoActivity(OrderDetailsActivity.this, Auth_CheZhuActivity.class, false);
+                                    }
+                                }, new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        dialog.dismiss();
+                                        finish();
+                                    }
+                                });
+                    } else {
+                        showToast(info, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+                    }
+
                 }
                 if (i == 2) {
                     //接单错误-停止轨迹
@@ -1187,6 +1230,13 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
 
     @Override
     public void onMyLocationChange(Location location) {
+        if (EMClient.getInstance().chatManager().getUnreadMessageCount() > 0) {
+            tv_xiaoxinum.setVisibility(View.VISIBLE);
+            tv_xiaoxinum.setText(EMClient.getInstance().chatManager().getUnreadMessageCount() + "");
+        } else {
+            tv_xiaoxinum.setVisibility(View.GONE);
+        }
+
         MyLogger.i(">>>>>>>>我的位置：" + location.getLatitude());
         lat = location.getLatitude();
         lng = location.getLongitude();

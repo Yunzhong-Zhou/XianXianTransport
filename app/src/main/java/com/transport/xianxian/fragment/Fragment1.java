@@ -28,6 +28,7 @@ import com.cy.dialog.BaseDialog;
 import com.liaoinstan.springview.widget.SpringView;
 import com.squareup.okhttp.Request;
 import com.transport.xianxian.R;
+import com.transport.xianxian.activity.Auth_CheZhuActivity;
 import com.transport.xianxian.activity.CapitalStatisticsActivity;
 import com.transport.xianxian.activity.MainActivity;
 import com.transport.xianxian.activity.NoticeListActivity;
@@ -401,7 +402,24 @@ public class Fragment1 extends BaseFragment {
 //                showErrorPage();
                 hideProgress();
                 if (!info.equals("")) {
-                    showToast(info);
+                    if (info.contains("认证")) {
+                        showToast("您暂未完成认证，确定前往认证？",
+                                "去认证", "取消",
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        dialog.dismiss();
+                                        CommonUtil.gotoActivity(getActivity(), Auth_CheZhuActivity.class, false);
+                                    }
+                                }, new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                    } else {
+                        showToast(info);
+                    }
                 }
                 //接单出错
                 showContentPage();
@@ -451,11 +469,11 @@ public class Fragment1 extends BaseFragment {
                             switch (model.getUse_type()) {
                                 case 1:
                                     //专车
-                                    tv_type.setBackgroundResource(R.drawable.yuanjiao_3_lanse);
+                                    tv_type.setBackgroundResource(R.drawable.yuanjiao_3_huangse);
                                     break;
                                 case 2:
                                     //顺风车
-                                    tv_type.setBackgroundResource(R.drawable.yuanjiao_3_huangse);
+                                    tv_type.setBackgroundResource(R.drawable.yuanjiao_3_lanse);
                                     break;
                                 case 3:
                                     //快递
@@ -604,49 +622,66 @@ public class Fragment1 extends BaseFragment {
                 break;
             case R.id.tv_kaishijiedan:
                 //开始接单
-                isStartJieDan = !isStartJieDan;
-                if (isStartJieDan) {
-                    //点击开始接单
-                    tv_kaishijiedan.setBackgroundResource(R.drawable.btn_huise);
-                    tv_kaishijiedan.setText("关闭接单");
-                    tv_hint.setVisibility(View.GONE);
+                if (localUserInfo.getIsVerified().equals("2")){
+                    showToast("您暂未完成认证，确定前往认证？", "去认证", "取消",
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    CommonUtil.gotoActivity(getActivity(),Auth_CheZhuActivity.class,false);
+                                }
+                            }, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+                }else {
+                    isStartJieDan = !isStartJieDan;
+                    if (isStartJieDan) {
+                        //点击开始接单
+                        tv_kaishijiedan.setBackgroundResource(R.drawable.btn_huise);
+                        tv_kaishijiedan.setText("关闭接单");
+                        tv_hint.setVisibility(View.GONE);
 
-                    //开始定位-请求数据-开始计时
-                    if (mLocationClient != null) {
-                        //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
+                        //开始定位-请求数据-开始计时
+                        if (mLocationClient != null) {
+                            //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
 //                        mLocationClient.stopLocation();
-                        mLocationClient.startLocation();
-                    }
+                            mLocationClient.startLocation();
+                        }
 
 //                    startAlarm();
-                } else {
-                    //点击关闭接单
-                    tv_kaishijiedan.setBackgroundResource(R.drawable.btn_lanse);
-                    tv_kaishijiedan.setText("开始接单");
-                    tv_hint.setVisibility(View.VISIBLE);
+                    } else {
+                        //点击关闭接单
+                        tv_kaishijiedan.setBackgroundResource(R.drawable.btn_lanse);
+                        tv_kaishijiedan.setText("开始接单");
+                        tv_hint.setVisibility(View.VISIBLE);
 
-                    //停止定位
-                    if (mLocationClient != null)
-                        mLocationClient.stopLocation();//停止定位后，本地定位服务并不会被销毁
+                        //停止定位
+                        if (mLocationClient != null)
+                            mLocationClient.stopLocation();//停止定位后，本地定位服务并不会被销毁
 
-                    //关闭计时器
-                    if (time1 != null) {
-                        time1.cancel();
-                    }
+                        //关闭计时器
+                        if (time1 != null) {
+                            time1.cancel();
+                        }
 
-                    //清空列表数据
-                    if (list.size() > 0) {
-                        list.clear();
-                        recyclerView.removeAllViews();
-                    }
+                        //清空列表数据
+                        if (list.size() > 0) {
+                            list.clear();
+                            recyclerView.removeAllViews();
+                        }
 
-                    //调用关闭接单接口
-                    Map<String, String> params = new HashMap<>();
-                    params.put("token", localUserInfo.getToken());
-                    params.put("work_close", "1");
-                    RequestClose(params);
+                        //调用关闭接单接口
+                        Map<String, String> params = new HashMap<>();
+                        params.put("token", localUserInfo.getToken());
+                        params.put("work_close", "1");
+                        RequestClose(params);
 //                    stopAlarm();
+                    }
                 }
+
                 break;
             case R.id.tv_chongzhi:
                 //重置
