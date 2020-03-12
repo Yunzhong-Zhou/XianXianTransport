@@ -37,7 +37,7 @@ public class Registered2Activity extends BaseActivity {
     private EditText editText1, editText2, editText3;
     private TextView textView2;
     private ImageView imageView1;
-    boolean isgouxuan = true;
+    boolean isgouxuan = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

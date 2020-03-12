@@ -39,7 +39,7 @@ public class RegisteredActivity extends BaseActivity {
     private EditText editText1, editText2, editText3, editText4;
 
     private ImageView imageView1;
-    boolean isgouxuan = true;
+    boolean isgouxuan = false;
 
     String phonenum = "", password1 = "", password2 = "", code = "", num = "", nickname = "", register_addr = "", hx_username = "";
 

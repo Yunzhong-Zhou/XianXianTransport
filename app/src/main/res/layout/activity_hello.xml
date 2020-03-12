@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@mipmap/background"
     android:orientation="vertical">
 
-    <View
+    <!--<View
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1"/>
@@ -29,5 +29,5 @@
         android:text="冷链就找鲜鲜拉"
         android:textColor="@color/blue"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold" />-->
 </LinearLayout>

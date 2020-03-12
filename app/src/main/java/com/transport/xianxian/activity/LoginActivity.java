@@ -48,7 +48,7 @@ public class LoginActivity extends BaseActivity {
     private EditText editText1, editText2;
     private TextView textView1, textView2, textView3, textView4;
     private ImageView imageView1;
-    boolean isgouxuan = true;
+    boolean isgouxuan = false;
 
     private String phonenum = "", password = "";
 
