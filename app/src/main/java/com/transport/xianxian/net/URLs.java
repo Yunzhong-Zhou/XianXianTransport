@@ -51,9 +51,9 @@ public class URLs {
      */
     public static final String Registered_API1 = "/api/sms-code/send-code";
     /**
-     * 新人领取
+     * 签到
      */
-    public static final String NewcomerReward= "/api/member/sign";
+    public static final String QianDao = "/api/sign";
     /**
      * 实名认证
      */

@@ -222,8 +222,9 @@ public class MainActivity extends BaseActivity {
                     });
         }
 
-        RequestUpgrade("?app_type=" + 1
-                + "&type=" + "driver");//检查更新//"driver 司机 owner货主端"
+        /*RequestUpgrade("?app_type=" + 1
+                + "&type=" + "driver");//检查更新//"driver 司机 owner货主端"*/
+        RequestQianDao("?token=" + localUserInfo.getToken());//签到
     }
 
     @Override
@@ -312,6 +313,35 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    private void RequestQianDao(String string) {
+        OkHttpClientManager.getAsyn(MainActivity.this, URLs.QianDao + string, new OkHttpClientManager.ResultCallback<String>() {
+            @Override
+            public void onError(Request request, String info, Exception e) {
+//                hideProgress();
+            }
+
+            @Override
+            public void onResponse(String response) {
+                MyLogger.i(">>>>>>>>>签到" + response);
+//                hideProgress();
+                dialog = new BaseDialog(MainActivity.this);
+                dialog.contentView(R.layout.dialog_qiandao)
+                        .layoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT))
+                        .animType(BaseDialog.AnimInType.CENTER)
+                        .canceledOnTouchOutside(true)
+                        .dimAmount(0.8f)
+                        .show();
+
+                dialog.findViewById(R.id.dismiss).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+    }
     //显示是否要更新的对话框
     private void showUpdateDialog() {
         dialog.contentView(R.layout.dialog_upgrade)
