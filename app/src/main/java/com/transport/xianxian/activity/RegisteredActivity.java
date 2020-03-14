@@ -126,7 +126,7 @@ public class RegisteredActivity extends BaseActivity {
                 //是真机
                 if (match()) {
                     textView2.setClickable(false);
-                    showProgress(true, getString(R.string.app_loading1));
+                    showProgress(false, getString(R.string.app_loading1));
                     HashMap<String, String> params = new HashMap<>();
                     params.put("mobile", phonenum);//手机号
                     params.put("password", password1);//密码（不能小于6位数）
@@ -182,6 +182,7 @@ public class RegisteredActivity extends BaseActivity {
         }
         if (password1.length() < 8) {
             myToast("密码过于简单，请重新设置");
+            return false;
         }
         if (!password1.equals(password2)) {
             myToast(getString(R.string.registered_h12));

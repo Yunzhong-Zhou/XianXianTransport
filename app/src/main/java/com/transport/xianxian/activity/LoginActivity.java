@@ -238,7 +238,7 @@ public class LoginActivity extends BaseActivity {
                             Bundle bundle = new Bundle();
                             bundle.putString("id",response.getId());
                             bundle.putString("hx_username",response.getHx_username());
-                            CommonUtil.gotoActivity(LoginActivity.this, Registered2Activity.class, false);
+                            CommonUtil.gotoActivityWithData(LoginActivity.this, Registered2Activity.class, bundle,false);
                         }
                     });
                 }
