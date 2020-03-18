@@ -30,6 +30,8 @@ public class ZhuanDanActivity extends BaseActivity {
     ImageView imageView1;
     TextView tv_quxiao;
 
+    String zhuanDanId = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +53,7 @@ public class ZhuanDanActivity extends BaseActivity {
                             dialog.dismiss();
                             Map<String, String> params = new HashMap<>();
                             params.put("token", localUserInfo.getToken());
-                            params.put("t_indent_confirm_id", id);
+                            params.put("t_indent_confirm_id", zhuanDanId);
                             params.put("type", "transfter_cancel");//转单确认
                             RequestQuXiao(params);
                         }
@@ -112,6 +114,7 @@ public class ZhuanDanActivity extends BaseActivity {
                 try {
                     jObj = new JSONObject(response);
                     JSONObject data = jObj.getJSONObject("data");
+                    zhuanDanId = data.getString("id");
                     //生成二维码
                     Bitmap mBitmap = ZxingUtils.createQRCodeBitmap(data.getString("id"), 480, 480);
                     imageView1.setImageBitmap(mBitmap);

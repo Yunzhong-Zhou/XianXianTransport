@@ -115,6 +115,7 @@
                 android:src="@mipmap/ic_jifenshangcheng_1" />
 
             <TextView
+                android:id="@+id/tv_type1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -144,6 +145,7 @@
                 android:src="@mipmap/ic_jifenshangcheng_3" />
 
             <TextView
+                android:id="@+id/tv_type2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -173,6 +175,7 @@
                 android:src="@mipmap/ic_jifenshangcheng_2" />
 
             <TextView
+                android:id="@+id/tv_type3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

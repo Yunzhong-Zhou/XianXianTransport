@@ -574,7 +574,7 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                                 Intent intent = new Intent();
                                 //设置拨打电话的动作
                                 intent.setAction(Intent.ACTION_CALL);//直接拨出电话
-//                                                                        intent.setAction(Intent.ACTION_DIAL);//只调用拨号界面，不拨出电话
+//                              intent.setAction(Intent.ACTION_DIAL);//只调用拨号界面，不拨出电话
                                 //设置拨打电话的号码
                                 intent.setData(Uri.parse("tel:" + model.getTindent().getSend_mobile()));
                                 //开启打电话的意图
@@ -789,7 +789,6 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                                 bundle2.putString("id", model.getTindent().getId());
                                 CommonUtil.gotoActivityWithData(OrderDetailsActivity.this, AddSurchargeActivity.class, bundle2, true);
                                 //跳转上传回单
-
 
                             } else {
                                 finish();

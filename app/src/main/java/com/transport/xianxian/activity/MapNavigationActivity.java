@@ -186,8 +186,8 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
         setContentView(R.layout.activity_mapnavigation);
 
         mAMapNaviView = (AMapNaviView) findViewById(R.id.navi_view);
-        mAMapNaviView.onCreate(savedInstanceState);
         mAMapNaviView.setAMapNaviViewListener(MapNavigationActivity.this);
+        mAMapNaviView.onCreate(savedInstanceState);
 
         aMapCarInfo = getIntent().getParcelableExtra("info");
 
@@ -206,6 +206,8 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
     protected void onResume() {
         super.onResume();
         mAMapNaviView.onResume();
+
+
     }
 
     @Override
@@ -747,7 +749,7 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
     public void onInitNaviSuccess() {
         //初始化成功
 //        mAMapNavi.startGPS();
-        //货车信息
+        /*//货车信息
         if (aMapCarInfo == null) {
             aMapCarInfo = new AMapCarInfo();
             aMapCarInfo.setCarType(model.getTindent().getCar_type_info().getCar_type());//设置车辆类型，0小车，1货车
@@ -764,7 +766,7 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
             aMapCarInfo.setRestriction(true);//设置是否躲避车辆限行。
         }
         aMapCarInfo.setVehicleLoadSwitch(true);
-        mAMapNavi.setCarInfo(aMapCarInfo);
+        mAMapNavi.setCarInfo(aMapCarInfo);*/
         /**
          * 方法: int strategy=mAMapNavi.strategyConvert(congestion, avoidhightspeed, cost, hightspeed, multipleroute); 参数:
          *

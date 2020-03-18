@@ -207,17 +207,12 @@ public class MainActivity extends BaseActivity {
             });
         }*/
         if (localUserInfo.getIsVerified().equals("2")){
-            showToast("您暂未完成认证，确定前往认证？", "去认证", "取消",
+            showToast("您暂未完成认证，确定前往认证？",
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();
                             CommonUtil.gotoActivity(MainActivity.this,Auth_CheZhuActivity.class,false);
-                        }
-                    }, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
                         }
                     });
         }
