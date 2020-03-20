@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -19,7 +20,9 @@ import android.widget.Toast;
 
 import com.cy.dialog.BaseDialog;
 import com.hyphenate.EMCallBack;
+import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.maning.updatelibrary.InstallUtils;
 import com.squareup.okhttp.Request;
 import com.transport.xianxian.R;
@@ -222,9 +225,89 @@ public class LoginActivity extends BaseActivity {
                         public void onError(int code, String error) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
-                                    hideProgress();
+//                                    hideProgress();
                                     MyLogger.i("环信登录失败：" + error);
-                                    myToast("环信登录失败：" + error);
+//                                    myToast("环信登录失败：" + error);
+                                    //环信注册
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                EMClient.getInstance().createAccount(response.getHx_username(), "123456");
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        //登录环信
+                                                        EMClient.getInstance().login(response.getHx_username(), "123456", new EMCallBack() {
+                                                            @Override
+                                                            public void onSuccess() {
+                                                                hideProgress();
+                                                                //保存id
+                                                                localUserInfo.setUserId(response.getId());
+                                                                CommonUtil.gotoActivity(LoginActivity.this, MainActivity.class, true);
+                                                            }
+
+                                                            @Override
+                                                            public void onProgress(int progress, String status) {
+                                                            }
+
+                                                            @Override
+                                                            public void onError(int code, String error) {
+                                                                runOnUiThread(new Runnable() {
+                                                                    public void run() {
+                                                                        hideProgress();
+                                                                        MyLogger.i("环信登录失败：" + error);
+                                                                        myToast("环信登录失败：" + error);
+                                                                    }
+                                                                });
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                            } catch (final HyphenateException e) {
+                                                e.printStackTrace();
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        hideProgress();
+                                                        /**
+                                                         * 关于错误码可以参考官方api详细说明
+                                                         * http://www.easemob.com/apidoc/android/chat3.0/classcom_1_1hyphenate_1_1_e_m_error.html
+                                                         */
+                                                        int errorCode = e.getErrorCode();
+                                                        String message = e.getMessage();
+                                                        Log.d("lzan13", String.format("sign up - errorCode:%d, errorMsg:%s", errorCode, e.getMessage()));
+                                                        switch (errorCode) {
+                                                            // 网络错误
+                                                            case EMError.NETWORK_ERROR:
+                                                                MyLogger.i("网络错误 code: " + errorCode + ", message:" + message);
+                                                                break;
+                                                            // 用户已存在
+                                                            case EMError.USER_ALREADY_EXIST:
+                                                                MyLogger.i("用户已存在 code: " + errorCode + ", message:" + message);
+                                                                break;
+                                                            // 参数不合法，一般情况是username 使用了uuid导致，不能使用uuid注册
+                                                            case EMError.USER_ILLEGAL_ARGUMENT:
+                                                                MyLogger.i("参数不合法，一般情况是username 使用了uuid导致，不能使用uuid注册 code: " + errorCode + ", message:" + message);
+                                                                break;
+                                                            // 服务器未知错误
+                                                            case EMError.SERVER_UNKNOWN_ERROR:
+                                                                MyLogger.i("服务器未知错误 code: " + errorCode + ", message:" + message);
+                                                                break;
+                                                            case EMError.USER_REG_FAILED:
+                                                                MyLogger.i("账户注册失败 code: " + errorCode + ", message:" + message);
+                                                                break;
+                                                            default:
+                                                                MyLogger.i("ml_sign_up_failed code: " + errorCode + ", message:" + message);
+                                                                break;
+                                                        }
+                                                    }
+                                                });
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }).start();
                                 }
                             });
                         }
