@@ -3,7 +3,6 @@ package com.transport.xianxian.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +12,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.location.CoordinateConverter;
-import com.amap.api.location.DPoint;
 import com.amap.api.navi.AMapNavi;
 import com.amap.api.navi.AMapNaviListener;
 import com.amap.api.navi.AMapNaviView;
 import com.amap.api.navi.AMapNaviViewListener;
-import com.amap.api.navi.enums.NaviForbidType;
-import com.amap.api.navi.enums.NaviLimitType;
 import com.amap.api.navi.enums.NaviType;
 import com.amap.api.navi.model.AMapCalcRouteResult;
 import com.amap.api.navi.model.AMapCarInfo;
@@ -28,9 +23,7 @@ import com.amap.api.navi.model.AMapLaneInfo;
 import com.amap.api.navi.model.AMapModelCross;
 import com.amap.api.navi.model.AMapNaviCameraInfo;
 import com.amap.api.navi.model.AMapNaviCross;
-import com.amap.api.navi.model.AMapNaviForbiddenInfo;
 import com.amap.api.navi.model.AMapNaviInfo;
-import com.amap.api.navi.model.AMapNaviLimitInfo;
 import com.amap.api.navi.model.AMapNaviLocation;
 import com.amap.api.navi.model.AMapNaviRouteNotifyData;
 import com.amap.api.navi.model.AMapNaviTrafficFacilityInfo;
@@ -55,7 +48,6 @@ import com.transport.xianxian.R;
 import com.transport.xianxian.base.BaseActivity;
 import com.transport.xianxian.lieying.Constants;
 import com.transport.xianxian.lieying.SimpleOnTrackLifecycleListener;
-import com.transport.xianxian.model.ErrorInfo;
 import com.transport.xianxian.model.OrderDetailsModel;
 import com.transport.xianxian.net.OkHttpClientManager;
 import com.transport.xianxian.net.URLs;
@@ -806,14 +798,15 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
 //        mAMapNavi.setEmulatorNaviSpeed(200);//模拟速度
 //        mAMapNavi.startNavi(NaviType.EMULATOR);//模拟导航
         mAMapNavi.startNavi(NaviType.GPS);//实时导航
-        /**
-         * 获取当前路线导航限制信息（例如： 限高，限宽）
-         */
-        List<AMapNaviLimitInfo> limitInfos = mAMapNavi.getNaviPath().getLimitInfos();
 
         /**
+         * 获取当前路线导航限制信息（例如： 限高，限宽）
+         *//*
+        List<AMapNaviLimitInfo> limitInfos = mAMapNavi.getNaviPath().getLimitInfos();
+
+        *//**
          * 获取当前路线导航禁行信息 (例如：禁行)
-         */
+         *//*
         List<AMapNaviForbiddenInfo> forbiddenInfos = mAMapNavi.getNaviPath().getForbiddenInfos();
 
         int forbiddenCount = 0;
@@ -822,11 +815,11 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
         if (limitInfos != null) {
             for (int i = 0; i < limitInfos.size(); i++) {
                 AMapNaviLimitInfo limitInfo = limitInfos.get(i);
-                /**
+                *//**
                  * 81 : 货车限高
                  * 82 : 货车限宽
                  * 83 : 货车限重
-                 */
+                 *//*
                 if (limitInfo.type == NaviLimitType.TYPE_TRUCK_WIDTH_LIMIT) {
                     ++limitWidth;
                 } else if (limitInfo.type == NaviLimitType.TYPE_TRUCK_HEIGHT_LIMIT) {
@@ -840,13 +833,13 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
 
             for (int i = 0; i < forbiddenInfos.size(); i++) {
                 AMapNaviForbiddenInfo forbiddenInfo = forbiddenInfos.get(i);
-                /**
+                *//**
                  * 0: 禁止左转
                  * 1: 禁止右转
                  * 2: 禁止左掉头
                  * 3: 禁止右掉头
                  * 4: 禁止直行
-                 */
+                 *//*
                 switch (forbiddenInfo.forbiddenType) {
                     case NaviForbidType.FORBID_TURN_LEFT:
                         MyLogger.i("当前路线有禁止左转");
@@ -891,7 +884,7 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
 
         if (!TextUtils.isEmpty(limitStr)) {
             Toast.makeText(this, limitStr, Toast.LENGTH_LONG).show();
-        }
+        }*/
 
     }
 
@@ -939,7 +932,7 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
     @Override
     public void onNaviViewLoaded() {
         MyLogger.i("wlx", "导航页面加载成功");
-        MyLogger.i("wlx", "请不要使用AMapNaviView.getMap().setOnMapLoadedListener();会overwrite导航SDK内部画线逻辑");
+//        MyLogger.i("wlx", "请不要使用AMapNaviView.getMap().setOnMapLoadedListener();会overwrite导航SDK内部画线逻辑");
     }
 
     @Override
@@ -954,7 +947,13 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
 
     @Override
     public void onInitNaviFailure() {
-        myToast("初始化导航失败");
+        showToast("初始化导航失败", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                finish();
+            }
+        });
     }
 
     @Override
@@ -970,14 +969,14 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
     @Override
     public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
         //当GPS位置有更新时的回调函数
-        MyLogger.i(">>>>>>>>>GPS位置" + aMapNaviLocation.getCoord().getLatitude());
+        /*MyLogger.i(">>>>>>>>>GPS位置" + aMapNaviLocation.getCoord().getLatitude());
         DPoint mStartDPoint = new DPoint(aMapNaviLocation.getCoord().getLatitude(),
                 aMapNaviLocation.getCoord().getLongitude());//起点-当前坐标
         DPoint mEndDPoint = new DPoint(lat, lng);//终点当前位置（为了测试，实际情况用下面参数）
-        /*DPoint mEndDPoint = new DPoint(Double.valueOf(model.getTindent().getNext_addr().getLat())
-                , Double.valueOf(model.getTindent().getNext_addr().getLng()));//终点*/
+        *//*DPoint mEndDPoint = new DPoint(Double.valueOf(model.getTindent().getNext_addr().getLat())
+                , Double.valueOf(model.getTindent().getNext_addr().getLng()));//终点*//*
         juli = CoordinateConverter.calculateLineDistance(mStartDPoint, mEndDPoint);
-        MyLogger.i(">>>>>>>>距目的地直线距离" + juli);
+        MyLogger.i(">>>>>>>>距目的地直线距离" + juli);*/
     }
 
     @Override
@@ -1004,11 +1003,18 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
     @Override
     public void onCalculateRouteFailure(int errorInfo) {
         //路线计算失败
-        Log.i("dm", "--------------------------------------------");
-        Log.i("dm", "路线计算失败：错误码=" + errorInfo + ",Error Message= " + ErrorInfo.getError(errorInfo));
-        Log.i("dm", "错误码详细链接见：http://lbs.amap.com/api/android-navi-sdk/guide/tools/errorcode/");
-        Log.i("dm", "--------------------------------------------");
-        Toast.makeText(this, "errorInfo：" + errorInfo + ",Message：" + ErrorInfo.getError(errorInfo), Toast.LENGTH_LONG).show();
+        showToast("路线计算失败", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+//        Log.i("dm", "--------------------------------------------");
+//        Log.i("dm", "路线计算失败：错误码=" + errorInfo + ",Error Message= " + ErrorInfo.getError(errorInfo));
+//        Log.i("dm", "错误码详细链接见：http://lbs.amap.com/api/android-navi-sdk/guide/tools/errorcode/");
+//        Log.i("dm", "--------------------------------------------");
+//        Toast.makeText(this, "errorInfo：" + errorInfo + ",Message：" + ErrorInfo.getError(errorInfo), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -1044,7 +1050,7 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
             tv_xiaoxinum_2.setVisibility(View.GONE);
         }
 
-        MyLogger.i(">>>>>>>>距目的地实际距离:" + naviInfo.getPathRetainDistance());
+//        MyLogger.i(">>>>>>>>距目的地实际距离:" + naviInfo.getPathRetainDistance());
 //        juli = naviInfo.getPathRetainDistance();
 
 //        MyLogger.i(">>>>>>>>距目的地剩余时间:"+naviInfo.getPathRetainTime());
@@ -1115,21 +1121,16 @@ public class MapNavigationActivity extends BaseActivity implements AMapNaviListe
 
     @Override
     public void notifyParallelRoad(int i) {
-        if (i == 0) {
-            Toast.makeText(this, "当前在主辅路过渡", Toast.LENGTH_SHORT).show();
-            Log.d("wlx", "当前在主辅路过渡");
-            return;
-        }
-        if (i == 1) {
-            Toast.makeText(this, "当前在主路", Toast.LENGTH_SHORT).show();
-
-            Log.d("wlx", "当前在主路");
-            return;
-        }
-        if (i == 2) {
-            Toast.makeText(this, "当前在辅路", Toast.LENGTH_SHORT).show();
-
-            Log.d("wlx", "当前在辅路");
+        switch (i){
+            case 0:
+                Toast.makeText(this, "当前在主辅路过渡", Toast.LENGTH_SHORT).show();
+                break;
+            case 1:
+                Toast.makeText(this, "当前在主路", Toast.LENGTH_SHORT).show();
+                break;
+            case 2:
+                Toast.makeText(this, "当前在辅路", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
