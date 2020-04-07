@@ -25,6 +25,7 @@
         android:drawableTop="@mipmap/empty_img"
         android:drawablePadding="10dp"
         android:gravity="center"
+        android:padding="50dp"
         android:text="@string/app_reload"
         android:textColor="@color/black1" />
 

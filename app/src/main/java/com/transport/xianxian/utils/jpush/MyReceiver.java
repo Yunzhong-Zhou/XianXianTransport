@@ -51,18 +51,17 @@ public class MyReceiver extends BroadcastReceiver {
                 int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
                 MyLogger.i(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
 
-                SoundHelper.get().palyFuJin(context);
 
-                /*JSONObject jObj = new JSONObject(model);
-                String type = jObj.getString("type");
-                switch (type){
+                JSONObject jObj = new JSONObject(model);
+                String sound_type = jObj.getString("sound_type");
+                switch (sound_type){
                     case "1"://附近
-                        SoundHelper.get().palyFuJin();
+                        SoundHelper.get().palyFuJin(context);
                         break;
                     case "2"://新订单
-                        SoundHelper.get().palyNewOrder();
+                        SoundHelper.get().palyNewOrder(context);
                         break;
-                }*/
+                }
 
 
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {

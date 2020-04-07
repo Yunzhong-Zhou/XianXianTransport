@@ -388,16 +388,19 @@ public class OrderDetailsActivity extends BaseActivity implements RouteSearch.On
                         if (position == 0) {
                             textView1.setText("发");
                             textView1.setBackgroundResource(R.drawable.yuanxing_lanse);
+                            holder.setText(R.id.tv3, "发货人：" + model.getName());//发货人
                         } else if (position == (response.getTindent().getAddr_list().size() - 1)) {
                             textView1.setText("收");
                             textView1.setBackgroundResource(R.drawable.yuanxing_juse);
+                            holder.setText(R.id.tv3, "收货人：" + model.getName());//发货人
                         } else {
                             //途经点
                             textView1.setText("途");
                             textView1.setBackgroundResource(R.drawable.yuanxing_huise);
+                            holder.setText(R.id.tv3, "收货人：" + model.getName());//发货人
                         }
                         holder.setText(R.id.tv2, model.getAddr());//地址
-                        holder.setText(R.id.tv3, "发货人：" + model.getName());//发货人
+
                         holder.setText(R.id.tv4, "手机号：" + model.getMobile());//手机号
                     }
                 };

@@ -126,6 +126,7 @@ public class TakeCashActivity extends BaseActivity {
                 if (response.getWay_list().size() > 0) {
                     way = model.getWay_list().get(0).getType();
                     textView1.setText(model.getWay_list().get(0).getTitle());
+                    textView2.setText(model.getWay_list().get(0).getSub());
                 }
 
             }
