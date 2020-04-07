@@ -9,8 +9,8 @@ android {
         targetSdkVersion 29
         /*versionCode 3
         versionName "1.0.2"*/
-        versionCode 32
-        versionName "Beta1.0.32"
+        versionCode 34
+        versionName "Beta1.0.34"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -34,7 +34,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 
     //环信
     useLibrary 'org.apache.http.legacy'
@@ -142,7 +141,6 @@ dependencies {
 
     //zxing 二维码框架
     implementation 'com.google.zxing:core:3.4.0'
-
 
     //环信
     implementation project(':easeui')

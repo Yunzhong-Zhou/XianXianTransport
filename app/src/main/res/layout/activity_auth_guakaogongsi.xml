@@ -15,6 +15,7 @@
         android:background="@drawable/yuanjiao_5_baise"
         android:hint="请输入挂靠公司全称"
         android:padding="14dp"
+        android:text="平台"
         android:textColor="@color/black1"
         android:textColorHint="@color/black3"
         android:textSize="14sp" />

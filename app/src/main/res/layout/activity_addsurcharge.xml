@@ -283,7 +283,7 @@
             android:gravity="center"
             android:onClick="onClick"
             android:padding="13dp"
-            android:text="保存"
+            android:text="返回列表"
             android:textColor="@color/white"
             android:textSize="16sp" />
 

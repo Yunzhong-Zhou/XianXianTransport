@@ -23,8 +23,8 @@ import com.transport.xianxian.base.BaseActivity;
 import com.transport.xianxian.model.Auth_GuaKaoGongSiModel;
 import com.transport.xianxian.net.OkHttpClientManager;
 import com.transport.xianxian.net.URLs;
-import com.transport.xianxian.utils.MyChooseImages;
 import com.transport.xianxian.utils.FileUtil;
+import com.transport.xianxian.utils.MyChooseImages;
 import com.transport.xianxian.utils.MyLogger;
 
 import java.io.File;
@@ -172,7 +172,6 @@ public class Auth_GuaKaoGongSiActivity extends BaseActivity {
                             imageView1.setVisibility(View.GONE);
                             linearLayout1.setVisibility(View.VISIBLE);
                         }
-
                     }
                 });
     }
@@ -183,10 +182,10 @@ public class Auth_GuaKaoGongSiActivity extends BaseActivity {
             myToast("请输入挂靠公司名称");
             return false;
         }
-        if (listFiles.size() != 1) {
+        /*if (listFiles.size() != 1) {
             myToast("请上传告知书照片");
             return false;
-        }
+        }*/
         return true;
     }
 

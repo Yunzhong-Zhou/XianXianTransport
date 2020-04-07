@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import com.transport.xianxian.activity.NoticeListActivity;
 import com.transport.xianxian.activity.OrderDetailsActivity;
 import com.transport.xianxian.activity.WebContentActivity;
-import com.transport.xianxian.utils.CommonUtil;
 import com.transport.xianxian.utils.MyLogger;
 
 import org.json.JSONException;
@@ -54,7 +53,7 @@ public class MyReceiver extends BroadcastReceiver {
 
                 JSONObject jObj = new JSONObject(model);
                 String sound_type = jObj.getString("sound_type");
-                switch (sound_type){
+                switch (sound_type) {
                     case "1"://附近
                         SoundHelper.get().palyFuJin(context);
                         break;
@@ -63,19 +62,8 @@ public class MyReceiver extends BroadcastReceiver {
                         break;
                 }
 
-
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
                 MyLogger.i(TAG, "[MyReceiver] 用户点击打开了通知");
-
-                //打开自定义的Activity
-				/*Intent i = new Intent(context, WebContentActivity.class);
-				bundle.putString("url", url);
-//                    bundle.putString("article_id", "");
-//				bundle.putString("title", context.getString(R.string.information_content));
-				i.putExtras(bundle);
-//				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-				context.startActivity(i);*/
                 //解析数据
                 JSONObject jObj = new JSONObject(model);
                 String type = jObj.getString("type");
@@ -87,19 +75,37 @@ public class MyReceiver extends BroadcastReceiver {
                 switch (type) {
                     case "1":
                         //订单详情
-                        Bundle bundle1 = new Bundle();
+                        Intent i = new Intent(context, OrderDetailsActivity.class);
+                        bundle.putString("id", t_indent_id);
+                        i.putExtras(bundle);
+//				        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(i);
+                        /*Bundle bundle1 = new Bundle();
                         bundle1.putString("id", t_indent_id);
-                        CommonUtil.gotoActivityWithData(context, OrderDetailsActivity.class, bundle1);
+                        CommonUtil.gotoActivityWithData(context, OrderDetailsActivity.class, bundle1);*/
                         break;
                     case "2":
                     case "4":
                         //网页
-                        Bundle bundle2 = new Bundle();
+                        Intent i2 = new Intent(context, WebContentActivity.class);
+                        bundle.putString("url", url);
+                        i2.putExtras(bundle);
+//				        i2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(i2);
+                        /*Bundle bundle2 = new Bundle();
                         bundle2.putString("url", url);
-                        CommonUtil.gotoActivityWithData(context, WebContentActivity.class, bundle2);
+                        CommonUtil.gotoActivityWithData(context, WebContentActivity.class, bundle2);*/
                         break;
                     case "3":
-                        CommonUtil.gotoActivity(context, NoticeListActivity.class);
+                        Intent i3 = new Intent(context, NoticeListActivity.class);
+//                        bundle.putString("url", url);
+                        i3.putExtras(bundle);
+//				        i3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(i3);
+//                        CommonUtil.gotoActivity(context, NoticeListActivity.class);
                         break;
                 }
 

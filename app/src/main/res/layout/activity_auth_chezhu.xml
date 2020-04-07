@@ -294,7 +294,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="挂靠公司告知书" />
+                android:text="挂靠公司告知书（选填）" />
 
             <ImageView
                 android:id="@+id/imageView7"
