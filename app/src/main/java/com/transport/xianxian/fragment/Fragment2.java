@@ -526,13 +526,14 @@ public class Fragment2 extends BaseFragment {
                                                         .dimAmount(0.8f)
                                                         .show();
                                                 TextView tv_bili = dialog1.findViewById(R.id.tv_bili);
-
+                                                SeekBar seekBar = dialog1.findViewById(R.id.seekBar);
                                                 dialog1.findViewById(R.id.jianhao).setOnClickListener(new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View v) {
                                                         if (scale > 1 && scale <= 100) {
                                                             scale = scale - 1;
                                                             tv_bili.setText("金额比例：" + scale + "%");
+                                                            seekBar.setProgress(scale);
                                                         }
                                                     }
                                                 });
@@ -542,15 +543,18 @@ public class Fragment2 extends BaseFragment {
                                                         if (scale >= 0 && scale < 99) {
                                                             scale = scale + 1;
                                                             tv_bili.setText("金额比例：" + scale + "%");
+                                                            seekBar.setProgress(scale);
+
                                                         }
                                                     }
                                                 });
-                                                SeekBar seekBar = dialog1.findViewById(R.id.seekBar);
                                                 seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                                                     @Override
                                                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                                        scale = progress + 1;
-                                                        tv_bili.setText("金额比例：" + scale + "%");
+                                                        if (progress > 0 && progress < 100) {
+                                                            scale = progress;
+                                                            tv_bili.setText("金额比例：" + scale + "%");
+                                                        }
                                                     }
 
                                                     @Override

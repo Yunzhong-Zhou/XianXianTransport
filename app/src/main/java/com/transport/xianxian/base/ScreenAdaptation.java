@@ -34,8 +34,6 @@ public class ScreenAdaptation {
             @Override
 
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
-
                 //开启Activity才执行
 
                 resetDensity(activity, mWidth, mHeight);
@@ -51,7 +49,7 @@ public class ScreenAdaptation {
             @Override
 
             public void onActivityResumed(Activity activity) {
-
+                resetDensity(activity, mWidth, mHeight);
             }
 
             @Override

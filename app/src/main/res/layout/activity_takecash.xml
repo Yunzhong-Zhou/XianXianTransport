@@ -67,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="2小时内到账，每次提现手续费5元"
+                    android:text=""
                     android:textColor="@color/black3"
                     android:textSize="11sp" />
 

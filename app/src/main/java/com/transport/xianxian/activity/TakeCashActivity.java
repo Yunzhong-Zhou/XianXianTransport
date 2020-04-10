@@ -127,6 +127,13 @@ public class TakeCashActivity extends BaseActivity {
                     way = model.getWay_list().get(0).getType();
                     textView1.setText(model.getWay_list().get(0).getTitle());
                     textView2.setText(model.getWay_list().get(0).getSub());
+                    if (!model.getWay_list().get(0).getIcon().equals(""))
+                        Glide.with(TakeCashActivity.this)
+                                .load(IMGHOST + model.getWay_list().get(0).getIcon())
+                                .centerCrop()
+//                    .placeholder(R.mipmap.headimg)//加载站位图
+//                    .error(R.mipmap.headimg)//加载失败
+                                .into(imageView1);//加载图片
                 }
 
             }
