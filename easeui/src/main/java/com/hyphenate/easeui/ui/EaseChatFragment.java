@@ -1181,6 +1181,21 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                 }
             });
         }
+
+        @Override
+        public void onWhiteListAdded(String s, List<String> list) {
+
+        }
+
+        @Override
+        public void onWhiteListRemoved(String s, List<String> list) {
+
+        }
+
+        @Override
+        public void onAllMemberMuteStateChanged(String s, boolean b) {
+
+        }
     }
 
     /**
@@ -1225,6 +1240,20 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             });
         }
 
+        @Override
+        public void onWhiteListAdded(String s, List<String> list) {
+
+        }
+
+        @Override
+        public void onWhiteListRemoved(String s, List<String> list) {
+
+        }
+
+        @Override
+        public void onAllMemberMuteStateChanged(String s, boolean b) {
+
+        }
 
 
         @Override
