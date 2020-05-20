@@ -259,9 +259,9 @@ public class Auth_CheLiangZhaoPianActivity extends BaseActivity {
                             TextView tv1 = pageViews.get(i).findViewById(R.id.tv1);
                             TextView tv2 = pageViews.get(i).findViewById(R.id.tv2);
                             TextView tv3 = pageViews.get(i).findViewById(R.id.tv3);
-                            tv1.setText("长宽高：" + stringList.get(i).getWeight());
-                            tv2.setText("载重：" + stringList.get(i).getSize());
-                            tv3.setText("承载体积：" + stringList.get(i).getBulk());
+                            tv1.setText("长宽高：" + stringList.get(i).getSize());
+                            tv2.setText("载重：" + stringList.get(i).getWeight() + "吨");
+                            tv3.setText("承载体积：" + stringList.get(i).getBulk() + "方");
                             if (!stringList.get(i).getImage().equals(""))
                                 Glide.with(Auth_CheLiangZhaoPianActivity.this)
                                         .load(IMGHOST + stringList.get(i).getImage())

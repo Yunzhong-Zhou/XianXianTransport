@@ -24,16 +24,12 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <!-- 相机 -->
     <uses-permission android:name="android.permission.CAMERA" />
-
     <!--9.0权限-->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
     <!--录音权限-->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
     <!-- 振动 -->
     <uses-permission android:name="android.permission.VIBRATE" />
-
     <!-- 极光推送 -->
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <!-- Optional for location -->
@@ -48,12 +44,10 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
-
     <!-- 这个权限用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 这个权限用于访问GPS定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
 
     <!-- 环信 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -250,9 +244,12 @@
             android:screenOrientation="portrait" />
 
         <!-- 设置环信应用的AppKey -->
+        <!--<meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="1138191008030637#xxl88" />-->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="1138191008030637#xxl88" />
+            android:value="1138191008030637#xianxianla" />
         <!-- 声明SDK所需的service SDK核心功能-->
         <service
             android:name="com.hyphenate.chat.EMChatService"

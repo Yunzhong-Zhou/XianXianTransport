@@ -84,8 +84,8 @@ public class Auth_CheLiangZhaoPianModel implements Serializable {
         private String id;
         private String name;
         private String size;
-        private int weight;
-        private int bulk;
+        private String weight;
+        private String bulk;
         private String image;
 
         public String getId() {
@@ -112,19 +112,19 @@ public class Auth_CheLiangZhaoPianModel implements Serializable {
             this.size = size;
         }
 
-        public int getWeight() {
+        public String getWeight() {
             return weight;
         }
 
-        public void setWeight(int weight) {
+        public void setWeight(String weight) {
             this.weight = weight;
         }
 
-        public int getBulk() {
+        public String getBulk() {
             return bulk;
         }
 
-        public void setBulk(int bulk) {
+        public void setBulk(String bulk) {
             this.bulk = bulk;
         }
 

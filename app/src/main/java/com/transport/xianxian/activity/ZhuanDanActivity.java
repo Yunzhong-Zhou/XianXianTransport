@@ -2,6 +2,7 @@ package com.transport.xianxian.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,11 +32,19 @@ public class ZhuanDanActivity extends BaseActivity {
     TextView tv_quxiao;
 
     String zhuanDanId = "";
-
+    TimeCount time1 = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zhuandan);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (time1 != null) {
+            time1.cancel();
+        }
     }
 
     @Override
@@ -121,8 +130,13 @@ public class ZhuanDanActivity extends BaseActivity {
                     status =  data.getInt("status");
                     if (status ==1){//等待接单
                         tv_quxiao.setText("取消");
+                        startTime();//开始倒计时
                     }else {
                         tv_quxiao.setText("已转派,点击按钮返回");
+                        //关闭计时器
+                        if (time1 != null) {
+                            time1.cancel();
+                        }
                     }
 
 
@@ -163,5 +177,48 @@ public class ZhuanDanActivity extends BaseActivity {
     @Override
     protected void updateView() {
         titleView.setTitle("转单二维码");
+    }
+
+    private void startTime() {
+        MyLogger.i(">>>>>>" + (10 * 1000));
+        if (time1 != null) {
+            time1.cancel();
+        }
+        time1 = new TimeCount(10 * 1000, 1000);//构造CountDownTimer对象
+        time1.start();//开始计时
+    }
+
+    class TimeCount extends CountDownTimer {
+        //        TextView textView;
+        public TimeCount(long millisInFuture, long countDownInterval
+//                , TextView textView
+        ) {
+            super(millisInFuture, countDownInterval);//参数依次为总时长,和计时的时间间隔
+//            this.textView = textView;
+        }
+
+        @Override
+        public void onFinish() {//计时完毕时触发
+//            textView.setText("0s");
+//            MyLogger.i(">>>>>>>>计时完毕，刷新订单");
+
+            Map<String, String> params = new HashMap<>();
+            params.put("token", localUserInfo.getToken());
+            params.put("t_indent_id", id);
+            params.put("type", "5");//转单确认
+            params.put("lat", lat + "");
+            params.put("lng", lng + "");
+            params.put("scale", scale);//动态比例
+            RequestZhuanDan(params);
+
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {//计时过程显示
+
+//            textView.setText(CommonUtil.timedate3(millisUntilFinished) + "s");//秒计时
+//            textView.setText(CommonUtil.timedate4(millisUntilFinished, getActivity()));//时分秒倒计时
+        }
+
     }
 }

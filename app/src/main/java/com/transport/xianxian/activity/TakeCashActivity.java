@@ -227,7 +227,7 @@ public class TakeCashActivity extends BaseActivity {
             case R.id.textView:
                 //提现
                 if (!editText1.getText().toString().trim().equals("")) {
-                    if (Double.valueOf(editText1.getText().toString().trim()) > Double.valueOf(model.getLow_money())){
+                    if (Double.valueOf(editText1.getText().toString().trim()) >= Double.valueOf(model.getLow_money())){
                         params.put("token", localUserInfo.getToken());//token
                         params.put("way", way + "");
                         params.put("money", editText1.getText().toString().trim());
