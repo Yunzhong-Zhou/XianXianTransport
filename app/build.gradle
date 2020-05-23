@@ -7,16 +7,16 @@ android {
         applicationId "com.transport.xianxian"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 7
-        versionName "1.0.7"
+        versionCode 8
+        versionName "1.0.8"
         /*versionCode 35
         versionName "Beta1.0.35"*/
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
             //选择要添加的对应 cpu 类型的 .so 库。
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
-            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+            abiFilters 'armeabi', 'armeabi-v7a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64', 'arm64-v8a'
         }
 
         manifestPlaceholders = [
