@@ -96,7 +96,7 @@ public class LoginActivity extends BaseActivity {
 
         setSwipeBackEnable(false); //主 activity 可以调用该方法，禁止滑动删除
 
-        mPermissionsChecker = new PermissionsChecker(this);
+//        mPermissionsChecker = new PermissionsChecker(this);
     }
 
 
@@ -567,9 +567,9 @@ public class LoginActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         // 缺少权限时, 进入权限配置页面
-        if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+        /*if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
             startPermissionsActivity();
-        }
+        }*/
     }
 
     private void startPermissionsActivity() {
@@ -580,8 +580,8 @@ public class LoginActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
-        if (requestCode == REQUEST_CODE && resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
+        /*if (requestCode == REQUEST_CODE && resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
             finish();
-        }
+        }*/
     }
 }

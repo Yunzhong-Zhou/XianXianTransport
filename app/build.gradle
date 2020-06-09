@@ -7,16 +7,16 @@ android {
         applicationId "com.transport.xianxian"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 8
-        versionName "1.0.8"
+        versionCode 9
+        versionName "1.0.10"
         /*versionCode 35
         versionName "Beta1.0.35"*/
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
             //选择要添加的对应 cpu 类型的 .so 库。
-            abiFilters 'armeabi', 'armeabi-v7a'
-            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64', 'arm64-v8a'
+            abiFilters 'armeabi'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64', 'arm64-v8a', 'armeabi-v7a'
         }
 
         manifestPlaceholders = [
@@ -142,8 +142,14 @@ dependencies {
     //zxing 二维码框架
     implementation 'com.google.zxing:core:3.4.0'
 
+    //动态申请权限
+    implementation 'com.github.MZCretin:FanPermission:1.0.0'
+
     //环信
     implementation project(':easeui')
+
+    //zbarcode
+//    implementation project(':zbarcode')
 /*//    api 'com.android.support:appcompat-v7:28.0.0-alpha1'
     implementation 'com.google.android.gms:play-services-base:11.4.0'
     implementation 'com.google.firebase:firebase-messaging:11.4.0'
